@@ -602,12 +602,6 @@
       "languageVersion": "3.0"
     },
     {
-      "name": "pop_scope_aware_cupertino_route",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/pop_scope_aware_cupertino_route-0.0.4",
-      "packageUri": "lib/",
-      "languageVersion": "3.5"
-    },
-    {
       "name": "posix",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/posix-6.0.1",
       "packageUri": "lib/",
@@ -908,7 +902,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-03-17T07:24:58.114954Z",
+  "generated": "2025-03-18T05:25:45.397924Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///opt/homebrew/Caskroom/flutter/3.24.1/flutter",
