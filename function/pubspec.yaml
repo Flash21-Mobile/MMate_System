@@ -1,0 +1,36 @@
+name: function_system
+description: A function system for mmate
+version: 0.0.1
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_riverpod: ^2.6.1
+
+  dio: ^5.7.0
+  retrofit: ^4.4.1
+  json_serializable: ^6.9.0
+  json_annotation: ^4.9.0
+
+  file_picker: ^9.0.0
+  shared_preferences: ^2.5.1
+  flutter_secure_storage: ^9.2.2
+
+  image: ^4.5.2
+  path_provider: ^2.1.5
+
+  zstandard_android: ^1.3.27
+  zstandard_ios: ^1.3.27
+
+  permission_handler: ^11.3.1
+
+  package_info_plus: ^8.2.1
+  daum_postcode_search: ^0.0.3
+  path: ^1.9.0
+
+dev_dependencies:
+  retrofit_generator: ^9.1.5
+  build_runner: ^2.4.13

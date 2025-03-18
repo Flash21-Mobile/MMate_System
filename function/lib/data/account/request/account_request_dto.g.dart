@@ -1,0 +1,75 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'account_request_dto.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+AccountRequestDto _$AccountRequestDtoFromJson(Map<String, dynamic> json) =>
+    AccountRequestDto(
+      active: json['active'] as bool?,
+      android: json['android'] as bool?,
+      birthDate: json['birthDate'] as String?,
+      cellphone: json['cellphone'] as String?,
+      email: json['email'] as String?,
+      faxNumber: json['faxNumber'] as String?,
+      fifthGrade: (json['fifthGrade'] as num?)?.toInt(),
+      firstGrade: (json['firstGrade'] as num?)?.toInt(),
+      fourthGrade: (json['fourthGrade'] as num?)?.toInt(),
+      grade: (json['grade'] as num?)?.toInt(),
+      graduationYear: (json['graduationYear'] as num?)?.toInt(),
+      homeAddress: json['homeAddress'] as String?,
+      homeAddressSub: json['homeAddressSub'] as String?,
+      homeAddressZipCode: json['homeAddressZipCode'] as String?,
+      ios: json['ios'] as bool?,
+      name: json['name'] as String?,
+      permission: json['permission'] as bool?,
+      secondGrade: (json['secondGrade'] as num?)?.toInt(),
+      signupYear: (json['signupYear'] as num?)?.toInt(),
+      telephone: json['telephone'] as String?,
+      thirdGrade: (json['thirdGrade'] as num?)?.toInt(),
+      userId: json['userId'] as String?,
+      userPassword: json['userPassword'] as String?,
+      workAddress: json['workAddress'] as String?,
+      workAddressSub: json['workAddressSub'] as String?,
+      workAddressZipCode: json['workAddressZipCode'] as String?,
+      workName: json['workName'] as String?,
+      workPositionName: json['workPositionName'] as String?,
+      hidden: json['hidden'] as bool?,
+      job: json['job'] as String,
+    );
+
+Map<String, dynamic> _$AccountRequestDtoToJson(AccountRequestDto instance) =>
+    <String, dynamic>{
+      'userId': instance.userId,
+      'userPassword': instance.userPassword,
+      'name': instance.name,
+      'email': instance.email,
+      'telephone': instance.telephone,
+      'cellphone': instance.cellphone,
+      'faxNumber': instance.faxNumber,
+      'signupYear': instance.signupYear,
+      'graduationYear': instance.graduationYear,
+      'birthDate': instance.birthDate,
+      'workAddress': instance.workAddress,
+      'workAddressSub': instance.workAddressSub,
+      'workAddressZipCode': instance.workAddressZipCode,
+      'workName': instance.workName,
+      'workPositionName': instance.workPositionName,
+      'homeAddress': instance.homeAddress,
+      'homeAddressSub': instance.homeAddressSub,
+      'homeAddressZipCode': instance.homeAddressZipCode,
+      'grade': instance.grade,
+      'firstGrade': instance.firstGrade,
+      'secondGrade': instance.secondGrade,
+      'thirdGrade': instance.thirdGrade,
+      'fourthGrade': instance.fourthGrade,
+      'fifthGrade': instance.fifthGrade,
+      'android': instance.android,
+      'ios': instance.ios,
+      'active': instance.active,
+      'hidden': instance.hidden,
+      'permission': instance.permission,
+      'job': instance.job,
+    };

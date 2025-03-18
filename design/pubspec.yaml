@@ -1,0 +1,19 @@
+name: design_system
+description: A design system for mmate
+version: 0.0.1
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.0.16
+  flutter_riverpod: ^2.6.1
+  shimmer: ^3.0.0
+  intl: ^0.19.0
+
+  simple_gesture_detector: ^0.2.1
+  carousel_slider_plus: ^7.1.0
+  infinite_carousel: ^1.1.1
+
+  flutter_avif: ^3.0.0
