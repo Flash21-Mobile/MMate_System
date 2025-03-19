@@ -36,7 +36,7 @@ class SignInUseCase {
       if (loginResult.active == true && loginResult.id != null) {
         return loginResult.toEntity();
       }
-      throw MmateException.noActiveAccountFound;
+      throw MMateException.noActiveAccountFound;
     } catch (e) {
       rethrow;
     }
@@ -72,7 +72,7 @@ class SignInWithNameUseCase {
       if (loginResult.active == true) {
         return loginResult.toEntity();
       }
-      throw MmateException.noActiveAccountFound;
+      throw MMateException.noActiveAccountFound;
     } catch (e) {
       rethrow;
     }

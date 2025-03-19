@@ -1,25 +1,28 @@
-import 'package:core_system/runapp/app.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:core_system/runapp/splash.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../theme.dart';
 
-Future runMMate(Widget home, {
-  required String title,
+Future runMMate(
+  Widget home, {
   required String baseUrl,
+  String title = '',
   MmateTheme? lightTheme,
   MmateTheme? darkTheme,
   bool isFirebaseEnabled = false,
 }) async {
-  final currentApp = App(
+  final currentApp = MaterialApp(
     title: title,
-    lightTheme: lightTheme ?? MmateTheme.light(),
-    darkTheme: darkTheme ?? MmateTheme.dark(),
-    home: home,
-    baseUrl: baseUrl,
+    theme: (lightTheme ?? MmateTheme.light()).themeData(),
+    darkTheme: (darkTheme ?? MmateTheme.dark()).themeData(),
+    themeMode: ThemeMode.system,
+    home: MmateSplash(
+      title: title,
+      home: home,
+      baseUrl: baseUrl,
+    ),
   );
 
   if (isFirebaseEnabled) {

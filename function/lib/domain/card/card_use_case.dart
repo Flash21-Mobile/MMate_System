@@ -36,7 +36,7 @@ class PostCardUseCase {
     try {
       final uriResult = await uriRepository.pickSingleImage();
       if (uriResult == null) {
-        throw MmateException.noFilesSelected;
+        throw MMateException.noFilesSelected;
       }
 
       // todo c: 이거 분리하기 레포지토리

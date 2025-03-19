@@ -30,7 +30,7 @@ class UriResponseDTO {
       this.image});
 
   UriEntity get toEntity {
-    if (image == null) throw MmateException.cannotFormat;
+    if (image == null) throw MMateException.cannotFormat;
 
     return UriEntity(
       data: image!,

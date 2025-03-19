@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 class MMateAppData {
   final Widget screen;
   final String? svgImage;
-  final String label;
+  final String? label;
 
   const MMateAppData({
     required this.screen,
-    required this.svgImage,
-    required this.label,
+    this.svgImage,
+    this.label,
   });
 }

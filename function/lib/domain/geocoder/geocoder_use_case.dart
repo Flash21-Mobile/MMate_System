@@ -12,11 +12,11 @@ class GetGeocoderUseCase {
       AccountEntity account) async {
     try {
       if (account.workAddress.isEmpty) {
-        throw MmateException.noData;
+        throw MMateException.noData;
       }
       final latLng = await geocoderRepository.getLatLng(account.workAddress);
       if (latLng == null || latLng.isEmpty) {
-        throw MmateException.noData;
+        throw MMateException.noData;
       }
 
       return GeocoderAccountEntity(

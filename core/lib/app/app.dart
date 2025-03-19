@@ -11,8 +11,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:function_system/utilities/navigation/navigation.dart';
 
 class MMateApp extends ConsumerStatefulWidget {
-  const MMateApp(this.data, {super.key});
+  const MMateApp({
+    super.key,
+    this.data = const [],
+    this.appBar,
+  });
 
+  final AppBar? appBar;
   final List<MMateAppData> data;
 
   @override
@@ -41,28 +46,30 @@ class _Widget extends ConsumerState<MMateApp> {
     final navigationNotifier = ref.read(mMateAppNavigationProvider.notifier);
 
     return DoubleTapToClose(
-        beforePop: (){
-        if(navigationState == 0){
-          return true;
-        }
-        navigationNotifier.state = 0;
-        return false;
-      },
+        beforePop: () {
+          if (navigationState == 0) {
+            return true;
+          }
+          navigationNotifier.state = 0;
+          return false;
+        },
         child: Scaffold(
             extendBody: true,
-            appBar: AppBar(),
+            appBar: widget.appBar,
             body: IndexedStack(
               index: navigationState,
               children: widget.data.map((e) => e.screen).toList(),
             ),
-            bottomNavigationBar: MMateBottomNavigationBar(
-              currentIndex: navigationState,
-              onTap: (index) => navigationNotifier.state = index,
-              items: widget.data
-                  .map((e) => MMateBottomNavigationItemData(e.label,
-                      svgImage: e.svgImage))
-                  .toList(),
-            )));
+            bottomNavigationBar: widget.data.length < 2
+                ? SizedBox()
+                : MMateBottomNavigationBar(
+                    currentIndex: navigationState,
+                    onTap: (index) => navigationNotifier.state = index,
+                    items: widget.data
+                        .map((e) => MMateBottomNavigationItemData(e.label,
+                            svgImage: e.svgImage))
+                        .toList(),
+                  )));
     //   DoubleTapToClose(child:  Scaffold(
     //   body:  IndexedStack(
     //         index: navigationState,

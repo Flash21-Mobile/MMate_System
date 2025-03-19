@@ -72,7 +72,7 @@ class PostArticleUseCase {
         time: DateFormat.formatDateTimeToServer(time),
         sendPushAlarm: sendPushAlarm,
       );
-      if (result.id == null) throw MmateException.failedSend;
+      if (result.id == null) throw MMateException.failedSend;
 
       if (images.isNotEmpty) {
         final fileResult = await _fileRepository.postFile(
@@ -80,7 +80,7 @@ class PostArticleUseCase {
             result.id!,
             images.map((e) => e.toMultipart()).toList());
 
-        if (fileResult.first.id != null) throw MmateException.failedSend;
+        if (fileResult.first.id != null) throw MMateException.failedSend;
       }
 
       return result.toEntity;

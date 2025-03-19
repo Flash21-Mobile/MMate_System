@@ -13,7 +13,7 @@ class UriPickImageUseCase {
   Future<UriEntity> execute() async {
     try {
       final result = await repository.pickSingleImage();
-      if (result == null) throw MmateException.noFilesSelected;
+      if (result == null) throw MMateException.noFilesSelected;
 
       String extension = p.extension(result).replaceFirst('.', '');
 

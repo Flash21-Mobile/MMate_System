@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:design_system/image/image.dart';
+import 'package:design_system/image/image_memory.dart';
 import 'package:flutter/material.dart';
 
 import '../config.dart';

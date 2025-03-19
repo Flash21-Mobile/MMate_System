@@ -46,7 +46,7 @@ class FileRepositoryImpl extends FileRepository {
   Future<List<UriResponseDTO>> getImages(String api, int pk) async {
     try {
       final fileResult = await service.getFiles(api, pk);
-      if (fileResult == null) throw MmateException.noFilesFound;
+      if (fileResult == null) throw MMateException.noFilesFound;
 
       List<Uint8List?> tempList = await Future.wait(fileResult.map((e) async {
         final result = await dio.get('/api/file/${e.id}',
@@ -84,7 +84,7 @@ class FileRepositoryImpl extends FileRepository {
     try {
       final tempResult = await service.getFiles(api, pk);
       if (tempResult == null || tempResult.isEmpty) {
-        throw MmateException.noFilesFound;
+        throw MMateException.noFilesFound;
       }
 
       final currentFile = isFirst == true ? tempResult.first : tempResult.last;
@@ -176,7 +176,7 @@ class FileRepositoryImpl extends FileRepository {
     try {
       final filePath = preferences.getString(PrefKey.card);
       if (filePath == null) {
-        throw MmateException.noFilesFound;
+        throw MMateException.noFilesFound;
       }
       return File(filePath);
     } catch (e) {

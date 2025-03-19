@@ -27,7 +27,7 @@ class LoginUseCase {
         fileResult =
             await fileRepository.getImages(ConstantsKey.accountImagesAPI, result.id!);
       } catch (e) {
-        if (e != MmateException.noFilesFound) {
+        if (e != MMateException.noFilesFound) {
           rethrow;
         }
       }
