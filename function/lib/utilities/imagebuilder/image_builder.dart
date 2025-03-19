@@ -14,7 +14,7 @@ class MMateImageBuilder extends ConsumerWidget {
 
   final int id;
   final String api;
-  final bool firstImage;
+  final bool showFirstImage;
 
   const MMateImageBuilder(
     this.id,
@@ -22,7 +22,7 @@ class MMateImageBuilder extends ConsumerWidget {
     super.key,
     this.loadingWidget,
     required this.builder,
-    this.firstImage = false,
+    this.showFirstImage = false,
     this.width,
     this.height,
     this.fit = BoxFit.contain,
@@ -31,10 +31,10 @@ class MMateImageBuilder extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imageState = ref.watch(imageProvider(ImageBuilderKey(
+    final imageState = ref.watch(imageBuilderProvider(ImageBuilderKey(
       id,
       api,
-      !firstImage,
+      !showFirstImage,
     )));
 
     if (imageState.isLoading || imageState.isInit == false) {
@@ -48,6 +48,8 @@ class MMateImageBuilder extends ConsumerWidget {
         imageState.data!,
         width: width,
         height: height,
+        alignment: alignment,
+        fit: fit,
       );
     }
     return builder(imageWidget);

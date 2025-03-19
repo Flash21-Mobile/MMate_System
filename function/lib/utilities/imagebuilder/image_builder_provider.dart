@@ -6,7 +6,7 @@ import '../../di/file/file_use_case_provider.dart';
 import '../../domain/file/file_use_case.dart';
 import '../exception/exceoption.dart';
 
-final imageProvider = StateNotifierProvider.family<_Viewmodel,
+final imageBuilderProvider = StateNotifierProvider.family<_Viewmodel,
     ImageBuilderState, ImageBuilderKey>(
   (ref, imageKey) {
     final viewModel = _Viewmodel(ref.watch(getUintUseCaseProvider), imageKey);
@@ -24,16 +24,13 @@ class _Viewmodel extends StateNotifier<ImageBuilderState> {
   }
 
   Future<void> _loadImage() async {
-    print('사진 2번 ');
     if ((state.data != null || state.isEmpty == true || state.isLoading) &&
         state.isInit) {
       return;
     }
 
-    print('사진 3번 ');
     state = state.copyWith(isLoading: true, error: null, isInit: true);
 
-    print('사진 4번 ');
     try {
       final imageData = await _getUintUseCase.execute(
         api: imageKey.api,
@@ -41,7 +38,6 @@ class _Viewmodel extends StateNotifier<ImageBuilderState> {
         isFirst: imageKey.isLast,
       );
 
-      print('사진 5번 ');
       state = state.copyWith(
           data: imageData.data,
           isLoading: false);
@@ -51,7 +47,6 @@ class _Viewmodel extends StateNotifier<ImageBuilderState> {
         return;
       }
       state = state.copyWith(error: e.toString());
-      print('사진 에러 ${e}');
     }
   }
 
