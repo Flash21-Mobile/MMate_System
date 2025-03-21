@@ -17,3 +17,6 @@ dependencies:
   infinite_carousel: ^1.1.1
 
   flutter_avif: ^3.0.0
+
+  flutter_hooks: ^0.21.2
+  fluttertoast: ^8.2.12

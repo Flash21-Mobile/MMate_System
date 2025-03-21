@@ -1,7 +1,9 @@
 import 'package:core_system/runapp/splash.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../theme.dart';
 
@@ -13,10 +15,19 @@ Future runMMate(
   MmateTheme? darkTheme,
   bool isFirebaseEnabled = false,
 }) async {
+
   final currentApp = MaterialApp(
     title: title,
     theme: (lightTheme ?? MmateTheme.light()).themeData(),
     darkTheme: (darkTheme ?? MmateTheme.dark()).themeData(),
+    localizationsDelegates: [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: const [
+      Locale('ko', 'KR'),
+    ],
     themeMode: ThemeMode.system,
     home: MmateSplash(
       title: title,

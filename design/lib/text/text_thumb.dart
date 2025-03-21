@@ -17,5 +17,5 @@ class IndexTextThumb extends _TextInterface {
 
   @override
   double Function(BuildContext context) get fontSize =>
-      (BuildContext context) => _getFontSize(context, 0.065, 20);
+      (BuildContext context) => _getFontSize(context, 0.065, 22);
 }

@@ -147,9 +147,9 @@
     },
     {
       "name": "ffi",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/ffi-2.1.3",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/ffi-2.1.4",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.7"
     },
     {
       "name": "file",
@@ -159,7 +159,31 @@
     },
     {
       "name": "file_picker",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/file_picker-9.1.0",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/file_picker-9.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "file_selector_linux",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/file_selector_linux-0.9.3+2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "file_selector_macos",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.4+2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "file_selector_platform_interface",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/file_selector_platform_interface-2.6.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "file_selector_windows",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/file_selector_windows-0.9.3+4",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -266,6 +290,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "flutter_hooks",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_hooks-0.21.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "flutter_inappwebview",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_inappwebview-6.1.5",
       "packageUri": "lib/",
@@ -312,6 +342,18 @@
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_inappwebview_windows-0.6.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_localization",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_localization-0.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_localizations",
+      "rootUri": "file:///opt/homebrew/Caskroom/flutter/3.24.1/flutter/packages/flutter_localizations",
+      "packageUri": "lib/",
+      "languageVersion": "3.7"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
@@ -380,6 +422,12 @@
       "languageVersion": "3.7"
     },
     {
+      "name": "fluttertoast",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/fluttertoast-8.2.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "function_system",
       "rootUri": "../../function",
       "packageUri": "lib/",
@@ -408,6 +456,54 @@
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image-4.5.3",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "image_picker",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image_picker-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "image_picker_android",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+22",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "image_picker_for_web",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image_picker_for_web-3.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "image_picker_ios",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image_picker_ios-0.8.12+2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "image_picker_linux",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image_picker_linux-0.2.1+2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "image_picker_macos",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image_picker_macos-0.2.1+2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "image_picker_platform_interface",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image_picker_platform_interface-2.10.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "image_picker_windows",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/image_picker_windows-0.2.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "infinite_carousel",
@@ -480,6 +576,12 @@
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/meta-1.16.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "mime",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/mime-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "package_config",
@@ -585,9 +687,21 @@
     },
     {
       "name": "petitparser",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/petitparser-6.0.2",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/petitparser-6.1.0",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "photo_manager",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/photo_manager-3.6.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
+      "name": "photo_manager_image_provider",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/photo_manager_image_provider-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
     },
     {
       "name": "platform",
@@ -729,27 +843,27 @@
     },
     {
       "name": "sqflite",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/sqflite-2.4.1",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/sqflite-2.4.2",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.7"
     },
     {
       "name": "sqflite_android",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/sqflite_android-2.4.0",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/sqflite_android-2.4.1",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.7"
     },
     {
       "name": "sqflite_common",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/sqflite_common-2.5.4+6",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/sqflite_common-2.5.5",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.7"
     },
     {
       "name": "sqflite_darwin",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.1+1",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.2",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.7"
     },
     {
       "name": "sqflite_platform_interface",
@@ -783,9 +897,9 @@
     },
     {
       "name": "synchronized",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/synchronized-3.3.0+3",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/synchronized-3.3.1",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.7"
     },
     {
       "name": "term_glyph",
@@ -804,6 +918,12 @@
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/typed_data-1.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
+    },
+    {
+      "name": "universal_io",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/universal_io-2.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "uuid",
@@ -855,9 +975,9 @@
     },
     {
       "name": "win32",
-      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/win32-5.10.1",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/win32-5.12.0",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.7"
     },
     {
       "name": "xdg_directories",
@@ -902,7 +1022,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-03-18T05:25:45.397924Z",
+  "generated": "2025-03-21T04:36:47.451377Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///opt/homebrew/Caskroom/flutter/3.24.1/flutter",

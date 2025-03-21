@@ -25,27 +25,13 @@ class MMateApp extends ConsumerStatefulWidget {
 }
 
 class _Widget extends ConsumerState<MMateApp> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    // 현재 모드 감지 (라이트/다크)
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: isDarkMode ? Colors.black : Colors.white,
-      systemNavigationBarIconBrightness:
-          isDarkMode ? Brightness.light : Brightness.dark,
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {
     final navigationState = ref.watch(mMateAppNavigationProvider);
     final navigationNotifier = ref.read(mMateAppNavigationProvider.notifier);
 
-    return DoubleTapToClose(
+    return  DoubleTapToClose(
         beforePop: () {
           if (navigationState == 0) {
             return true;
@@ -60,35 +46,14 @@ class _Widget extends ConsumerState<MMateApp> {
               index: navigationState,
               children: widget.data.map((e) => e.screen).toList(),
             ),
-            bottomNavigationBar: widget.data.length < 2
-                ? SizedBox()
-                : MMateBottomNavigationBar(
+            bottomNavigationBar:MMateBottomNavigationBar(
                     currentIndex: navigationState,
                     onTap: (index) => navigationNotifier.state = index,
                     items: widget.data
                         .map((e) => MMateBottomNavigationItemData(e.label,
                             svgImage: e.svgImage))
                         .toList(),
-                  )));
-    //   DoubleTapToClose(child:  Scaffold(
-    //   body:  IndexedStack(
-    //         index: navigationState,
-    //         children: widget.data
-    //             .map((e) => Navigator(
-    //                 onGenerateRoute: (settings) =>
-    //                     MaterialPageRoute(builder: (_) => e.screen)))
-    //             .toList(),
-    //       ),
-    //   bottomNavigationBar: MMateBottomNavigationBar(
-    //     currentIndex: navigationState,
-    //     onTap: (index) => navigationNotifier.state = index,
-    //     items: widget.data
-    //         .map((e) => MMateBottomNavigationItem(
-    //               svgImage: e.svgImage,
-    //               label: e.label,
-    //             ))
-    //         .toList(),
-    //   ))
-    // );
+                  )
+        ));
   }
 }

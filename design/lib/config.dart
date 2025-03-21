@@ -7,9 +7,9 @@ class AppConfig {
   static const double paddingIndex = 16.0;
   static EdgeInsets padding = EdgeInsets.all(paddingIndex);
   static EdgeInsets paddingHorizontal =
-  EdgeInsets.symmetric(horizontal: paddingIndex);
+      EdgeInsets.symmetric(horizontal: paddingIndex);
   static EdgeInsets paddingVertical =
-  EdgeInsets.symmetric(vertical: paddingIndex);
+      EdgeInsets.symmetric(vertical: paddingIndex);
 
   static const double borderRadiusIndex = 16;
   static BorderRadius borderRadius = BorderRadius.circular(borderRadiusIndex);
@@ -23,4 +23,7 @@ class AppConfig {
   static int alpha30 = (255 * 0.3).round();
   static int alpha50 = (255 * 0.5).round();
   static int alpha80 = (255 * 0.8).round();
+
+  static final startCalendarDate = DateTime(1900);
+  static final endCalendarDate = DateTime(2100, 12, 31);
 }

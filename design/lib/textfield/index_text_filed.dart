@@ -53,7 +53,9 @@ class IndexTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Material(
+        color: Colors.transparent,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       ...indexText != null
           ? [
               IndexText(indexText, color: Theme.of(context).hintColor),
@@ -107,6 +109,6 @@ class IndexTextField extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.transparent)), // 동그란 테두리
             ),
           )),
-    ]);
+    ]));
   }
 }

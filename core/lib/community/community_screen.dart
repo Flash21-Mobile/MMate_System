@@ -1,7 +1,7 @@
 import 'package:core_system/community/provider/article/article_tab_provider.dart';
 import 'package:core_system/community/provider/board/board_provider.dart';
 import 'package:design_system/config.dart';
-import 'package:design_system/dialog/BottomSheetDialog.dart';
+import 'package:design_system/dialog/bottom_sheet_dialog.dart';
 import 'package:design_system/tab/tab_bar_widget.dart';
 import 'package:design_system/tab/tab_item.dart';
 import 'package:design_system/tab/tab_view_widget.dart';

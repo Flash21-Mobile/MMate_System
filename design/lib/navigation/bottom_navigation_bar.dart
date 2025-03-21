@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:design_system/config.dart';
 import 'package:design_system/navigation/bottom_navigation_item_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,22 +23,33 @@ class MMateBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final bottomNavigationBarHeight = 48 + bottomPadding;
 
     return SizedBox(
-        height: 48 + bottomPadding,
-        child: BottomNavigationBar(
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            onTap: onTap,
-            currentIndex: currentIndex,
-            type: BottomNavigationBarType.fixed,
-            selectedFontSize: 11,
-            unselectedFontSize: 11,
-            elevation: 5,
-            selectedItemColor: Theme.of(context).colorScheme.primary,
-            unselectedItemColor: Theme.of(context).colorScheme.onTertiary,
-            showUnselectedLabels: true,
-            items: items
-                .map((e) => MMateBottomNavigationBarItem(e).build(context))
-                .toList()));
+        height: bottomNavigationBarHeight,
+        child: ClipRRect(
+            child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  color: Theme.of(context).colorScheme.primaryContainer.withAlpha(220),
+                  padding: EdgeInsets.only(bottom: bottomPadding),
+                  child: Row(
+                      children: items
+                          .asMap()
+                          .entries
+                          .map((e) => Expanded(
+                              child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      borderRadius: AppConfig.borderRadius,
+                                      onTap: () => onTap(e.key),
+                                      child: MMateBottomNavigationBarItem(
+                                        e.value,
+                                        isClicked: currentIndex == e.key,
+                                      )))))
+                          .toList()),
+                ))));
   }
 }

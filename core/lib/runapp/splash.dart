@@ -59,10 +59,13 @@ class _Widget extends ConsumerState<MmateSplash>
         MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: isDarkMode ? Colors.black : Colors.white,
+      systemNavigationBarColor: Colors.transparent,
       systemNavigationBarIconBrightness:
           isDarkMode ? Brightness.light : Brightness.dark,
+        systemNavigationBarContrastEnforced: false,
     ));
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
 
   Future onLaunched() async {
@@ -97,14 +100,11 @@ class _Widget extends ConsumerState<MmateSplash>
     final bottomPadding = navigationHeight == 0 ? 48.0 : navigationHeight;
 
     return Scaffold(
+      extendBody: true,
       body: Center(
-        child: Container(
-          // color: Colors.blueGrey,
-          padding: EdgeInsets.only(top: bottomPadding),
-          child: Row(
+        child:  Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // 로고 애니메이션
               AnimatedBuilder(
                 animation: _logoAnimation,
                 builder: (context, child) {
@@ -134,7 +134,6 @@ class _Widget extends ConsumerState<MmateSplash>
             ],
           ),
         ),
-      ),
     );
   }
 }

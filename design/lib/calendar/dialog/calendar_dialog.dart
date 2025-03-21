@@ -1,7 +1,7 @@
 import 'package:design_system/text/text_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../table/calendar_table.dart';
+import '../table/table_calendar.dart';
 import '../table/table_calendar_utiles.dart';
 
 class CalendarDialog extends ConsumerStatefulWidget {
@@ -82,8 +82,6 @@ class _Widget extends ConsumerState<CalendarDialog> {
                 TableCalendar(
                   locale: 'ko_KR',
                   focusedDay: selectedDate,
-                  firstDay: DateTime(1900),
-                  lastDay: DateTime(2050, 12, 31),
                   onDaySelected: (selectedDay, _) {
                     setState(() {
                       setSelectedData = selectedDay;
