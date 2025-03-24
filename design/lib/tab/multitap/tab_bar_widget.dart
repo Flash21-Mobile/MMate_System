@@ -1,9 +1,8 @@
-import 'package:design_system/tab/tab_item.dart';
-import 'package:design_system/tab/tab_item_widget.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:design_system/tab/multitap/tab_item.dart';
+import 'package:design_system/tab/multitap/tab_item_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../config.dart';
+import '../../config.dart';
 
 class TabBarWidget extends StatefulWidget {
   final List<TabItem> tabItems;
@@ -65,7 +64,6 @@ class _Widget extends State<TabBarWidget> {
                     position: t);
 
                 return TabItemWidget(
-                  // todo d: 클릭 효과 둥글게
                   text: value.name,
                   backGroundColor: backgroundColor,
                   textColor: textColor,

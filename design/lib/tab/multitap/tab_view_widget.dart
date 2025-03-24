@@ -1,4 +1,4 @@
-import 'package:design_system/tab/tab_item.dart';
+import 'package:design_system/tab/multitap/tab_item.dart';
 import 'package:flutter/material.dart';
 
 class TabViewWidget extends StatelessWidget {

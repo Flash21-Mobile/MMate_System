@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../text/text_interface.dart';
+import '../../text/text_interface.dart';
 
 class TabItemWidget extends StatelessWidget {
   final String text;
