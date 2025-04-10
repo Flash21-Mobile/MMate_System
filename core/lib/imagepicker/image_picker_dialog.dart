@@ -5,16 +5,18 @@ import 'package:design_system/animate/ink_well.dart';
 import 'package:design_system/config.dart';
 import 'package:design_system/dialog/bottom_sheet_dialog.dart';
 import 'package:design_system/dialog/bottom_sheet_header_delegate.dart';
+import 'package:design_system/image/image.dart';
+import 'package:design_system/image/image_detail.dart';
 import 'package:design_system/text/text_interface.dart';
 import 'package:design_system/toast/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:function_system/domain/uri/uri_entity.dart';
 import 'package:function_system/utilities/navigation/navigation.dart';
-import 'package:function_system/utilities/toast.dart';
+import 'package:function_system/utilities/permission/permission.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
-
-import 'image_detail.dart';
+import 'package:path/path.dart' as p; // todo b: 이거 지워
 
 class ImagePickerDialog {
   final BuildContext context;
@@ -27,7 +29,12 @@ class ImagePickerDialog {
     this.maxLength = 8,
   });
 
-  Future<List<Uint8List>> show() async {
+  Future<List<UriEntity>> show() async {
+    final isGranted = await MMatePermission.photos();
+    if (isGranted == false) {
+      return [];
+    }
+
     final tempImage = (await showModalBottomSheet<List<AssetEntity>>(
             context: context,
             isScrollControlled: true,
@@ -54,14 +61,19 @@ class ImagePickerDialog {
             })) ??
         [];
 
-    final List<Uint8List> imageList = [];
+    final List<UriEntity> imageList = [];
     for (AssetEntity photo in tempImage) {
       Uint8List? imageData = await photo.thumbnailDataWithSize(
         const ThumbnailSize(720, 720),
         quality: 90, // 품질 설정
       );
+
+      final currentFile = await photo.file;
       if (imageData != null) {
-        imageList.add(imageData);
+        imageList.add(UriEntity(
+            data: imageData,
+            extension:
+                p.extension(currentFile?.path ?? '').replaceFirst('.', '')));
       }
     }
     return imageList;
@@ -163,10 +175,11 @@ class _Widget extends State<_ImagePickerScreen> {
 
     if (photo != null) {
       // 사진 찍은 후, 사진을 photos 목록에 추가하는 로직
-      final newAsset = await PhotoManager.editor.saveImage(File( photo.path).readAsBytesSync(), filename: photo.name);
+      final newAsset = await PhotoManager.editor
+          .saveImage(File(photo.path).readAsBytesSync(), filename: photo.name);
       setState(() {
         photos.insert(0, newAsset); // 그리드에서 첫 번째 위치에 새 사진 추가
-        toggleSelection(context,newAsset);
+        toggleSelection(context, newAsset);
       });
     }
   }
@@ -241,8 +254,13 @@ class _Widget extends State<_ImagePickerScreen> {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
                           return ImageDetail(
-                            asset,
-                            index: index - 1,
+                            null,
+                            '${index - 1}',
+                            imageWidget: AssetEntityImage(
+                              asset,
+                              isOriginal: false,
+                              fit: BoxFit.contain,
+                            ),
                           );
                         }));
                       });

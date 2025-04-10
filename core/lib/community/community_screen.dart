@@ -24,7 +24,7 @@ class _Screen extends ConsumerState<CommunityScreen>
     final boards = ref.read(boardProvider);
 
     _tabController =
-        TabController(length: (boards.boards ?? []).length, vsync: this);
+        TabController(length: (boards.data ?? []).length, vsync: this);
 
     _tabController.index = ref.read(articleTapProvider);
     _tabController.addListener(() {
@@ -44,7 +44,7 @@ class _Screen extends ConsumerState<CommunityScreen>
   Widget build(BuildContext context) {
     final boards = ref.read(boardProvider);
 
-    final tabs = boards.boards?.asMap().entries.map((entry) {
+    final tabs = boards.data?.asMap().entries.map((entry) {
       return TabItem(
           index: entry.key,
           name: entry.value.name,

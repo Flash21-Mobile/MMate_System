@@ -1,4 +1,4 @@
-import 'package:core_system/runapp/splash.dart';
+import 'package:core_system/splash/splash.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

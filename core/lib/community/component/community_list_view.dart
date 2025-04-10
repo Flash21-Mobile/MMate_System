@@ -1,7 +1,7 @@
 import 'package:design_system/config.dart';
 import 'package:design_system/listview/list_view_interface.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:function_system/domain/aricle/article_entity.dart';
+import 'package:function_system/domain/aricle/entity/article_entity.dart';
 
 class CommunityListView extends ListViewInterface<ArticleEntity> {
   const CommunityListView({

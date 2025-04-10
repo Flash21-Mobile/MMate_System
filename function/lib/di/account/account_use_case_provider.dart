@@ -19,9 +19,13 @@ final getAccountDetailUseCaseProvider =
 
 final putAccountUseCaseProvider = Provider<PutAccountUseCase>((ref) {
   final repository = ref.watch(accountRepositoryProvider);
-  final loginRepository = ref.watch(loginRepositoryProvider);
   final fileRepository = ref.watch(fileRepositoryProvider);
-  return PutAccountUseCase(repository, loginRepository, fileRepository);
+  return PutAccountUseCase(repository, fileRepository);
+});
+
+final postAccountUseCaseProvider = Provider<PostAccountUseCase>((ref) {
+  final repository = ref.watch(accountRepositoryProvider);
+  return PostAccountUseCase(repository);
 });
 
 final postAccountFavoriteUseCaseProvider =

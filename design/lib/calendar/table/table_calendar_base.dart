@@ -3,6 +3,7 @@
 
 import 'package:design_system/calendar/table/table_calendar_core.dart';
 import 'package:design_system/calendar/table/table_calendar_utiles.dart';
+import 'package:design_system/config.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
@@ -207,7 +208,7 @@ class _TableCalendarBaseState extends State<TableCalendarBase> {
                 curve: widget.formatAnimationCurve,
                 alignment: Alignment.topCenter,
                 child: SizedBox(
-                  height: height,
+                  height: height + (AppConfig.paddingIndex * 2),
                   child: child,
                 ),
               );

@@ -31,7 +31,7 @@ class MMateBottomNavigationBar extends StatelessWidget {
             child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer.withAlpha(220),
+                  color: Theme.of(context).colorScheme.primaryContainer.withAlpha(165),
                   padding: EdgeInsets.only(bottom: bottomPadding),
                   child: Row(
                       children: items

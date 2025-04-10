@@ -18,9 +18,19 @@ class _ArticleService implements ArticleService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<ArticleResponseDto>> getArticle({int? boardId, int? id}) async {
+  Future<List<ArticleResponseDto>> getArticle({
+    int? boardId,
+    int? accountId,
+    int? id,
+    String? title,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'board': boardId, r'id': id};
+    final queryParameters = <String, dynamic>{
+      r'board': boardId,
+      r'account': accountId,
+      r'id': id,
+      r'title': title,
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;

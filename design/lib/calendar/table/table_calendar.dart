@@ -4,6 +4,7 @@
 import 'dart:math';
 
 import 'package:design_system/calendar/table/table_calendar_event.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -42,12 +43,6 @@ class TableCalendar<T> extends StatefulWidget {
   ///
   /// If nothing is provided, a default locale will be used.
   final dynamic locale;
-
-  /// The start of the selected day range.
-  final DateTime? rangeStartDay;
-
-  /// The end of the selected day range.
-  final DateTime? rangeEndDay;
 
   /// DateTime that determines which days are currently visible and focused.
   final DateTime focusedDay;
@@ -174,20 +169,11 @@ class TableCalendar<T> extends StatefulWidget {
   /// Function deciding whether given day is treated as a holiday.
   final bool Function(DateTime day)? holidayPredicate;
 
-  /// Called whenever a day range gets selected.
-  final OnRangeSelected? onRangeSelected;
-
   /// Called whenever any day gets tapped.
   final OnDaySelected? onDaySelected;
 
-  /// Called whenever any day gets long pressed.
-  final OnDaySelected? onDayLongPressed;
-
   /// Called whenever any disabled day gets tapped.
   final void Function(DateTime day)? onDisabledDayTapped;
-
-  /// Called whenever any disabled day gets long pressed.
-  final void Function(DateTime day)? onDisabledDayLongPressed;
 
   /// Called whenever header gets long pressed.
   final void Function(DateTime focusedDay)? onHeaderLongPressed;
@@ -206,14 +192,22 @@ class TableCalendar<T> extends StatefulWidget {
 
   final bool canDuplicate;
 
+  final Alignment cellAlignment;
+
+  final Widget Function(
+    DateTime date,
+    bool isOpenDatePicker,
+    Function() onTapCalendarType,
+    Function() onTapPrevious,
+    Function() onTapNext,
+  )? customHeader;
+
   /// Creates a `TableCalendar` widget.
   TableCalendar({
     super.key,
     required DateTime focusedDay,
     DateTime? currentDay,
     this.locale,
-    this.rangeStartDay,
-    this.rangeEndDay,
     this.weekendDays = const [DateTime.saturday, DateTime.sunday],
     this.calendarFormat = CalendarFormat.month,
     this.availableCalendarFormats = const {
@@ -244,18 +238,17 @@ class TableCalendar<T> extends StatefulWidget {
     this.enabledDayPredicate,
     this.selectedDayPredicate,
     this.holidayPredicate,
-    this.onRangeSelected,
     this.onDaySelected,
-    this.onDayLongPressed,
     this.onDisabledDayTapped,
-    this.onDisabledDayLongPressed,
     this.onHeaderLongPressed,
     this.onPageChanged,
     this.onFormatChanged,
     this.onCalendarCreated,
     this.onTapHeaderYear,
     this.onTapHeaderMonth,
+    this.cellAlignment = Alignment.topCenter,
     this.canDuplicate = false,
+    this.customHeader,
   })  : assert(availableCalendarFormats.keys.contains(calendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(
@@ -276,14 +269,13 @@ class TableCalendar<T> extends StatefulWidget {
 class _TableCalendarState<T> extends State<TableCalendar<T>> {
   late final PageController _pageController;
   ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
-  late RangeSelectionMode _rangeSelectionMode;
-  DateTime? _firstSelectedDay;
+
+  final _isOpenDatePicker = ValueNotifier(false);
 
   @override
   void initState() {
     super.initState();
     _focusedDay = ValueNotifier(widget.focusedDay);
-    _rangeSelectionMode = widget.rangeSelectionMode;
   }
 
   @override
@@ -293,14 +285,6 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     if (_focusedDay.value != widget.focusedDay) {
       _focusedDay.value = widget.focusedDay;
     }
-
-    if (_rangeSelectionMode != widget.rangeSelectionMode) {
-      _rangeSelectionMode = widget.rangeSelectionMode;
-    }
-
-    if (widget.rangeStartDay == null && widget.rangeEndDay == null) {
-      _firstSelectedDay = null;
-    }
   }
 
   @override
@@ -308,14 +292,6 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     _focusedDay.dispose();
     super.dispose();
   }
-
-  bool get _isRangeSelectionToggleable =>
-      _rangeSelectionMode == RangeSelectionMode.toggledOn ||
-      _rangeSelectionMode == RangeSelectionMode.toggledOff;
-
-  bool get _isRangeSelectionOn =>
-      _rangeSelectionMode == RangeSelectionMode.toggledOn ||
-      _rangeSelectionMode == RangeSelectionMode.enforced;
 
   bool get _shouldBlockOutsideDays =>
       !widget.calendarStyle.outsideDaysVisible &&
@@ -352,53 +328,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
     _updateFocusOnTap(day);
 
-    if (_isRangeSelectionOn && widget.onRangeSelected != null) {
-      if (_firstSelectedDay == null) {
-        _firstSelectedDay = day;
-        widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
-      } else {
-        if (day.isAfter(_firstSelectedDay!)) {
-          widget.onRangeSelected!(_firstSelectedDay, day, _focusedDay.value);
-          _firstSelectedDay = null;
-        } else if (day.isBefore(_firstSelectedDay!)) {
-          widget.onRangeSelected!(day, _firstSelectedDay, _focusedDay.value);
-          _firstSelectedDay = null;
-        }
-      }
-    } else {
-      widget.onDaySelected?.call(day, _focusedDay.value);
-    }
-  }
-
-  void _onDayLongPressed(DateTime day) {
-    final isOutside = day.month != _focusedDay.value.month;
-    if (isOutside && _shouldBlockOutsideDays) {
-      return;
-    }
-
-    if (_isDayDisabled(day)) {
-      return widget.onDisabledDayLongPressed?.call(day);
-    }
-
-    if (widget.onDayLongPressed != null) {
-      _updateFocusOnTap(day);
-      return widget.onDayLongPressed!(day, _focusedDay.value);
-    }
-
-    if (widget.onRangeSelected != null) {
-      if (_isRangeSelectionToggleable) {
-        _updateFocusOnTap(day);
-        _toggleRangeSelection();
-
-        if (_isRangeSelectionOn) {
-          _firstSelectedDay = day;
-          widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
-        } else {
-          _firstSelectedDay = null;
-          widget.onDaySelected?.call(day, _focusedDay.value);
-        }
-      }
-    }
+    widget.onDaySelected?.call(day, _focusedDay.value);
   }
 
   void _updateFocusOnTap(DateTime day) {
@@ -415,14 +345,6 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     }
   }
 
-  void _toggleRangeSelection() {
-    if (_rangeSelectionMode == RangeSelectionMode.toggledOn) {
-      _rangeSelectionMode = RangeSelectionMode.toggledOff;
-    } else {
-      _rangeSelectionMode = RangeSelectionMode.toggledOn;
-    }
-  }
-
   void _onLeftChevronTap() {
     _pageController.previousPage(
       duration: widget.pageAnimationDuration,
@@ -435,6 +357,10 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
       duration: widget.pageAnimationDuration,
       curve: widget.pageAnimationCurve,
     );
+  }
+
+  void _onTapCalendarType() {
+    _isOpenDatePicker.value = !_isOpenDatePicker.value;
   }
 
   final defaultWeekNumber = CalendarBuilders(
@@ -455,155 +381,323 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 10),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Material(
-              color: Colors.transparent,
-              child: InkWell(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-                  onTap: () => _onLeftChevronTap())),
-          SizedBox(
-              width: MediaQuery.of(context).size.width / 3,
-              child:
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                        onTap: () {
-                          (widget.onTapHeaderYear ?? () {})(_focusedDay.value);
-                        },
-                        borderRadius: BorderRadius.circular(100),
-                        child: IndexTextMax(
-                          '${_focusedDay.value.year}',
-                          fontWeight: FontWeight.bold,
-                        ))),
-                IndexTextMax('.', fontWeight: FontWeight.bold),
-                SizedBox(width: 5),
-                Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(100),
-                        onTap: () {
-                          (widget.onTapHeaderMonth ?? () {})(_focusedDay.value);
-                        },
-                        child: Container(
-                            alignment: Alignment.center,
-                            child: IndexTextMax(
-                              '${_focusedDay.value.month}',
-                              fontWeight: FontWeight.bold,
-                            )))),
-                IndexTextMax('.', fontWeight: FontWeight.bold),
-                SizedBox(width: 5),
-                Container(
-                    alignment: Alignment.center,
-                    child: IndexTextMax(
-                      '${_focusedDay.value.day}',
-                      fontWeight: FontWeight.bold,
-                    )),
-              ])),
-          Material(
-              color: Colors.transparent,
-              child: InkWell(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Icon(Icons.arrow_forward_ios_rounded, size: 20),
-                  onTap: () => _onRightChevronTap())),
-        ]),
-        SizedBox(
-          height: 15,
-        ),
-        Flexible(
-          flex: 0,
-          child: TableCalendarBase(
-            onCalendarCreated: (pageController) {
-              _pageController = pageController;
-              widget.onCalendarCreated?.call(pageController);
-            },
-            focusedDay: _focusedDay.value,
-            calendarFormat: widget.calendarFormat,
-            availableGestures: widget.availableGestures,
-            firstDay: widget.firstDay,
-            lastDay: widget.lastDay,
-            startingDayOfWeek: widget.startingDayOfWeek,
-            dowDecoration: widget.daysOfWeekStyle.decoration,
-            rowDecoration: widget.calendarStyle.rowDecoration,
-            tableBorder: widget.calendarStyle.tableBorder,
-            tablePadding: widget.calendarStyle.tablePadding,
-            dowVisible: widget.daysOfWeekVisible,
-            dowHeight: widget.daysOfWeekHeight,
-            rowHeight: widget.rowHeight,
-            formatAnimationDuration: widget.formatAnimationDuration,
-            formatAnimationCurve: widget.formatAnimationCurve,
-            pageAnimationEnabled: widget.pageAnimationEnabled,
-            pageAnimationDuration: widget.pageAnimationDuration,
-            pageAnimationCurve: widget.pageAnimationCurve,
-            availableCalendarFormats: widget.availableCalendarFormats,
-            simpleSwipeConfig: widget.simpleSwipeConfig,
-            sixWeekMonthsEnforced: false,
-            onVerticalSwipe: _swipeCalendarFormat,
-            onPageChanged: (focusedDay) {
-              _focusedDay.value = focusedDay;
-              widget.onPageChanged?.call(focusedDay);
-            },
-            weekNumbersVisible: false,
-            weekNumberBuilder: (BuildContext context, DateTime day) {
-              final weekNumber = _calculateWeekNumber(day);
-              final cell = (widget.calendarBuilders ?? defaultWeekNumber)
-                  .weekNumberBuilder
-                  ?.call(context, weekNumber);
+    return ValueListenableBuilder(
+        valueListenable: _isOpenDatePicker,
+        builder: (_, value, __) {
+          return Column(
+            children: [
+              SizedBox(height: AppConfig.paddingIndex),
+              widget.customHeader != null
+                  ? widget.customHeader!(
+                      _focusedDay.value,
+                      _isOpenDatePicker.value,
+                      _onTapCalendarType,
+                      _onLeftChevronTap,
+                      _onRightChevronTap,
+                    )
+                  : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Icon(Icons.arrow_back_ios_new_rounded,
+                                  size: 20),
+                              onTap: () => _onLeftChevronTap())),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width / 3,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                        onTap: () {
+                                          (widget.onTapHeaderYear ??
+                                              () {})(_focusedDay.value);
+                                        },
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: IndexTextMax(
+                                          '${_focusedDay.value.year}',
+                                          fontWeight: FontWeight.bold,
+                                        ))),
+                                IndexTextMax('.', fontWeight: FontWeight.bold),
+                                SizedBox(width: 5),
+                                Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        onTap: () {
+                                          (widget.onTapHeaderMonth ??
+                                              () {})(_focusedDay.value);
+                                        },
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            child: IndexTextMax(
+                                              '${_focusedDay.value.month}',
+                                              fontWeight: FontWeight.bold,
+                                            )))),
+                                IndexTextMax('.', fontWeight: FontWeight.bold),
+                                SizedBox(width: 5),
+                                Container(
+                                    alignment: Alignment.center,
+                                    child: IndexTextMax(
+                                      '${_focusedDay.value.day}',
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ])),
+                      Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 20),
+                              onTap: () => _onRightChevronTap())),
+                    ]),
+              SizedBox(
+                height: 15,
+              ),
+              Flexible(
+                  flex: 0,
+                  child: Stack(children: [
+                    TableCalendarBase(
+                      onCalendarCreated: (pageController) {
+                        _pageController = pageController;
+                        widget.onCalendarCreated?.call(pageController);
+                      },
+                      focusedDay: _focusedDay.value,
+                      calendarFormat: widget.calendarFormat,
+                      availableGestures: widget.availableGestures,
+                      firstDay: widget.firstDay,
+                      lastDay: widget.lastDay,
+                      startingDayOfWeek: widget.startingDayOfWeek,
+                      dowDecoration: widget.daysOfWeekStyle.decoration,
+                      rowDecoration: widget.calendarStyle.rowDecoration,
+                      tableBorder: widget.calendarStyle.tableBorder,
+                      tablePadding: widget.calendarStyle.tablePadding,
+                      dowVisible: widget.daysOfWeekVisible,
+                      dowHeight: widget.daysOfWeekHeight,
+                      rowHeight: widget.rowHeight,
+                      formatAnimationDuration: widget.formatAnimationDuration,
+                      formatAnimationCurve: widget.formatAnimationCurve,
+                      pageAnimationEnabled: widget.pageAnimationEnabled,
+                      pageAnimationDuration: widget.pageAnimationDuration,
+                      pageAnimationCurve: widget.pageAnimationCurve,
+                      availableCalendarFormats: widget.availableCalendarFormats,
+                      simpleSwipeConfig: widget.simpleSwipeConfig,
+                      sixWeekMonthsEnforced: false,
+                      onVerticalSwipe: _swipeCalendarFormat,
+                      onPageChanged: (focusedDay) {
+                        _focusedDay.value = focusedDay;
+                        widget.onPageChanged?.call(focusedDay);
+                      },
+                      weekNumbersVisible: false,
+                      weekNumberBuilder: (BuildContext context, DateTime day) {
+                        final weekNumber = _calculateWeekNumber(day);
+                        final cell =
+                            (widget.calendarBuilders ?? defaultWeekNumber)
+                                .weekNumberBuilder
+                                ?.call(context, weekNumber);
 
-              return cell ??
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Center(
-                      child: Text(
-                        weekNumber.toString(),
-                        style: widget.calendarStyle.weekNumberTextStyle,
-                      ),
+                        return cell ??
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4),
+                              child: Center(
+                                child: Text(
+                                  weekNumber.toString(),
+                                  style:
+                                      widget.calendarStyle.weekNumberTextStyle,
+                                ),
+                              ),
+                            );
+                      },
+                      dowBuilder: (BuildContext context, DateTime day) {
+                        Widget? dowCell =
+                            (widget.calendarBuilders ?? defaultWeekNumber)
+                                .dowBuilder
+                                ?.call(context, day);
+
+                        if (dowCell == null) {
+                          final weekdayString = widget
+                                  .daysOfWeekStyle.dowTextFormatter
+                                  ?.call(day, widget.locale) ??
+                              DateFormat.E(widget.locale).format(day);
+
+                          final isWeekend =
+                              _isWeekend(day, weekendDays: widget.weekendDays);
+
+                          dowCell = Center(
+                            child: ExcludeSemantics(
+                              child: Text(
+                                weekdayString,
+                                style: isWeekend
+                                    ? widget.daysOfWeekStyle.weekendStyle
+                                    : widget.daysOfWeekStyle.weekdayStyle,
+                              ),
+                            ),
+                          );
+                        }
+
+                        return dowCell;
+                      },
+                      dayBuilder: (context, day, focusedMonth) {
+                        return GestureDetector(
+                          behavior: widget.dayHitTestBehavior,
+                          onTap: () => _onDayTapped(day),
+                          child: _buildCell(day, focusedMonth),
+                        );
+                      },
                     ),
-                  );
-            },
-            dowBuilder: (BuildContext context, DateTime day) {
-              Widget? dowCell = (widget.calendarBuilders ?? defaultWeekNumber)
-                  .dowBuilder
-                  ?.call(context, day);
+                    ValueListenableBuilder<bool>(
+                      valueListenable: _isOpenDatePicker,
+                      builder: (_, value, __) {
+                        return value
+                            ? Positioned.fill(
+                                child: Container(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                    padding: AppConfig.padding,
+                                    child: LayoutBuilder(
+                                        builder: (context, constraints) {
+                                      List<int> years = List.generate(
+                                          2101 - 1900, (index) => 1900 + index);
 
-              if (dowCell == null) {
-                final weekdayString = widget.daysOfWeekStyle.dowTextFormatter
-                        ?.call(day, widget.locale) ??
-                    DateFormat.E(widget.locale).format(day);
+                                      List<int> months = List.generate(
+                                          12, (index) => index + 1);
 
-                final isWeekend =
-                    _isWeekend(day, weekendDays: widget.weekendDays);
+                                      final yearScrollController =
+                                          FixedExtentScrollController(
+                                              initialItem: years.indexOf(
+                                                  _focusedDay.value.year));
 
-                dowCell = Center(
-                  child: ExcludeSemantics(
-                    child: Text(
-                      weekdayString,
-                      style: isWeekend
-                          ? widget.daysOfWeekStyle.weekendStyle
-                          : widget.daysOfWeekStyle.weekdayStyle,
-                    ),
-                  ),
-                );
-              }
+                                      final monthScrollController =
+                                          FixedExtentScrollController(
+                                              initialItem: months.indexOf(
+                                                  _focusedDay.value.month));
 
-              return dowCell;
-            },
-            dayBuilder: (context, day, focusedMonth) {
-              return GestureDetector(
-                behavior: widget.dayHitTestBehavior,
-                onTap: () => _onDayTapped(day),
-                onLongPress: () => _onDayLongPressed(day),
-                child: _buildCell(day, focusedMonth),
-              );
-            },
-          ),
-        ),
-      ],
-    );
+                                      return NotificationListener<
+                                              ScrollEndNotification>(
+                                          onNotification: (notification) {
+                                            final yearIndex =
+                                                yearScrollController
+                                                    .selectedItem;
+                                            final monthIndex =
+                                                monthScrollController
+                                                    .selectedItem;
+                                            final date = DateTime(
+                                              years[yearIndex],
+                                              months[monthIndex],
+                                              _focusedDay.value.day,
+                                            );
+                                            _onDayTapped(date);
+                                            return true;
+                                          },
+                                          child: Row(children: [
+                                            SizedBox(
+                                                height: constraints.maxHeight /
+                                                    3 *
+                                                    2,
+                                                width: constraints.maxWidth / 2,
+                                                child: CupertinoPicker(
+                                                    offAxisFraction: -0.43,
+                                                    itemExtent: 30.0,
+                                                    selectionOverlay: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .tertiary
+                                                                    .withAlpha(
+                                                                        100),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          5),
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          5),
+                                                                ))),
+                                                    scrollController:
+                                                        yearScrollController,
+                                                    onSelectedItemChanged:
+                                                        (index) {},
+                                                    children: years.map((e) {
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          right: AppConfig
+                                                                  .paddingIndex /
+                                                              2,
+                                                        ),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerRight,
+                                                          child: IndexTextThumb(
+                                                              '$e년'),
+                                                        ),
+                                                      );
+                                                    }).toList())),
+                                            SizedBox(
+                                                height: constraints.maxHeight /
+                                                    3 *
+                                                    2,
+                                                width: constraints.maxWidth / 2,
+                                                child: CupertinoPicker(
+                                                    offAxisFraction: 0.43,
+                                                    itemExtent: 30.0,
+                                                    selectionOverlay: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .tertiary
+                                                                    .withAlpha(
+                                                                        100),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .only(
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          5),
+                                                                  bottomRight: Radius
+                                                                      .circular(
+                                                                          5),
+                                                                ))),
+                                                    scrollController:
+                                                        monthScrollController,
+                                                    onSelectedItemChanged:
+                                                        (index) {},
+                                                    children: months.map((e) {
+                                                      return Padding(
+                                                        padding: EdgeInsets.only(
+                                                            left: AppConfig
+                                                                    .paddingIndex /
+                                                                2),
+                                                        // 텍스트를 오른쪽으로 좀 더 붙이기
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: IndexTextThumb(
+                                                              '$e월'),
+                                                        ),
+                                                      );
+                                                    }).toList()))
+                                          ]));
+                                    })))
+                            : SizedBox();
+                      },
+                    )
+                  ]))
+            ],
+          );
+        });
   }
 
   Widget _buildCell(DateTime day, DateTime focusedDay) {
@@ -621,38 +715,6 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
         final children = <Widget>[];
 
-        final isWithinRange = widget.rangeStartDay != null &&
-            widget.rangeEndDay != null &&
-            _isWithinRange(day, widget.rangeStartDay!, widget.rangeEndDay!);
-
-        final isRangeStart = isSameDay(day, widget.rangeStartDay);
-        final isRangeEnd = isSameDay(day, widget.rangeEndDay);
-
-        Widget? rangeHighlight = (widget.calendarBuilders ?? defaultWeekNumber)
-            .rangeHighlightBuilder
-            ?.call(context, day, isWithinRange);
-
-        if (rangeHighlight == null) {
-          if (isWithinRange) {
-            rangeHighlight = Center(
-              child: Container(
-                margin: EdgeInsetsDirectional.only(
-                  start: isRangeStart ? constraints.maxWidth * 0.5 : 0.0,
-                  end: isRangeEnd ? constraints.maxWidth * 0.5 : 0.0,
-                ),
-                height:
-                    (shorterSide - widget.calendarStyle.cellMargin.vertical) *
-                        widget.calendarStyle.rangeHighlightScale,
-                color: widget.calendarStyle.rangeHighlightColor,
-              ),
-            );
-          }
-        }
-
-        if (rangeHighlight != null) {
-          children.add(rangeHighlight);
-        }
-
         final isToday = isSameDay(day, widget.currentDay);
         final isDisabled = _isDayDisabled(day);
         final isWeekend = _isWeekend(day, weekendDays: widget.weekendDays);
@@ -661,14 +723,12 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           key: ValueKey('CellContent-${day.year}-${day.month}-${day.day}'),
           day: day,
           focusedDay: focusedDay,
+          cellAlignment: widget.cellAlignment,
           calendarStyle: widget.calendarStyle,
           calendarBuilders: widget.calendarBuilders ?? defaultWeekNumber,
           isTodayHighlighted: widget.calendarStyle.isTodayHighlighted,
           isToday: isToday,
           isSelected: widget.selectedDayPredicate?.call(day) ?? false,
-          isRangeStart: isRangeStart,
-          isRangeEnd: isRangeEnd,
-          isWithinRange: isWithinRange,
           isOutside: isOutside,
           isDisabled: isDisabled,
           isWeekend: isWeekend,
@@ -689,58 +749,54 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
               ?.call(context, day);
 
           if (events.isNotEmpty && markerWidget == null) {
-            final center = constraints.maxHeight / 2;
-
             final markerSize = widget.calendarStyle.markerSize ??
                 (shorterSide - widget.calendarStyle.cellMargin.vertical) *
                     widget.calendarStyle.markerSizeScale;
 
-            final markerAutoAlignmentTop = center +
-                (shorterSide - widget.calendarStyle.cellMargin.vertical) / 2 -
-                (markerSize * widget.calendarStyle.markersAnchor);
-
-            markerWidget = PositionedDirectional(
-              top: widget.calendarStyle.markersAutoAligned
-                  ? markerAutoAlignmentTop
-                  : widget.calendarStyle.markersOffset.top,
-              bottom: widget.calendarStyle.markersAutoAligned
-                  ? null
-                  : widget.calendarStyle.markersOffset.bottom,
-              start: widget.calendarStyle.markersAutoAligned
-                  ? null
-                  : widget.calendarStyle.markersOffset.start,
-              end: widget.calendarStyle.markersAutoAligned
-                  ? null
-                  : widget.calendarStyle.markersOffset.end,
-              child: Row(
-                  children: events.isNotEmpty
-                      ? widget.canDuplicate
-                          ? events.length < 2
-                              ? [_buildSingleMarker(day, markerSize)]
-                              : [
-                                  _buildSingleMarker(day, markerSize),
-                                  SizedBox(width: 3),
-                                  IndexTextMin('+${events.length - 1}')
-                                ]
-                          : [
-                              Container(
-                                width: constraints.maxHeight / 5 * 4,
-                                margin: EdgeInsets.only(top: 2),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: events.first.color,
-                                  borderRadius: AppConfig.borderRadius,
-                                ),
-                                child: IndexTextMicro(
-                                  height: 1.3,
-                                  events.first.label,
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
-                              )
-                            ]
-                      : []),
-            );
+            markerWidget = Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: events.isNotEmpty
+                    ? widget.canDuplicate
+                        ? events.length < 2
+                            ? [_buildSingleMarker(day, markerSize)]
+                            : [
+                                _buildSingleMarker(day, markerSize),
+                                SizedBox(width: 3),
+                                IndexTextMin('+${events.length - 1}')
+                              ]
+                        : [
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IndexTextMicro(
+                                    events.first.labelIndex,
+                                    fontWeight: FontWeight.w500,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    height: 1.1,
+                                  ),
+                                  Container(
+                                      // height: 10,
+                                      width: constraints.maxHeight / 5 * 3,
+                                      margin: EdgeInsets.only(bottom: 3),
+                                      decoration: BoxDecoration(
+                                        color: events.first.color,
+                                        borderRadius: AppConfig.borderRadius,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          IndexTextMicro(
+                                            height: 1.3,
+                                            events.first.label,
+                                            color: events.first.textColor,
+                                          ),
+                                        ],
+                                      ))
+                                ])
+                          ]
+                    : []);
           }
 
           if (markerWidget != null) {
@@ -780,18 +836,6 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
   int _dayOfYear(DateTime date) {
     return normalizeDate(date).difference(DateTime.utc(date.year)).inDays + 1;
-  }
-
-  bool _isWithinRange(DateTime day, DateTime start, DateTime end) {
-    if (isSameDay(day, start) || isSameDay(day, end)) {
-      return true;
-    }
-
-    if (day.isAfter(start) && day.isBefore(end)) {
-      return true;
-    }
-
-    return false;
   }
 
   bool _isDayDisabled(DateTime day) {

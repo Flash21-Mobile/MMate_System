@@ -1,16 +1,6 @@
-class DateFormat {
-  static String? formatDateTimeToFeatureDate(DateTime? dateTime) {
-    if(dateTime ==null){
-      return null;
-    }
-    var result = [
-      if (dateTime?.year != null) dateTime?.year,
-      if (dateTime?.month != null) dateTime?.month.toString().padLeft(2, '0'),
-      if (dateTime?.day != null) dateTime?.day.toString().padLeft(2, '0'),
-    ].join('.');
-    return result;
-  }
+import 'package:intl/intl.dart';
 
+class MMateDateFormat {
   static DateTime? formatFeatureDateToDateTime(String dateString) {
     try {
       List<String> parts = dateString.split('.');
@@ -22,13 +12,8 @@ class DateFormat {
 
       return DateTime(year, month, day);
     } catch (e) {
-      return null; // 변환 중 오류 발생 시 null 반환
+      return null;
     }
-  }
-
-  static String formatDateTimeToFeatureTime(DateTime? dateTime) {
-    var result = "${dateTime?.hour}:${dateTime?.minute}";
-    return result;
   }
 
   static DateTime? formatStringToDateTime(String? dateTime) {
@@ -39,13 +24,12 @@ class DateFormat {
     }
   }
 
-  static String formatDateTimeToServer(DateTime dateTime) {
-    return dateTime.toIso8601String().split('Z').first; // UTC 표시(Z) 제거
-  }
-
-  static bool dateComparator(DateTime aDate, DateTime bDate) {
-    return aDate.year == bDate.year &&
-        aDate.month == bDate.month &&
-        aDate.day == bDate.day;
+  static DateTime? formatFeatureDateType4ToDateTime(String? input) {
+    if (input == null || input.length != 6) return null;
+    try {
+      return DateTime.parse('20${input}');
+    } catch (e) {
+      return null;
+    }
   }
 }

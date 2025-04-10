@@ -15,14 +15,3 @@ final signInUseCaseProvider = Provider<SignInUseCase>((ref) {
     fcmRepository,
   );
 });
-
-final signInWithNameUseCaseProvider = Provider<SignInWithNameUseCase>((ref) {
-  final repository = ref.watch(signRepositoryProvider);
-  final loginRepository = ref.watch(loginRepositoryProvider);
-  final fcmRepository = ref.watch(fcmRepositoryProvider);
-  return SignInWithNameUseCase(
-    repository,
-    loginRepository,
-    fcmRepository,
-  );
-});

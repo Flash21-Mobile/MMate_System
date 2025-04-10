@@ -7,4 +7,6 @@ class MMateException {
 
   static final noData = 'NO_DATA';
   static final cannotFormat = 'CANNOT_FORMAT';
+
+  static final noDataOnMyAccount = "NO_DATA_ON_MY_ACCOUNT";
 }

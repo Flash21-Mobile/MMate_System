@@ -1,6 +1,6 @@
 Resolving dependencies...
 Downloading packages...
-  archive 4.0.3 (4.0.4 available)
+  archive 4.0.3 (4.0.5 available)
   args 2.6.0 (2.7.0 available)
   async 2.11.0 (2.13.0 available)
   boolean_selector 2.1.1 (2.1.2 available)
@@ -8,21 +8,27 @@ Downloading packages...
   clock 1.1.1 (1.1.2 available)
   dio_web_adapter 2.1.0 (2.1.1 available)
   ffi 2.1.3 (2.1.4 available)
-  file_picker 9.0.1 (9.2.0 available)
+  file_picker 9.0.1 (10.0.0 available)
   flutter_plugin_android_lifecycle 2.0.24 (2.0.27 available)
   flutter_secure_storage_linux 1.2.2 (2.0.1 available)
   flutter_secure_storage_macos 3.1.3 (4.0.0 available)
   flutter_secure_storage_platform_interface 1.1.2 (2.0.1 available)
   flutter_secure_storage_web 1.2.1 (2.0.0 available)
   flutter_secure_storage_windows 3.1.2 (4.0.0 available)
+  freezed 3.0.4 (3.0.6 available)
+  image 4.5.3 (4.5.4 available)
+  intl 0.19.0 (0.20.2 available)
   js 0.6.7 (0.7.2 available)
   matcher 0.12.16+1 (0.12.17 available)
   material_color_utilities 0.11.1 (0.12.0 available)
   package_config 2.1.1 (2.2.0 available)
   path 1.9.0 (1.9.1 available)
   path_provider_android 2.2.15 (2.2.16 available)
+  permission_handler_android 12.1.0 (13.0.1 available)
   petitparser 6.0.2 (6.1.0 available)
+  protobuf 3.1.0 (4.0.0 available)
   pub_semver 2.1.5 (2.2.0 available)
+  shared_preferences 2.5.2 (2.5.3 available)
   shared_preferences_android 2.4.6 (2.4.8 available)
   source_span 1.10.0 (1.10.1 available)
   stack_trace 1.12.0 (1.12.1 available)
@@ -30,8 +36,9 @@ Downloading packages...
   string_scanner 1.3.0 (1.4.1 available)
   term_glyph 1.2.1 (1.2.2 available)
   test_api 0.7.3 (0.7.4 available)
+  url_launcher_ios 6.3.2 (6.3.3 available)
   web 1.1.0 (1.1.1 available)
   win32 5.10.1 (5.12.0 available)
 Got dependencies!
-32 packages have newer versions incompatible with dependency constraints.
+39 packages have newer versions incompatible with dependency constraints.
 Try `flutter pub outdated` for more information.

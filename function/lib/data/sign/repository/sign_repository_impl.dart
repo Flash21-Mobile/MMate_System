@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:function_system/data/sign/request/sign_request_dto.dart';
 import 'package:function_system/data/sign/service/sign_service.dart';
+import 'package:function_system/utilities/exception/exceoption.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'sign_repository.dart';
@@ -55,7 +56,7 @@ class SignRepositoryImpl extends SignRepository {
     final preferences = await SharedPreferences.getInstance();
     try {
       if (Platform.isAndroid) {
-        const androidChannel = MethodChannel('com.resoft.chunggu/android');
+        const androidChannel = MethodChannel('com.flash21.mmate/android');
 
         var cellphoneNum = await androidChannel.invokeMethod('getCellphone');
         if (cellphoneNum != null && cellphoneNum is String) {
@@ -78,7 +79,7 @@ class SignRepositoryImpl extends SignRepository {
         preferences.setBool(PrefKey.isNotFirst, true);
       }
 
-      throw 'Not Found Cellphone';
+      throw MMateException.noData;
     } catch (e) {
       rethrow;
     }

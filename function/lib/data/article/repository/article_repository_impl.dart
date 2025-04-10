@@ -2,9 +2,7 @@ import 'package:function_system/data/article/request/article_request_dto.dart';
 import 'package:function_system/data/article/response/article_response_dto.dart';
 import 'package:function_system/data/article/service/article_service.dart';
 
-import '../../../domain/aricle/article_entity.dart';
 import 'article_repository.dart';
-import '../../../utilities/date_format.dart';
 
 class ArticleRepositoryImpl extends ArticleRepository {
   final ArticleService service;
@@ -14,10 +12,17 @@ class ArticleRepositoryImpl extends ArticleRepository {
   @override
   Future<List<ArticleResponseDto>> getArticleList({
     int? boardPk,
+    int? accountPk,
     int? id,
+    String? title,
   }) async {
     try {
-      final result = await service.getArticle(boardId: boardPk, id: id);
+      final result = await service.getArticle(
+        boardId: boardPk,
+        accountId: accountPk,
+        title: title,
+        id: id,
+      );
       return result;
     } catch (e) {
       rethrow;

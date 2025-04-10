@@ -1,5 +1,6 @@
 import 'package:design_system/calendar/table/table_calendar_page.dart';
 import 'package:design_system/calendar/table/table_calendar_utiles.dart';
+import 'package:design_system/config.dart';
 import 'package:flutter/material.dart';
 
 class CalendarCore extends StatelessWidget {
@@ -66,46 +67,51 @@ class CalendarCore extends StatelessWidget {
         final actualDowHeight = dowVisible ? dowHeight! : 0.0;
         final constrainedRowHeight = constraints.hasBoundedHeight
             ? (constraints.maxHeight - actualDowHeight) /
-            _getRowCount(calendarFormat, baseDay)
+                _getRowCount(calendarFormat, baseDay)
             : null;
 
-        return CalendarPage(
-          visibleDays: visibleDays,
-          dowVisible: dowVisible,
-          dowDecoration: dowDecoration,
-          rowDecoration: rowDecoration,
-          tableBorder: tableBorder,
-          tablePadding: tablePadding,
-          dowBuilder: (context, day) {
-            return SizedBox(
-              height: dowHeight,
-              child: dowBuilder?.call(context, day),
-            );
-          },
-          dayBuilder: (context, day) {
-            DateTime baseDay;
-            final previousFocusedDay = focusedDay;
-            if (previousFocusedDay == null || previousIndex == null) {
-              baseDay = _getBaseDay(calendarFormat, index);
-            } else {
-              baseDay =
-                  _getFocusedDay(calendarFormat, previousFocusedDay, index);
-            }
+        return Container(
+            padding: EdgeInsets.only(
+              left: AppConfig.paddingIndex,
+              right: AppConfig.paddingIndex,
+            ),
+            child: CalendarPage(
+              visibleDays: visibleDays,
+              dowVisible: dowVisible,
+              dowDecoration: dowDecoration,
+              rowDecoration: rowDecoration,
+              tableBorder: tableBorder,
+              tablePadding: tablePadding,
+              dowBuilder: (context, day) {
+                return SizedBox(
+                  height: dowHeight,
+                  child: dowBuilder?.call(context, day),
+                );
+              },
+              dayBuilder: (context, day) {
+                DateTime baseDay;
+                final previousFocusedDay = focusedDay;
+                if (previousFocusedDay == null || previousIndex == null) {
+                  baseDay = _getBaseDay(calendarFormat, index);
+                } else {
+                  baseDay =
+                      _getFocusedDay(calendarFormat, previousFocusedDay, index);
+                }
 
-            return SizedBox(
-              height: constrainedRowHeight ?? rowHeight,
-              child: dayBuilder(context, day, baseDay),
-            );
-          },
-          dowHeight: dowHeight,
-          weekNumberVisible: weekNumbersVisible,
-          weekNumberBuilder: (context, day) {
-            return SizedBox(
-              height: constrainedRowHeight ?? rowHeight,
-              child: weekNumberBuilder?.call(context, day),
-            );
-          },
-        );
+                return SizedBox(
+                  height: constrainedRowHeight ?? rowHeight,
+                  child: dayBuilder(context, day, baseDay),
+                );
+              },
+              dowHeight: dowHeight,
+              weekNumberVisible: weekNumbersVisible,
+              weekNumberBuilder: (context, day) {
+                return SizedBox(
+                  height: constrainedRowHeight ?? rowHeight,
+                  child: weekNumberBuilder?.call(context, day),
+                );
+              },
+            ));
       },
       onPageChanged: (index) {
         DateTime baseDay;
@@ -148,10 +154,10 @@ class CalendarCore extends StatelessWidget {
   }
 
   DateTime _getFocusedDay(
-      CalendarFormat format,
-      DateTime prevFocusedDay,
-      int pageIndex,
-      ) {
+    CalendarFormat format,
+    DateTime prevFocusedDay,
+    int pageIndex,
+  ) {
     if (pageIndex == previousIndex) {
       return prevFocusedDay;
     }
@@ -260,7 +266,7 @@ class CalendarCore extends StatelessWidget {
     final dayCount = last.difference(first).inDays + 1;
     return List.generate(
       dayCount,
-          (index) => DateTime.utc(first.year, first.month, first.day + index),
+      (index) => DateTime.utc(first.year, first.month, first.day + index),
     );
   }
 

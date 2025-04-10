@@ -10,7 +10,9 @@ abstract class AccountRepository {
     String? cellphone,
   });
 
-  Future<AccountResponseDto> putAccount(int id,AccountRequestDto dto);
+  Future<AccountResponseDto> putAccount(int id, AccountRequestDto dto);
+
+  Future postAccount(AccountRequestDto dto);
 
   // 즐겨찾기
   Future<List<int>> getAccountFavorites();

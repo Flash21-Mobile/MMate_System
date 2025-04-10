@@ -14,6 +14,7 @@ class MMateImage extends ConsumerWidget {
   final Alignment alignment;
   final bool enableToDetail;
   final String? heroTag;
+  final Color? color;
 
   const MMateImage(
     this.data, {
@@ -24,6 +25,7 @@ class MMateImage extends ConsumerWidget {
     this.alignment = Alignment.center,
     this.enableToDetail = false,
     this.heroTag,
+    this.color,
   });
 
   @override
@@ -34,7 +36,7 @@ class MMateImage extends ConsumerWidget {
 
     Widget currentWidget = SizedBox();
 
-    if(enableToDetail && heroTag == null){
+    if (enableToDetail && heroTag == null) {
       throw 'Hero Tag를 추가해야 합니다';
     }
 
@@ -56,6 +58,8 @@ class MMateImage extends ConsumerWidget {
           height: height,
           fit: fit,
           alignment: alignment,
+          colorFilter:
+              color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
         );
       } else if (imageNetwork.any((e) => imageData.contains((e)))) {
         currentWidget = Image.network(
@@ -66,7 +70,7 @@ class MMateImage extends ConsumerWidget {
           alignment: alignment,
         );
       } else {
-        throw '지원하지 않는 형식의 문자열 입니다';
+        throw '${data} 지원하지 않는 형식의 문자열 입니다';
       }
     } else if (data is File) {
       final imageData = data as File;
@@ -86,15 +90,41 @@ class MMateImage extends ConsumerWidget {
         fit: fit,
         alignment: alignment,
       );
+    } else if (data is Future<File?>) {
+      currentWidget = FutureBuilder(
+          future: data as Future<File?>,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SizedBox(width: width, height: height);
+            } else if (snapshot.hasError) {
+              return SizedBox(
+                width: width,
+                height: height,
+              );
+            } else if (snapshot.hasData) {
+              return Image.file(
+                snapshot.data!,
+                width: width,
+                height: height,
+                fit: fit,
+                alignment: alignment,
+              );
+            } else {
+              return SizedBox(
+                width: width,
+                height: height,
+              );
+            }
+          });
     } else {
-      throw '지원하지 않는 형식의 문자열 입니다';
+      throw '지원하지 않는 형식의 데이터 입니다';
     }
 
     return InkWell(
         onTap: enableToDetail
             ? () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => ImageDetail(currentWidget)));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => ImageDetail(data, heroTag!)));
               }
             : null,
         child: enableToDetail

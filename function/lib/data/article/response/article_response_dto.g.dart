@@ -15,7 +15,7 @@ ArticleResponseDto _$ArticleResponseDtoFromJson(Map<String, dynamic> json) =>
               json['account'] as Map<String, dynamic>),
       board: json['board'] == null
           ? null
-          : BoardRequestDto.fromJson(json['board'] as Map<String, dynamic>),
+          : BoardResponseDto.fromJson(json['board'] as Map<String, dynamic>),
       title: json['title'] as String?,
       content: json['content'] as String?,
       time: json['time'] as String?,

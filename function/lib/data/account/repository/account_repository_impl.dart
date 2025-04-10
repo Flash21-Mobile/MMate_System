@@ -36,6 +36,17 @@ class AccountRepositoryImpl extends AccountRepository {
   }
 
   @override
+  Future postAccount(AccountRequestDto dto) async {
+    try {
+      final result = await service.postAccount(dto: dto);
+
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<int>> getAccountFavorites() async {
     final preferences = await SharedPreferences.getInstance();
     try {

@@ -1,4 +1,5 @@
 import 'package:function_system/data/board/repository/board_repository.dart';
+import 'package:function_system/data/board/response/board_response_dto.dart';
 import 'package:function_system/data/grade/repository/grade_repository.dart';
 import 'package:function_system/domain/board/board_entity.dart';
 import 'package:function_system/domain/grade/grade_entity.dart';

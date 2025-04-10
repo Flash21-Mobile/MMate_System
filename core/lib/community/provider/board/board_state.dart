@@ -1,23 +1,19 @@
-import 'dart:typed_data';
-
-import 'package:function_system/domain/account/account_entity.dart';
-import 'package:function_system/domain/aricle/article_entity.dart';
 import 'package:function_system/domain/board/board_entity.dart';
 
 class BoardState {
-  final List<BoardEntity>? boards;
+  final List<BoardEntity>? data;
   final bool isLoading;
   final String? error;
 
   BoardState({
-    this.boards,
+    this.data,
     required this.isLoading,
     this.error,
   });
 
   factory BoardState.initial() {
     return BoardState(
-      boards: null,
+      data: null,
       isLoading: false,
       error: null,
     );
@@ -29,7 +25,7 @@ class BoardState {
     String? error,
   }) {
     return BoardState(
-      boards: boards ?? this.boards,
+      data: boards ?? this.data,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
     );

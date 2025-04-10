@@ -27,6 +27,8 @@ class MmateTheme {
   /// Primary 보조 색성
   final Color primaryFixed;
 
+  final Color unSelected;
+
   final Brightness brightness;
 
   const MmateTheme._({
@@ -48,6 +50,7 @@ class MmateTheme {
     required this.outline,
     required this.primaryFixed,
     required this.brightness,
+    required this.unSelected,
   });
 
   factory MmateTheme.light({
@@ -56,8 +59,8 @@ class MmateTheme {
     onPrimary = const Color(0xFFFFFFFF),
     secondary = const Color(0xFFD7EAFF),
     onSecondary = const Color(0xFF1979E4),
-    tertiary = const Color(0xFFD9D9D9),
-    onTertiary = const Color(0xFFA5A5A5),
+    tertiary = const Color(0xFFE4E4E4),
+    onTertiary = const Color(0xFF707070),
     primaryContainer = const Color(0xFFFFFFFF),
     onPrimaryContainer = const Color(0xFF000000),
     secondaryContainer = const Color(0xFFF5F6F8),
@@ -68,6 +71,7 @@ class MmateTheme {
     onSurface = const Color(0xFF000000),
     outline = const Color(0xFFE4E4E4),
     primaryFixed = const Color(0xFFD7EAFF),
+    unSelected = const Color(0xFFE8EAEB),
   }) {
     return MmateTheme._(
       background: background,
@@ -88,6 +92,7 @@ class MmateTheme {
       outline: outline,
       primaryFixed: primaryFixed,
       brightness: Brightness.light,
+      unSelected: unSelected,
     );
   }
 
@@ -97,8 +102,8 @@ class MmateTheme {
     onPrimary = const Color(0xFFFFFFFF),
     secondary = const Color(0xFFD7EAFF),
     onSecondary = const Color(0xFF1979E4),
-    tertiary = const Color(0xFFD9D9D9),
-    onTertiary = const Color(0xFFA5A5A5),
+    tertiary = const Color(0xFFE4E4E4),
+    onTertiary = const Color(0xFF707070),
     primaryContainer = const Color(0xFFFFFFFF),
     onPrimaryContainer = const Color(0xFF000000),
     secondaryContainer = const Color(0xFFF5F6F8),
@@ -109,6 +114,7 @@ class MmateTheme {
     onSurface = const Color(0xFF000000),
     outline = const Color(0xFFE4E4E4),
     primaryFixed = const Color(0xFFD7EAFF),
+    unSelected = const Color(0xFFE8EAEB),
   }) {
     return MmateTheme._(
       background: background,
@@ -129,6 +135,7 @@ class MmateTheme {
       outline: outline,
       primaryFixed: primaryFixed,
       brightness: Brightness.dark,
+      unSelected: unSelected,
     );
   }
 
@@ -138,6 +145,7 @@ class MmateTheme {
         appBarTheme: AppBarTheme(
           backgroundColor: background,
         ),
+        unselectedWidgetColor: unSelected,
         colorScheme: ColorScheme(
           brightness: brightness,
           primary: primary,

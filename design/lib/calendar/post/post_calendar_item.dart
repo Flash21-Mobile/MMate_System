@@ -1,3 +1,4 @@
+import 'package:design_system/animate/ink_well.dart';
 import 'package:design_system/calendar/post/post_calendar_focused.dart';
 import 'package:design_system/config.dart';
 import 'package:design_system/text/text_interface.dart';
@@ -24,7 +25,7 @@ class _Widget extends State<PostCalendarItem> {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      InkWell(
+      MMateInkWell(
         onTap: () {
           if (state == PostCalendarFocused.date) {
             state = PostCalendarFocused.shrink;
@@ -50,7 +51,7 @@ class _Widget extends State<PostCalendarItem> {
         ),
       ),
       SizedBox(width: 5),
-      InkWell(
+      MMateInkWell(
         onTap: () {
           if (state == PostCalendarFocused.time) {
             state = PostCalendarFocused.shrink;

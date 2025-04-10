@@ -1,6 +1,7 @@
 name: function_system
 description: A function system for mmate
 version: 0.0.1
+
 environment:
   sdk: ^3.6.0
 
@@ -8,29 +9,48 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_riverpod: ^2.6.1
-
+  # networking
   dio: ^5.7.0
   retrofit: ^4.4.1
+
+  # json
   json_serializable: ^6.9.0
   json_annotation: ^4.9.0
+  freezed_annotation: ^3.0.0
 
+  # riverpod
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # file
   file_picker: ^9.0.0
-  shared_preferences: ^2.5.1
-  flutter_secure_storage: ^9.2.2
-
-  image: ^4.5.2
   path_provider: ^2.1.5
+  image: ^4.5.2
+  package_info_plus: ^8.2.1
+  path: ^1.9.0
 
+  # Native
+  permission_handler: ^11.3.1
+  url_launcher: ^6.3.1
+
+  # interceptor
   zstandard_android: ^1.3.27
   zstandard_ios: ^1.3.27
 
-  permission_handler: ^11.3.1
+  # storage
+  shared_preferences: ^2.5.1
+  flutter_secure_storage: ^9.2.2
 
-  package_info_plus: ^8.2.1
+  # etc
   daum_postcode_search: ^0.0.3
-  path: ^1.9.0
+  intl: ^0.19.0
 
 dev_dependencies:
-  retrofit_generator: ^9.1.5
+
   build_runner: ^2.4.13
+
+  retrofit_generator: ^9.1.5
+
+  riverpod_generator: ^2.6.5
+
+  freezed: ^3.0.4

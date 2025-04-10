@@ -1,7 +1,4 @@
-import 'dart:typed_data';
-
-import 'package:function_system/domain/account/account_entity.dart';
-import 'package:function_system/domain/aricle/article_entity.dart';
+import 'package:function_system/domain/aricle/entity/article_entity.dart';
 
 class ArticleState {
   final List<ArticleEntity>? articles;

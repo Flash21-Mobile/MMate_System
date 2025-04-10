@@ -34,7 +34,6 @@ class AccountRequestDto {
   bool? active;
   bool? hidden;
   bool? permission;
-  String job;
 
   AccountRequestDto(
       {required this.active,
@@ -66,7 +65,7 @@ class AccountRequestDto {
       required this.workName,
       required this.workPositionName,
       required this.hidden,
-      required this.job});
+      });
 
   factory AccountRequestDto.fromJson(Map<String, dynamic> json) =>
       _$AccountRequestDtoFromJson(json);

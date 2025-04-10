@@ -1,15 +1,10 @@
-import 'dart:typed_data';
-
-import 'package:function_system/data/article/request/article_request_dto.dart';
 import 'package:function_system/data/file/repository/file_repository.dart';
-import 'package:function_system/domain/account/account_entity.dart';
-import 'package:function_system/domain/aricle/article_entity.dart';
+import 'package:function_system/domain/aricle/entity/article_entity.dart';
 import 'package:function_system/data/article/repository/article_repository.dart';
 import 'package:function_system/domain/uri/uri_entity.dart';
 import 'package:function_system/key/constants_key.dart';
 import 'package:function_system/utilities/exception/exceoption.dart';
-
-import '../../utilities/date_format.dart';
+import 'package:function_system/utilities/format/date_time_format.dart';
 
 class GetArticlesUseCase {
   final ArticleRepository _repository;
@@ -17,10 +12,16 @@ class GetArticlesUseCase {
   GetArticlesUseCase(this._repository);
 
   Future<List<ArticleEntity>> execute({
-    required int boardPk,
+    int? boardPk,
+    int? accountPk,
+    String? title,
   }) async {
     try {
-      final result = await _repository.getArticleList(boardPk: boardPk);
+      final result = await _repository.getArticleList(
+        boardPk: boardPk,
+        accountPk: accountPk,
+        title: title,
+      );
       return result.map((e) => e.toEntity).toList();
     } catch (e) {
       rethrow;
@@ -60,8 +61,8 @@ class PostArticleUseCase {
     required String title,
     required String content,
     required DateTime time,
-    required bool sendPushAlarm,
-    required List<UriEntity> images,
+    bool sendPushAlarm = false,
+    List<UriEntity> images = const [],
   }) async {
     try {
       final result = await _repository.postArticle(
@@ -69,7 +70,7 @@ class PostArticleUseCase {
         boardPk: boardPk,
         title: title,
         content: content,
-        time: DateFormat.formatDateTimeToServer(time),
+        time: time.toIso8601(),
         sendPushAlarm: sendPushAlarm,
       );
       if (result.id == null) throw MMateException.failedSend;
@@ -80,7 +81,7 @@ class PostArticleUseCase {
             result.id!,
             images.map((e) => e.toMultipart()).toList());
 
-        if (fileResult.first.id != null) throw MMateException.failedSend;
+        if (fileResult.first.id == null) throw MMateException.failedSend;
       }
 
       return result.toEntity;
@@ -96,21 +97,16 @@ class PutArticleUseCase {
   PutArticleUseCase(this._repository);
 
   Future<ArticleEntity> execute({
-    required int articleId,
-    required int accountPk,
-    required int boardPk,
-    required String title,
-    required String content,
-    required DateTime time,
+    required ArticleEntity data,
   }) async {
     try {
       final result = await _repository.putArticle(
-        articleId: articleId,
-        accountPk: accountPk,
-        boardPk: boardPk,
-        title: title,
-        content: content,
-        time: DateFormat.formatDateTimeToServer(time),
+        articleId: data.id,
+        accountPk: data.account.id,
+        boardPk: data.board.id,
+        title: data.title,
+        content: data.content,
+        time: data.time.toIso8601(),
       );
       return result.toEntity;
     } catch (e) {

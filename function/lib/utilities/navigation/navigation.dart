@@ -26,4 +26,8 @@ extension Navigation on BuildContext {
   }
 
   void pop<T extends Object?>([ T? result ]) => Navigator.of(this).pop(result);
+
+  void superPop<T extends Object?>([ T? result ]) {
+    Navigator.of(this).popUntil((route) => route.isFirst);
+  }
 }

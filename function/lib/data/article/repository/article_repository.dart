@@ -1,11 +1,13 @@
 import 'package:function_system/data/article/response/article_response_dto.dart';
 
-import '../../../domain/aricle/article_entity.dart';
+import '../../../domain/aricle/entity/article_entity.dart';
 
 abstract class ArticleRepository {
   Future<List<ArticleResponseDto>> getArticleList({
     int? boardPk,
+    int? accountPk,
     int? id,
+    String? title
   });
 
   Future<ArticleResponseDto> postArticle({

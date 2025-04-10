@@ -37,7 +37,6 @@ AccountRequestDto _$AccountRequestDtoFromJson(Map<String, dynamic> json) =>
       workName: json['workName'] as String?,
       workPositionName: json['workPositionName'] as String?,
       hidden: json['hidden'] as bool?,
-      job: json['job'] as String,
     );
 
 Map<String, dynamic> _$AccountRequestDtoToJson(AccountRequestDto instance) =>
@@ -71,5 +70,4 @@ Map<String, dynamic> _$AccountRequestDtoToJson(AccountRequestDto instance) =>
       'active': instance.active,
       'hidden': instance.hidden,
       'permission': instance.permission,
-      'job': instance.job,
     };

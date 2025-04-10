@@ -23,4 +23,9 @@ abstract class AccountService {
     @Path('id') int? id,
     @Body() AccountRequestDto? dto,
   });
+
+  @POST('/api/account')
+  Future<AccountResponseDto> postAccount({
+    @Body() AccountRequestDto? dto,
+  });
 }

@@ -159,28 +159,4 @@ class FileRepositoryImpl extends FileRepository {
     }
   }
 
-  @override
-  Future<File> saveCard(File file) async {
-    final preferences = await SharedPreferences.getInstance();
-    try {
-      preferences.setString(PrefKey.card, file.path);
-      return file;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<File> loadCard() async {
-    final preferences = await SharedPreferences.getInstance();
-    try {
-      final filePath = preferences.getString(PrefKey.card);
-      if (filePath == null) {
-        throw MMateException.noFilesFound;
-      }
-      return File(filePath);
-    } catch (e) {
-      rethrow;
-    }
-  }
 }

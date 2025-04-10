@@ -20,6 +20,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "analyzer_plugin",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/analyzer_plugin-0.13.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "archive",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/archive-4.0.4",
       "packageUri": "lib/",
@@ -56,6 +62,42 @@
       "languageVersion": "3.6"
     },
     {
+      "name": "build_daemon",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/build_daemon-4.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "build_resolvers",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/build_resolvers-2.4.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "build_runner",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/build_runner-2.4.15",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "build_runner_core",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/build_runner_core-8.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "built_collection",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/built_collection-5.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "built_value",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/built_value-8.9.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "carousel_slider_plus",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/carousel_slider_plus-7.1.0",
       "packageUri": "lib/",
@@ -74,10 +116,28 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "ci",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/ci-0.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "cli_util",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/cli_util-0.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "clock",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/clock-1.1.2",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "code_builder",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/code_builder-4.10.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "collection",
@@ -102,6 +162,30 @@
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/crypto-3.0.6",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "custom_lint",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/custom_lint-0.7.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "custom_lint_builder",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/custom_lint_builder-0.7.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "custom_lint_core",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/custom_lint_core-0.7.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "custom_lint_visitor",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/custom_lint_visitor-1.0.0+7.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "dart_style",
@@ -344,6 +428,42 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "flutter_keyboard_visibility",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility-6.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_linux",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_linux-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_macos",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_macos-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_platform_interface",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_platform_interface-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_web",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_web-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_windows",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_windows-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_localization",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/flutter_localization-0.3.1",
       "packageUri": "lib/",
@@ -428,6 +548,24 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "freezed",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/freezed-3.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "freezed_annotation",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/freezed_annotation-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "frontend_server_client",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/frontend_server_client-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "function_system",
       "rootUri": "../../function",
       "packageUri": "lib/",
@@ -440,10 +578,28 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "graphs",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/graphs-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "hotreloader",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/hotreloader-4.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "http",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/http-1.3.0",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "http_multi_server",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/http_multi_server-3.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "http_parser",
@@ -516,6 +672,12 @@
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/intl-0.19.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "io",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/io-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
     },
     {
       "name": "js",
@@ -716,6 +878,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "pool",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/pool-1.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "posix",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/posix-6.0.1",
       "packageUri": "lib/",
@@ -740,6 +908,12 @@
       "languageVersion": "3.6"
     },
     {
+      "name": "restart_app",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/restart_app-1.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
       "name": "retrofit",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/retrofit-4.4.2",
       "packageUri": "lib/",
@@ -748,6 +922,30 @@
     {
       "name": "riverpod",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/riverpod-2.6.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "riverpod_analyzer_utils",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/riverpod_analyzer_utils-0.5.10",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "riverpod_annotation",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/riverpod_annotation-2.6.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "riverpod_generator",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/riverpod_generator-2.6.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "riverpod_lint",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/riverpod_lint-2.6.5",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -798,6 +996,18 @@
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.4.1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
+    },
+    {
+      "name": "shelf",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/shelf-1.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "shelf_web_socket",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/shelf_web_socket-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "shimmer",
@@ -890,6 +1100,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "stream_transform",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/stream_transform-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "string_scanner",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/string_scanner-1.4.1",
       "packageUri": "lib/",
@@ -914,6 +1130,12 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "timing",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/timing-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "typed_data",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/typed_data-1.4.0",
       "packageUri": "lib/",
@@ -924,6 +1146,54 @@
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/universal_io-2.2.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "url_launcher",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/url_launcher-6.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.15",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/url_launcher_linux-3.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/url_launcher_web-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
     },
     {
       "name": "uuid",
@@ -974,6 +1244,18 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "web_socket",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/web_socket-0.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "web_socket_channel",
+      "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/web_socket_channel-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "win32",
       "rootUri": "file:///Users/syngchulchu/.pub-cache/hosted/pub.dev/win32-5.12.0",
       "packageUri": "lib/",
@@ -1022,7 +1304,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-03-21T04:36:47.451377Z",
+  "generated": "2025-04-02T00:39:49.994382Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///opt/homebrew/Caskroom/flutter/3.24.1/flutter",

@@ -19,8 +19,4 @@ abstract class FileRepository {
   Future<UriResponseDTO> getImage(String api, int pk, bool? isFirst);
 
   Future<List<File>> getResizedImages(List<File> image);
-
-  Future<File> saveCard(File file);
-
-  Future<File> loadCard();
 }

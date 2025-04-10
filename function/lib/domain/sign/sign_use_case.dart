@@ -18,13 +18,24 @@ class SignInUseCase {
     this._fcmRepository,
   );
 
-  Future<AccountEntity> execute(String? fcmToken) async {
+  Future<AccountEntity> execute(
+    String? fcmToken, {
+    String? name,
+    String? cellphone,
+  }) async {
+    late String currentCellphone;
+
     try {
-      if (Platform.isAndroid && await Permission.phone.request().isDenied) {
-        throw 'Permission is Denied';
+      if (cellphone == null) {
+        if (Platform.isAndroid && await Permission.phone.request().isDenied) {
+          throw 'Permission is Denied';
+        }
+        currentCellphone = await repository.getCellphone();
+      } else {
+        currentCellphone = cellphone;
       }
-      final cellphone = await repository.getCellphone();
-      final result = await repository.signIn(null, cellphone);
+
+      final result = await repository.signIn(name, currentCellphone);
       await repository.setToken(result);
 
       final loginResult = await loginRepository.login();
@@ -34,42 +45,6 @@ class SignInUseCase {
       }
 
       if (loginResult.active == true && loginResult.id != null) {
-        return loginResult.toEntity();
-      }
-      throw MMateException.noActiveAccountFound;
-    } catch (e) {
-      rethrow;
-    }
-  }
-}
-
-class SignInWithNameUseCase {
-  final SignRepository repository;
-  final LoginRepository loginRepository;
-  final FcmRepository _fcmRepository;
-
-  SignInWithNameUseCase(
-    this.repository,
-    this.loginRepository,
-    this._fcmRepository,
-  );
-
-  Future<AccountEntity> execute({
-    required String name,
-    required String cellphone,
-    String? fcmToken
-  }) async {
-    try {
-      final result = await repository.signIn(name, cellphone);
-      await repository.setToken(result);
-
-      final loginResult = await loginRepository.login();
-
-      if (fcmToken != null) {
-        await _fcmRepository.putFcm(fcmToken);
-      }
-
-      if (loginResult.active == true) {
         return loginResult.toEntity();
       }
       throw MMateException.noActiveAccountFound;

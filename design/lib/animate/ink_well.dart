@@ -9,8 +9,8 @@ class MMateInkWell extends HookWidget {
     this.onLogTap,
     this.backgroundColor,
     this.scaleDown = true,
-    this.scaleDiff = 0.05,
-    this.enableSplash = true,
+    this.scaleDiff = 0.5,
+    this.enableSplash = false,
     this.borderRadius,
   });
 
@@ -37,7 +37,7 @@ class MMateInkWell extends HookWidget {
           borderRadius: borderRadius,
         ),
         child: AnimatedScale(
-          scale: animate.value ? 1 + scaleDiff * (scaleDown ? -1 : 1) : 1,
+          scale: animate.value ? 1 + (scaleDiff *0.1) * (scaleDown ? -1 : 1) : 1,
           duration: const Duration(milliseconds: 100), // 애니메이션 시간 0.5초
           curve: Curves.easeInOut,
           child: Material(
@@ -46,7 +46,7 @@ class MMateInkWell extends HookWidget {
               child: InkWell(
                 borderRadius: borderRadius,
                 splashColor: Colors.transparent,
-                highlightColor: enableSplash ? Colors.grey.withAlpha(35): Colors.transparent,
+                highlightColor: enableSplash ? Colors.grey.withAlpha(65): Colors.transparent,
                 onTapDown: (details) {
                   animate.value = true;
                 },

@@ -18,9 +18,17 @@ class _GradeService implements GradeService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<GradeResponseDto>?> getGrades(String? positionName) async {
+  Future<List<GradeResponseDto>?> getGrades(
+    int? id,
+    String? positionName,
+    String? name,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'positionName': positionName};
+    final queryParameters = <String, dynamic>{
+      r'id': id,
+      r'positionName': positionName,
+      r'name': name,
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
@@ -46,6 +54,55 @@ class _GradeService implements GradeService {
       errorLogger?.logError(e, s, _options);
       rethrow;
     }
+    return _value;
+  }
+
+  @override
+  Future<GradeResponseDto> postGrade(GradeRequestDto data) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(data.toJson());
+    final _options = _setStreamType<GradeResponseDto>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/grade',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GradeResponseDto _value;
+    try {
+      _value = GradeResponseDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<dynamic> deleteGrade(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<dynamic>(
+      Options(method: 'DELETE', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/grade/${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
     return _value;
   }
 

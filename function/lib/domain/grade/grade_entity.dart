@@ -6,10 +6,10 @@ class GradeEntity {
   bool? active;
 
   GradeEntity({
-  required  this.id,
+    required this.id,
     required this.name,
-    required  this.order,
-    required  this.groupOrder,
-    required  this.active,
+    required this.order,
+    required this.groupOrder,
+    required this.active,
   });
 }

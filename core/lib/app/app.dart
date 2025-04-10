@@ -15,23 +15,24 @@ class MMateApp extends ConsumerStatefulWidget {
     super.key,
     this.data = const [],
     this.appBar,
+    this.floatingButton,
   });
 
   final AppBar? appBar;
   final List<MMateAppData> data;
+  final Widget? floatingButton;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _Widget();
 }
 
 class _Widget extends ConsumerState<MMateApp> {
-
   @override
   Widget build(BuildContext context) {
     final navigationState = ref.watch(mMateAppNavigationProvider);
     final navigationNotifier = ref.read(mMateAppNavigationProvider.notifier);
 
-    return  DoubleTapToClose(
+    return DoubleTapToClose(
         beforePop: () {
           if (navigationState == 0) {
             return true;
@@ -40,20 +41,30 @@ class _Widget extends ConsumerState<MMateApp> {
           return false;
         },
         child: Scaffold(
-            extendBody: true,
-            appBar: widget.appBar,
-            body: IndexedStack(
-              index: navigationState,
-              children: widget.data.map((e) => e.screen).toList(),
-            ),
-            bottomNavigationBar:MMateBottomNavigationBar(
-                    currentIndex: navigationState,
-                    onTap: (index) => navigationNotifier.state = index,
-                    items: widget.data
-                        .map((e) => MMateBottomNavigationItemData(e.label,
-                            svgImage: e.svgImage))
-                        .toList(),
-                  )
+          extendBody: true,
+          extendBodyBehindAppBar: true,
+          appBar: widget.appBar,
+          body: IndexedStack(
+            index: navigationState,
+            children:
+                widget.data.map((e) => e.screen ?? Placeholder()).toList(),
+          ),
+          bottomNavigationBar: MMateBottomNavigationBar(
+            currentIndex: navigationState,
+            onTap: (index) {
+              if (widget.data[index].onTap != null) {
+                widget.data[index].onTap!();
+              }
+              if (widget.data[index].screen != null) {
+                navigationNotifier.state = index;
+              }
+            },
+            items: widget.data
+                .map((e) => MMateBottomNavigationItemData(e.label,
+                    svgImage: e.svgImage))
+                .toList(),
+          ),
+          floatingActionButton: widget.floatingButton,
         ));
   }
 }

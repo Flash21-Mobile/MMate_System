@@ -6,14 +6,16 @@ part of 'board_request_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BoardRequestDto _$BoardRequestDtoFromJson(Map<String, dynamic> json) =>
-    BoardRequestDto(
-      id: (json['id'] as num?)?.toInt(),
+_BoardRequestDto _$BoardRequestDtoFromJson(Map<String, dynamic> json) =>
+    _BoardRequestDto(
       name: json['name'] as String?,
+      type: json['type'] as String?,
+      content: json['content'] as String?,
     );
 
-Map<String, dynamic> _$BoardRequestDtoToJson(BoardRequestDto instance) =>
+Map<String, dynamic> _$BoardRequestDtoToJson(_BoardRequestDto instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
+      'type': instance.type,
+      'content': instance.content,
     };

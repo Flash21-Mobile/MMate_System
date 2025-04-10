@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:function_system/di/utilities/permission_provider.dart';
 import 'package:function_system/domain/board/board_entity.dart';
+import 'package:function_system/domain/board/board_type.dart';
 import 'package:function_system/utilities/navigation/navigation.dart';
 
 class CommunityTab extends ConsumerStatefulWidget {
@@ -41,7 +42,7 @@ class _Widget extends ConsumerState<CommunityTab> {
               return Text('hello');
             })),
         floatingActionButton:
-            permission || widget.entity.firstInfo == BoardType.free
+            permission || widget.entity.type is BoardTypeCommunity
                 ? FloatingActionButton(
                     heroTag: null,
                     backgroundColor: Theme.of(context).primaryColor,
