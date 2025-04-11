@@ -10,11 +10,11 @@ Future runMMate(
   Widget home, {
   required String baseUrl,
   String title = '',
+  String appLogoPath = '',
   MmateTheme? lightTheme,
   MmateTheme? darkTheme,
   bool isFirebaseEnabled = false,
 }) async {
-
   final currentApp = MaterialApp(
     title: title,
     theme: (lightTheme ?? MmateTheme.light()).themeData(),
@@ -28,7 +28,8 @@ Future runMMate(
       Locale('ko', 'KR'),
     ],
     themeMode: ThemeMode.system,
-    home: MmateSplash(
+    home: MMateSplash(
+      appLogoPath: appLogoPath,
       title: title,
       home: home,
       baseUrl: baseUrl,

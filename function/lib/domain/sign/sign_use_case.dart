@@ -21,21 +21,10 @@ class SignInUseCase {
   Future<AccountEntity> execute(
     String? fcmToken, {
     String? name,
-    String? cellphone,
+    required String cellphone,
   }) async {
-    late String currentCellphone;
-
     try {
-      if (cellphone == null) {
-        if (Platform.isAndroid && await Permission.phone.request().isDenied) {
-          throw 'Permission is Denied';
-        }
-        currentCellphone = await repository.getCellphone();
-      } else {
-        currentCellphone = cellphone;
-      }
-
-      final result = await repository.signIn(name, currentCellphone);
+      final result = await repository.signIn(name, cellphone);
       await repository.setToken(result);
 
       final loginResult = await loginRepository.login();
@@ -50,6 +39,50 @@ class SignInUseCase {
       throw MMateException.noActiveAccountFound;
     } catch (e) {
       rethrow;
+    }
+  }
+}
+
+class GetCellphoneUseCase {
+  final SignRepository repository;
+
+  const GetCellphoneUseCase(this.repository);
+
+  Future<String?> execute() async {
+    try {
+      final result = await repository.getCellphone();
+      return result;
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
+class SetCellphoneUseCase {
+  final SignRepository repository;
+
+  const SetCellphoneUseCase(this.repository);
+
+  Future execute(String cellphone) async {
+    try {
+      await repository.setCellphone(cellphone);
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
+class GetCellphoneInAndroidUseCase {
+  final SignRepository repository;
+
+  const GetCellphoneInAndroidUseCase(this.repository);
+
+  Future<String?> execute() async {
+    try {
+      final result = await repository.getCellphoneOnDevice();
+      return result;
+    } catch (e) {
+      return null;
     }
   }
 }

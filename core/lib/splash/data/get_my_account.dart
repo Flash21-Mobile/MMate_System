@@ -7,9 +7,9 @@ import '../provider/login_viewmodel.dart';
 
 extension GetMyAccountOnRef on Ref {
   AccountEntity getMyAccount({bool onErrorRestart = true}) {
-    final result = read(loginViewmodelProvider);
+    final result = watch(loginViewmodelProvider);
 
-    if (result.isLoading || result.error != null || result.data == null) {
+    if (result.data == null) {
       if (onErrorRestart) {
         Restart.restartApp();
       }
@@ -22,9 +22,9 @@ extension GetMyAccountOnRef on Ref {
 
 extension GetMyAccountOnWidgetRef on WidgetRef {
   AccountEntity getMyAccount({bool onErrorRestart = true}) {
-    final result = read(loginViewmodelProvider);
 
-    if (result.isLoading || result.error != null || result.data == null) {
+    final result = watch(loginViewmodelProvider);
+    if ( result.data == null) {
       if (onErrorRestart) {
         Restart.restartApp();
       }

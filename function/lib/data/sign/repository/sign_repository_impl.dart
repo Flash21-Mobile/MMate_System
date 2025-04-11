@@ -15,7 +15,10 @@ class SignRepositoryImpl extends SignRepository {
   final FlutterSecureStorage secureStorage;
   final SignService service;
 
-  SignRepositoryImpl(this.secureStorage, this.service, );
+  SignRepositoryImpl(
+    this.secureStorage,
+    this.service,
+  );
 
   @override
   Future<String> signIn(String? name, String cellphone) async {
@@ -55,6 +58,24 @@ class SignRepositoryImpl extends SignRepository {
   Future<String> getCellphone() async {
     final preferences = await SharedPreferences.getInstance();
     try {
+      if ((preferences.getBool(PrefKey.isNotFirst)) == true) {
+        final cellphone = await secureStorage.read(key: SecureStorageKey.cellphone);
+        if (cellphone != null) {
+          return cellphone;
+        }
+      }
+      secureStorage.deleteAll();
+      preferences.setBool(PrefKey.isNotFirst, true);
+
+      throw MMateException.noData;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> getCellphoneOnDevice() async {
+    try {
       if (Platform.isAndroid) {
         const androidChannel = MethodChannel('com.flash21.mmate/android');
 
@@ -67,18 +88,6 @@ class SignRepositoryImpl extends SignRepository {
           return indexPhone;
         }
       }
-      if (Platform.isIOS) {
-        if ((preferences.getBool(PrefKey.isNotFirst)) == true) {
-          final cellphone =
-              await secureStorage.read(key: SecureStorageKey.cellphone);
-          if (cellphone != null) {
-            return cellphone;
-          }
-        }
-        secureStorage.deleteAll();
-        preferences.setBool(PrefKey.isNotFirst, true);
-      }
-
       throw MMateException.noData;
     } catch (e) {
       rethrow;

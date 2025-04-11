@@ -15,3 +15,20 @@ final signInUseCaseProvider = Provider<SignInUseCase>((ref) {
     fcmRepository,
   );
 });
+
+final getCellphoneUseCaseProvider = Provider<GetCellphoneUseCase>((ref){
+  final repository = ref.watch(signRepositoryProvider);
+
+  return GetCellphoneUseCase(repository);
+});
+
+final setCellphoneUseCaseProvider = Provider<SetCellphoneUseCase>((ref){
+  final repository = ref.watch(signRepositoryProvider);
+  return SetCellphoneUseCase(repository);
+});
+
+final getCellphoneInAndroidUseCaseProvider = Provider<GetCellphoneInAndroidUseCase>((ref){
+  final repository = ref.watch(signRepositoryProvider);
+
+  return GetCellphoneInAndroidUseCase(repository);
+});

@@ -1,21 +1,23 @@
 import 'package:core_system/community/provider/board/board_provider.dart';
 import 'package:core_system/splash/provider/login_viewmodel.dart';
 import 'package:design_system/config.dart';
+import 'package:design_system/image/image.dart';
 import 'package:design_system/text/text_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:function_system/di/utilities/base_url_provider.dart';
-import 'package:function_system/di/utilities/cellphone_provider.dart';
 import 'package:function_system/utilities/navigation/navigation.dart';
 
-class MmateSplash extends ConsumerStatefulWidget {
+class MMateSplash extends ConsumerStatefulWidget {
+  final String appLogoPath;
   final String title;
   final Widget home;
   final String baseUrl;
 
-  const MmateSplash({
+  const MMateSplash({
     super.key,
+    required this.appLogoPath,
     required this.title,
     required this.home,
     required this.baseUrl,
@@ -25,7 +27,7 @@ class MmateSplash extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _Widget();
 }
 
-class _Widget extends ConsumerState<MmateSplash>
+class _Widget extends ConsumerState<MMateSplash>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _logoAnimation;
@@ -34,9 +36,9 @@ class _Widget extends ConsumerState<MmateSplash>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
+    Future.microtask(() async {
       ref.read(baseUrlProvider.notifier).state = widget.baseUrl;
-      ref.watch(cellphoneProvider.notifier).fetchData();
+      ref.read(loginViewmodelProvider.notifier).fetchData();
     });
 
     _controller = AnimationController(
@@ -88,9 +90,12 @@ class _Widget extends ConsumerState<MmateSplash>
   @override
   Widget build(BuildContext context) {
     ref.listen(loginViewmodelProvider, (previous, next) {
-      if (next.error == null && next.isLoading == false && next.data != null) {
+      if ((previous?.isLoading??true) == true && next.isLoading == false) {
         launchSplash([
           ref.read(boardProvider.notifier).fetchData(),
+          if (next.data != null) ...[
+
+          ]
         ]);
       }
     });
@@ -99,6 +104,7 @@ class _Widget extends ConsumerState<MmateSplash>
     final bottomPadding = navigationHeight == 0 ? 48.0 : navigationHeight;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       extendBody: true,
       body: Center(
         child: Row(
@@ -112,7 +118,11 @@ class _Widget extends ConsumerState<MmateSplash>
                   child: child,
                 );
               },
-              child: Container(width: 70, height: 70, color: Colors.blue),
+              child: MMateImage(
+                widget.appLogoPath,
+                width: 100,
+                height: 100,
+              ),
             ),
             ClipRect(
               child: AnimatedBuilder(

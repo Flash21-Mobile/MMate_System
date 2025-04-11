@@ -7,8 +7,11 @@ abstract class SignRepository {
 
   Future<String> getCellphone();
 
+  Future<String> getCellphoneOnDevice();
+
   Future<String> signIn(
     String? name,
     String cellphone,
   );
+
 }
