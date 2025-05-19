@@ -1,8 +1,5 @@
-import 'package:function_system/domain/account/base/base_account_entity.dart';
 import 'package:function_system/domain/board/board_entity.dart';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:function_system/domain/uri/uri_entity.dart';
 
 import '../../../account/entity/account/account_entity.dart';
 

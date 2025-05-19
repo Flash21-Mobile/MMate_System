@@ -1,6 +1,5 @@
 import 'package:function_system/data/login/service/login_service.dart';
 
-import '../../../domain/account/base/base_account_entity.dart';
 import 'login_repository.dart';
 import '../../account/response/account_response_dto.dart';
 

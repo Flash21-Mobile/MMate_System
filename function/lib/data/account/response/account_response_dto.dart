@@ -1,10 +1,5 @@
-import 'package:function_system/domain/coordinate/coordinate_entity.dart';
-import 'package:function_system/domain/uri/uri_entity.dart';
-import 'package:function_system/utilities/date_format.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../domain/account/base/base_account_entity.dart';
-import '../../../domain/account/entity/account/account_entity.dart';
 import '../../grade/response/grade_response_dto.dart';
 
 part 'account_response_dto.g.dart';

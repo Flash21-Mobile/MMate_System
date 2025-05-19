@@ -1,14 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:function_system/domain/account/base/base_account_entity.dart';
 import 'package:function_system/domain/coordinate/coordinate_entity.dart';
-import 'package:function_system/domain/uri/uri_entity.dart';
 
 import '../../../grade/grade_entity.dart';
 
 part 'account_entity.freezed.dart';
 
 @freezed
-abstract class AccountEntity with _$AccountEntity implements BaseAccountEntity{
+abstract class AccountEntity with _$AccountEntity {
   const factory AccountEntity({
     required int id,
     required String name,

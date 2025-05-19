@@ -1,5 +1,4 @@
 import 'package:function_system/data/geocoder/repository/geocoder_repository.dart';
-import 'package:function_system/domain/account/base/base_account_entity.dart';
 import 'package:function_system/domain/geocoder/geoceder_account_entity.dart';
 import 'package:function_system/utilities/exception/exceoption.dart';
 

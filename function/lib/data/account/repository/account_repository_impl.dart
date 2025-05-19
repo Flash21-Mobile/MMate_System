@@ -2,11 +2,7 @@ import 'package:function_system/data/account/request/account_request_dto.dart';
 import 'package:function_system/data/account/response/account_response_dto.dart';
 import 'package:function_system/data/account/service/account_service.dart';
 import 'package:function_system/utilities/exception/exceoption.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../domain/account/base/base_account_entity.dart';
 import 'account_repository.dart';
-import '../../../key/shared_preference_key.dart';
 
 class AccountRepositoryImpl extends AccountRepository {
   final AccountService service;

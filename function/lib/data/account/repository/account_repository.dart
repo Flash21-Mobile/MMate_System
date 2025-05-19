@@ -1,6 +1,5 @@
 import '../request/account_request_dto.dart';
 import '../response/account_response_dto.dart';
-import '../../../domain/account/base/base_account_entity.dart';
 
 abstract class AccountRepository {
   // 유저 관리
