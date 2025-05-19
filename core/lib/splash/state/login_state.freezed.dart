@@ -17,6 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$LoginState {
   dynamic get isLoading;
   String? get error;
+  bool get isLogin;
   AccountEntity? get data;
 
   /// Create a copy of LoginState
@@ -33,16 +34,17 @@ mixin _$LoginState {
             other is LoginState &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             (identical(other.error, error) || other.error == error) &&
+            (identical(other.isLogin, isLogin) || other.isLogin == isLogin) &&
             (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(isLoading), error, data);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(isLoading), error, isLogin, data);
 
   @override
   String toString() {
-    return 'LoginState(isLoading: $isLoading, error: $error, data: $data)';
+    return 'LoginState(isLoading: $isLoading, error: $error, isLogin: $isLogin, data: $data)';
   }
 }
 
@@ -52,7 +54,10 @@ abstract mixin class $LoginStateCopyWith<$Res> {
           LoginState value, $Res Function(LoginState) _then) =
       _$LoginStateCopyWithImpl;
   @useResult
-  $Res call({dynamic isLoading, String? error, AccountEntity? data});
+  $Res call(
+      {dynamic isLoading, String? error, bool isLogin, AccountEntity? data});
+
+  $AccountEntityCopyWith<$Res>? get data;
 }
 
 /// @nodoc
@@ -69,6 +74,7 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
   $Res call({
     Object? isLoading = freezed,
     Object? error = freezed,
+    Object? isLogin = null,
     Object? data = freezed,
   }) {
     return _then(_self.copyWith(
@@ -80,11 +86,29 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      isLogin: null == isLogin
+          ? _self.isLogin
+          : isLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
       data: freezed == data
           ? _self.data
           : data // ignore: cast_nullable_to_non_nullable
               as AccountEntity?,
     ));
+  }
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountEntityCopyWith<$Res>? get data {
+    if (_self.data == null) {
+      return null;
+    }
+
+    return $AccountEntityCopyWith<$Res>(_self.data!, (value) {
+      return _then(_self.copyWith(data: value));
+    });
   }
 }
 
@@ -92,7 +116,10 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
 
 class _LoginState implements LoginState {
   const _LoginState(
-      {this.isLoading = true, this.error = null, this.data = null});
+      {this.isLoading = true,
+      this.error = null,
+      this.isLogin = false,
+      this.data = null});
 
   @override
   @JsonKey()
@@ -100,6 +127,9 @@ class _LoginState implements LoginState {
   @override
   @JsonKey()
   final String? error;
+  @override
+  @JsonKey()
+  final bool isLogin;
   @override
   @JsonKey()
   final AccountEntity? data;
@@ -119,16 +149,17 @@ class _LoginState implements LoginState {
             other is _LoginState &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             (identical(other.error, error) || other.error == error) &&
+            (identical(other.isLogin, isLogin) || other.isLogin == isLogin) &&
             (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(isLoading), error, data);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(isLoading), error, isLogin, data);
 
   @override
   String toString() {
-    return 'LoginState(isLoading: $isLoading, error: $error, data: $data)';
+    return 'LoginState(isLoading: $isLoading, error: $error, isLogin: $isLogin, data: $data)';
   }
 }
 
@@ -140,7 +171,11 @@ abstract mixin class _$LoginStateCopyWith<$Res>
       __$LoginStateCopyWithImpl;
   @override
   @useResult
-  $Res call({dynamic isLoading, String? error, AccountEntity? data});
+  $Res call(
+      {dynamic isLoading, String? error, bool isLogin, AccountEntity? data});
+
+  @override
+  $AccountEntityCopyWith<$Res>? get data;
 }
 
 /// @nodoc
@@ -157,6 +192,7 @@ class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
   $Res call({
     Object? isLoading = freezed,
     Object? error = freezed,
+    Object? isLogin = null,
     Object? data = freezed,
   }) {
     return _then(_LoginState(
@@ -165,11 +201,29 @@ class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      isLogin: null == isLogin
+          ? _self.isLogin
+          : isLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
       data: freezed == data
           ? _self.data
           : data // ignore: cast_nullable_to_non_nullable
               as AccountEntity?,
     ));
+  }
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountEntityCopyWith<$Res>? get data {
+    if (_self.data == null) {
+      return null;
+    }
+
+    return $AccountEntityCopyWith<$Res>(_self.data!, (value) {
+      return _then(_self.copyWith(data: value));
+    });
   }
 }
 

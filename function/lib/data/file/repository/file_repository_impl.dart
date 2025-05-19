@@ -48,6 +48,13 @@ class FileRepositoryImpl extends FileRepository {
       final fileResult = await service.getFiles(api, pk);
       if (fileResult == null) throw MMateException.noFilesFound;
 
+      fileResult.sort((a, b) {
+        if (a.order == null && b.order == null) return 0;
+        if (a.order == null) return 1; // null은 뒤로
+        if (b.order == null) return -1;
+        return a.order!.compareTo(b.order!);
+      });
+
       List<Uint8List?> tempList = await Future.wait(fileResult.map((e) async {
         final result = await dio.get('/api/file/${e.id}',
             options: Options(responseType: ResponseType.bytes));
@@ -86,6 +93,13 @@ class FileRepositoryImpl extends FileRepository {
       if (tempResult == null || tempResult.isEmpty) {
         throw MMateException.noFilesFound;
       }
+
+      tempResult.sort((a, b) {
+        if (a.order == null && b.order == null) return 0;
+        if (a.order == null) return 1; // null은 뒤로
+        if (b.order == null) return -1;
+        return a.order!.compareTo(b.order!);
+      });
 
       final currentFile = isFirst == true ? tempResult.first : tempResult.last;
 
@@ -158,5 +172,4 @@ class FileRepositoryImpl extends FileRepository {
       rethrow;
     }
   }
-
 }

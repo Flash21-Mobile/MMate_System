@@ -51,7 +51,7 @@ abstract class _TextInterface extends StatelessWidget {
           fontSize: fontSize(context),
           height: height,
           fontWeight: fontWeight,
-          color: color ?? Colors.black),
+          color: color ?? Theme.of(context).colorScheme.onPrimaryContainer),
       overflow: overFlowFade ?? false
               ? TextOverflow.ellipsis
               : null,

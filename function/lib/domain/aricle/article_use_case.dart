@@ -1,15 +1,19 @@
-import 'package:function_system/data/file/repository/file_repository.dart';
-import 'package:function_system/domain/aricle/entity/article_entity.dart';
+import 'package:function_system/data/article/enricher/article_enricher.dart';
 import 'package:function_system/data/article/repository/article_repository.dart';
+import 'package:function_system/data/file/repository/file_repository.dart';
 import 'package:function_system/domain/uri/uri_entity.dart';
 import 'package:function_system/key/constants_key.dart';
 import 'package:function_system/utilities/exception/exceoption.dart';
 import 'package:function_system/utilities/format/date_time_format.dart';
 
+import '../account/entity/account/account_entity.dart';
+import 'entity/article/article_entity.dart';
+
 class GetArticlesUseCase {
   final ArticleRepository _repository;
+  final ArticleEnricher _articleEnricher;
 
-  GetArticlesUseCase(this._repository);
+  GetArticlesUseCase(this._repository, this._articleEnricher);
 
   Future<List<ArticleEntity>> execute({
     int? boardPk,
@@ -22,7 +26,10 @@ class GetArticlesUseCase {
         accountPk: accountPk,
         title: title,
       );
-      return result.map((e) => e.toEntity).toList();
+
+      return result.map((e) {
+        return _articleEnricher.enrich(e);
+      }).toList();
     } catch (e) {
       rethrow;
     }
@@ -31,15 +38,21 @@ class GetArticlesUseCase {
 
 class GetArticleDetailUseCase {
   final ArticleRepository _repository;
+  final ArticleEnricher _articleEnricher;
 
-  GetArticleDetailUseCase(this._repository);
+  GetArticleDetailUseCase(
+    this._repository,
+    this._articleEnricher,
+  );
 
   Future<ArticleEntity> execute({
     required int id,
   }) async {
     try {
-      final result = await _repository.getArticleList(id: id);
-      return result.first.toEntity;
+      final articlesResult = await _repository.getArticleList(id: id);
+      final result = articlesResult.last;
+
+      return _articleEnricher.enrich(result);
     } catch (e) {
       rethrow;
     }
@@ -48,15 +61,17 @@ class GetArticleDetailUseCase {
 
 class PostArticleUseCase {
   final ArticleRepository _repository;
+  final ArticleEnricher _articleEnricher;
   final FileRepository _fileRepository;
 
   PostArticleUseCase(
     this._repository,
+    this._articleEnricher,
     this._fileRepository,
   );
 
   Future<ArticleEntity> execute({
-    required int accountPk,
+    required AccountEntity account,
     required int boardPk,
     required String title,
     required String content,
@@ -66,11 +81,11 @@ class PostArticleUseCase {
   }) async {
     try {
       final result = await _repository.postArticle(
-        accountPk: accountPk,
+        accountPk: account.id,
         boardPk: boardPk,
         title: title,
         content: content,
-        time: time.toIso8601(),
+        time: time.toServerIso8601(),
         sendPushAlarm: sendPushAlarm,
       );
       if (result.id == null) throw MMateException.failedSend;
@@ -84,7 +99,7 @@ class PostArticleUseCase {
         if (fileResult.first.id == null) throw MMateException.failedSend;
       }
 
-      return result.toEntity;
+      return _articleEnricher.enrich(result);
     } catch (e) {
       rethrow;
     }
@@ -93,22 +108,47 @@ class PostArticleUseCase {
 
 class PutArticleUseCase {
   final ArticleRepository _repository;
+  final ArticleEnricher _articleEnricher;
+  final FileRepository _fileRepository;
 
-  PutArticleUseCase(this._repository);
+  PutArticleUseCase(
+      this._repository, this._articleEnricher, this._fileRepository);
 
   Future<ArticleEntity> execute({
-    required ArticleEntity data,
+    required ArticleEntity entity,
+    required List<UriEntity> images,
   }) async {
     try {
       final result = await _repository.putArticle(
-        articleId: data.id,
-        accountPk: data.account.id,
-        boardPk: data.board.id,
-        title: data.title,
-        content: data.content,
-        time: data.time.toIso8601(),
+        articleId: entity.id,
+        accountPk: entity.account.id,
+        boardPk: entity.board.id,
+        title: entity.title,
+        content: entity.content,
+        time: entity.time.toServerIso8601(),
       );
-      return result.toEntity;
+
+      // 프로필 사진 전부 삭제
+      await _fileRepository.deleteFiles(
+        ConstantsKey.articleImagesAPI,
+        entity.id,
+      );
+
+      // 프로필 사진 멀티파트로 변환
+      final multipartImage = images.map((e) {
+        return e.toMultipart();
+      }).toList();
+
+      // 이미지 삽입
+      if (images.isNotEmpty) {
+        await _fileRepository.postFile(
+          ConstantsKey.articleImagesAPI,
+          entity.id,
+          multipartImage,
+        );
+      }
+
+      return _articleEnricher.enrich(result);
     } catch (e) {
       rethrow;
     }

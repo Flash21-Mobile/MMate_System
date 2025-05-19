@@ -60,6 +60,7 @@ class IndexDropdown extends StatelessWidget {
           borderRadius: BorderRadius.circular(100),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IndexText(

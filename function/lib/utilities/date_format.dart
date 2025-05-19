@@ -18,7 +18,7 @@ class MMateDateFormat {
 
   static DateTime? formatStringToDateTime(String? dateTime) {
     try {
-      return DateTime.parse(dateTime ?? '');
+      return DateTime.tryParse(dateTime ?? '');
     } catch (e) {
       return null;
     }

@@ -3,8 +3,9 @@ import 'package:function_system/domain/uri/uri_entity.dart';
 import 'package:function_system/utilities/date_format.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../domain/account/account_entity.dart';
-import '../../grade/request/grade_response_dto.dart';
+import '../../../domain/account/base/base_account_entity.dart';
+import '../../../domain/account/entity/account/account_entity.dart';
+import '../../grade/response/grade_response_dto.dart';
 
 part 'account_response_dto.g.dart';
 
@@ -18,8 +19,6 @@ class AccountResponseDto {
   String? telephone;
   String? cellphone;
   String? faxNumber;
-  int? signupYear;
-  int? graduationYear;
   String? birthDate;
   String? workAddress;
   String? workAddressSub;
@@ -29,6 +28,8 @@ class AccountResponseDto {
   String? homeAddress;
   String? homeAddressSub;
   String? homeAddressZipCode;
+  String? xCoordinate;
+  String? yCoordinate;
   GradeResponseDto? grade;
   GradeResponseDto? firstGrade;
   GradeResponseDto? secondGrade;
@@ -40,9 +41,13 @@ class AccountResponseDto {
   bool? active;
   bool? hidden;
   bool? permission;
+  String? clubRi;
+  String? memberRi;
+  String? nickname;
+  String? englishName;
+  String? memo;
   String? job;
-  String? xCoordinate;
-  String? yCoordinate;
+  String? time;
 
   AccountResponseDto({
     this.id,
@@ -53,8 +58,6 @@ class AccountResponseDto {
     this.telephone,
     this.cellphone,
     this.faxNumber,
-    this.signupYear,
-    this.graduationYear,
     this.birthDate,
     this.workAddress,
     this.workAddressSub,
@@ -64,6 +67,8 @@ class AccountResponseDto {
     this.homeAddress,
     this.homeAddressSub,
     this.homeAddressZipCode,
+    this.xCoordinate,
+    this.yCoordinate,
     this.grade,
     this.firstGrade,
     this.secondGrade,
@@ -75,52 +80,17 @@ class AccountResponseDto {
     this.active,
     this.hidden,
     this.permission,
+    this.clubRi,
+    this.memberRi,
+    this.nickname,
+    this.englishName,
+    this.memo,
     this.job,
-    this.xCoordinate,
-    this.yCoordinate,
+    this.time,
   });
 
   factory AccountResponseDto.fromJson(Map<String, dynamic> json) =>
       _$AccountResponseDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccountResponseDtoToJson(this);
-
-  AccountEntity toEntity({List<UriEntity>? profileImage}) {
-    final resultXCoordinate = double.tryParse(xCoordinate ?? '');
-    final resultYCoordinate = double.tryParse(yCoordinate ?? '');
-
-    final coordinate = resultXCoordinate != null && resultYCoordinate != null
-        ? CoordinateEntity(resultYCoordinate, resultXCoordinate)
-        : null;
-
-    return AccountEntity(
-      // todo d: 이거 널 불가로 바꿔
-      id: id ?? 0,
-      name: name ?? '',
-      email: email ?? '',
-      grade: grade?.toEntity,
-      firstGrade: firstGrade?.toEntity,
-      secondGrade: secondGrade?.toEntity,
-      thirdGrade: thirdGrade?.toEntity,
-      fourthGrade: fourthGrade?.toEntity,
-      permission: permission ?? false,
-      cellphone: cellphone ?? '',
-      workName: workName ?? '',
-      workAddress: workAddress ?? '',
-      workAddressSub: workAddressSub ?? '',
-      workPositionName: workPositionName ?? '',
-      hidden: hidden ?? true,
-      active: active ?? false,
-      profileImage: profileImage,
-      job: job ?? '',
-      homeAddress: homeAddress ?? '',
-      homeAddressSub: homeAddressSub ?? '',
-      workCellphone: telephone ?? '',
-      coordinate: coordinate,
-
-      point: int.tryParse(userId ?? '0') ?? 0,
-      birthDate: MMateDateFormat.formatStringToDateTime(birthDate),
-      gender: int.tryParse(userPassword ?? '0') ?? 0,
-    );
-  }
 }

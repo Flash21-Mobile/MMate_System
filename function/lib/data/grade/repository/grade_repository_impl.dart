@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:function_system/data/grade/repository/grade_repository.dart';
 import 'package:function_system/data/grade/service/grade_service.dart';
 
-import '../request/grade_response_dto.dart';
-import '../response/grade_request_dto.dart';
+import '../response/grade_response_dto.dart';
+import '../request/grade_request_dto.dart';
 
 class GradeRepositoryImpl extends GradeRepository {
   final GradeService service;

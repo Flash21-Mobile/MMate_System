@@ -32,7 +32,6 @@ class IndexTextField extends HookWidget {
   final bool showCounter;
   final TextAlignVertical textAlignVertical;
 
-  final IndexTextFieldAnimate? animate;
   final FontWeight? fontWeight;
 
   const IndexTextField({
@@ -60,7 +59,6 @@ class IndexTextField extends HookWidget {
     this.readOnly = false,
     this.showCounter = false,
     this.textAlignVertical = TextAlignVertical.center,
-    this.animate,
   });
 
 
@@ -70,65 +68,30 @@ class IndexTextField extends HookWidget {
     final indexFocus = useState(false);
     final viewSub = useState(false);
 
-    void updateText() {
-      if (animate != null) {
-        if (controller?.text.length == 0 ||
-            controller?.text.length == 1) {
-          opacity.value = (controller?.text.isNotEmpty ?? false) ? 1.0 : 0.0;
-        }
-        if ((controller?.text.length ?? 0) > 0) {
-          Future.delayed(Duration(milliseconds: 300)).then((_) {
-                viewSub.value = true;
-          });
-        }
-      }
-    }
-
-    void updateFocus() {
-      if (animate != null) {
-        if (focusNode?.hasFocus ?? false) {
-          if (!indexFocus.value) {
-            indexFocus.value = true;
-          }
-        } else {
-          if (indexFocus.value) {
-            indexFocus.value = false;
-          }
-        }
-      }
-    }
-
-    useEffect((){
-      controller?.addListener(updateText);
-      focusNode?.addListener(updateFocus);
-      return (){
-        controller?.removeListener(updateText);
-        focusNode?.removeListener(updateFocus);
-      };
-    },[]);
 
     return Material(
         color: Colors.transparent,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          if (indexText != null) ...[
-            IndexText(indexText,
-                color: indexColor ?? Theme.of(context).hintColor),
-            SizedBox(height: 5),
-          ],
-          if (animate != null) ...[
-            AnimatedOpacity(
-              opacity: opacity.value,
-              duration: Duration(milliseconds: 150),
-              child: IndexTextMin(
-                fontWeight: FontWeight.w500,
-                hintText,
-                color: indexFocus.value
-                    ? indexColor ?? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onTertiary,
-              ),
-            ),
-            SizedBox(height: AppConfig.paddingIndex / 3)
-          ],
+        child:
+        // Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          // if (indexText != null) ...[
+          //   IndexText(indexText,
+          //       color: indexColor ?? Theme.of(context).hintColor),
+          //   SizedBox(height: 5),
+          // ],
+          // if (animate != null) ...[
+          //   AnimatedOpacity(
+          //     opacity: opacity.value,
+          //     duration: Duration(milliseconds: 150),
+          //     child: IndexTextMin(
+          //       fontWeight: FontWeight.w500,
+          //       hintText,
+          //       color: indexFocus.value
+          //           ? indexColor ?? Theme.of(context).colorScheme.primary
+          //           : Theme.of(context).colorScheme.onTertiary,
+          //     ),
+          //   ),
+          //   SizedBox(height: AppConfig.paddingIndex / 3)
+          // ],
           Container(
               width: width,
               height: height,
@@ -178,27 +141,29 @@ class IndexTextField extends HookWidget {
                   focusedBorder: InputBorder.none, // 동그란 테두리
                 ),
               )),
-          if (animate != null) ...[
-            Container(
-              height: 1.23,
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 5),
-              color: indexFocus.value
-                  ? indexColor ?? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.tertiary,
-            ),
-            if (animate!.subText.isNotEmpty)
-              ClipRect(
-                  child: AnimatedSlide(
-                offset: viewSub.value ? Offset(0, 0) : Offset(0, -1),
-                duration: Duration(milliseconds: 150),
-                child: IndexTextMin(
-                  animate!.subText,
-                  color: indexColor ??
-                      Theme.of(context).colorScheme.onTertiary,
-                ),
-              )),
-          ]
-        ]));
+          // if (animate != null) ...[
+          //   Container(
+          //     height: 1.23,
+          //     width: double.infinity,
+          //     margin: EdgeInsets.only(top: 5),
+          //     color: indexFocus.value
+          //         ? indexColor ?? Theme.of(context).colorScheme.primary
+          //         : Theme.of(context).colorScheme.tertiary,
+          //   ),
+          //   if (animate!.subText.isNotEmpty)
+          //     ClipRect(
+          //         child: AnimatedSlide(
+          //       offset: viewSub.value ? Offset(0, 0) : Offset(0, -1),
+          //       duration: Duration(milliseconds: 150),
+          //       child: IndexTextMin(
+          //         animate!.subText,
+          //         color: indexColor ??
+          //             Theme.of(context).colorScheme.onTertiary,
+          //       ),
+          //     )),
+          // ]
+        // ]
+    // )
+    );
   }
 }

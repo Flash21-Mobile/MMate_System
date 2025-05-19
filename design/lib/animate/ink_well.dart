@@ -45,8 +45,8 @@ class MMateInkWell extends HookWidget {
             color:  backgroundColor ?? Colors.transparent,
               child: InkWell(
                 borderRadius: borderRadius,
-                splashColor: Colors.transparent,
-                highlightColor: enableSplash ? Colors.grey.withAlpha(65): Colors.transparent,
+                splashColor: enableSplash ? Colors.grey.withAlpha(65): Colors.transparent,
+                highlightColor: Colors.transparent,
                 onTapDown: (details) {
                   animate.value = true;
                 },

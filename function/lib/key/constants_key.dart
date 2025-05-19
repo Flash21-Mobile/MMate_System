@@ -1,5 +1,5 @@
 class ConstantsKey {
-  static const String accountImagesAPI = 'account';
+  static const String accountImagesAPI = 'accountlist';
   static const String articleImagesAPI = 'article_images';
   static const String articleFileAPI = 'article_file';
   static const String presidentImagesAPI = 'president';

@@ -4,6 +4,7 @@ import 'package:core_system/splash/state/login_state.dart';
 import 'package:function_system/di/login/login_use_case_provider.dart';
 import 'package:function_system/di/sign/sign_use_case_provider.dart';
 import 'package:function_system/utilities/exception/exceoption.dart';
+import 'package:function_system/utilities/log.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_viewmodel.g.dart';
@@ -30,7 +31,11 @@ class LoginViewmodel extends _$LoginViewmodel {
       }
 
       if (cellphone == null) {
-        state = state.copyWith(isLoading: false, data: null);
+        state = state.copyWith(
+          isLoading: false,
+          isLogin: false,
+          data: null,
+        );
         return;
       }
 
@@ -38,33 +43,29 @@ class LoginViewmodel extends _$LoginViewmodel {
       await signInUseCase.execute(null, cellphone: cellphone);
 
       final loginUseCase = ref.watch(loginUseCaseProvider);
-      final myAccount =await loginUseCase.execute();
+      final myAccount = await loginUseCase.execute();
 
-      state = state.copyWith(isLoading: false, data: myAccount);
+      state = state.copyWith(
+        isLoading: false,
+        isLogin: true,
+        data: myAccount,
+      );
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(
+        isLoading: false,
+        isLogin: false,
+        error: e.toString(),
+      );
     }
   }
 
   Future fetchData() async => _fetch();
 
-  Future refreshData() async {
-    state = state.copyWith(isLoading: true, error: null);
+  Future login(String cellphone) async {
+    final setCellphoneUseCase = ref.watch(setCellphoneUseCaseProvider);
 
-    try {
-      final getCellphoneUseCase = ref.watch(getCellphoneUseCaseProvider);
-      final cellphone = await getCellphoneUseCase.execute();
+    await setCellphoneUseCase.execute(cellphone);
 
-      if (cellphone != null) {
-        final loginUseCase = ref.watch(loginUseCaseProvider);
-
-        final myAccount = await loginUseCase.execute();
-
-        state = state.copyWith(isLoading: false, data: myAccount);
-      }
-      state = state.copyWith(isLoading: false, error: MMateException.noData);
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
-    }
+    _fetch();
   }
 }

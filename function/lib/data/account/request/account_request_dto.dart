@@ -4,7 +4,6 @@ part 'account_request_dto.g.dart';
 
 @JsonSerializable()
 class AccountRequestDto {
-  // todo d: request에 맞게 수정하기
   String? userId;
   String? userPassword;
   String? name;
@@ -12,8 +11,6 @@ class AccountRequestDto {
   String? telephone;
   String? cellphone;
   String? faxNumber;
-  int? signupYear;
-  int? graduationYear;
   String? birthDate;
   String? workAddress;
   String? workAddressSub;
@@ -34,38 +31,51 @@ class AccountRequestDto {
   bool? active;
   bool? hidden;
   bool? permission;
+  String? clubRi;
+  String? memberRi;
+  String? nickname;
+  String? englishName;
+  String? memo;
+  String? job;
+  String? time;
 
-  AccountRequestDto(
-      {required this.active,
-      required this.android,
-      required this.birthDate,
-      required this.cellphone,
-      required this.email,
-      required this.faxNumber,
-      required this.fifthGrade,
-      required this.firstGrade,
-      required this.fourthGrade,
-      required this.grade,
-      required this.graduationYear,
-      required this.homeAddress,
-      required this.homeAddressSub,
-      required this.homeAddressZipCode,
-      required this.ios,
-      required this.name,
-      required this.permission,
-      required this.secondGrade,
-      required this.signupYear,
-      required this.telephone,
-      required this.thirdGrade,
-      required this.userId,
-      required this.userPassword,
-      required this.workAddress,
-      required this.workAddressSub,
-      required this.workAddressZipCode,
-      required this.workName,
-      required this.workPositionName,
-      required this.hidden,
-      });
+
+  AccountRequestDto({
+    required this.userId,
+    required this.userPassword,
+    required this.name,
+    required this.email,
+    required this.telephone,
+    required this.cellphone,
+    required this.faxNumber,
+    required this.birthDate,
+    required this.workAddress,
+    required this.workAddressSub,
+    required this.workAddressZipCode,
+    required this.workName,
+    required this.workPositionName,
+    required this.homeAddress,
+    required this.homeAddressSub,
+    required this.homeAddressZipCode,
+    required this.grade,
+    required this.firstGrade,
+    required this.secondGrade,
+    required this.thirdGrade,
+    required this.fourthGrade,
+    required this.fifthGrade,
+    required this.android,
+    required this.ios,
+    required this.active,
+    required this.hidden,
+    required this.permission,
+    required this.clubRi,
+    required this.memberRi,
+    required this.nickname,
+    required this.englishName,
+    required this.memo,
+    required this.job,
+    required this.time,
+  });
 
   factory AccountRequestDto.fromJson(Map<String, dynamic> json) =>
       _$AccountRequestDtoFromJson(json);

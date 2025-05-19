@@ -6,8 +6,8 @@ import 'package:function_system/utilities/imagebuilder/image_builder_key.dart';
 import 'package:function_system/utilities/imagebuilder/image_builder_provider.dart';
 
 class MMateImageBuilder extends ConsumerWidget {
-  final Widget? loadingWidget;
-  final Widget Function(Uint8List? bytes) builder;
+  final Widget Function(BuildContext context, bool isLoading, Uint8List? data)
+  builder;
 
   final int id;
   final String api;
@@ -17,7 +17,6 @@ class MMateImageBuilder extends ConsumerWidget {
     this.id,
     this.api, {
     super.key,
-    this.loadingWidget,
     required this.builder,
     this.showFirstImage = false,
   });
@@ -31,9 +30,11 @@ class MMateImageBuilder extends ConsumerWidget {
     )));
 
     if (imageState.isLoading || imageState.isInit == false) {
-      return loadingWidget ?? SizedBox();
+      return builder(context, true, null);
+    }else if (imageState.error != null) {
+      return builder(context, false, null);
     }
 
-    return builder(imageState.data);
+    return builder(context, false, imageState.data);
   }
 }

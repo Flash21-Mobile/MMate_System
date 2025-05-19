@@ -14,7 +14,7 @@ abstract class ArticleService {
   @GET("/api/article")
   Future<List<ArticleResponseDto>> getArticle({
     @Query('board') int? boardId,
-    @Query('account') int? accountId,
+    @Query('accountlist') int? accountId,
     @Query('id') int? id,
     @Query('title') String? title,
   });

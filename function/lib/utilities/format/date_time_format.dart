@@ -9,6 +9,7 @@ extension DateTimeFormatOnNuallable on DateTime? {
     ].join('.');
     return '$result${showWeekDay && this != null ? ' ${DateFormat('EEEE', 'ko_KR').format(this!)}' : ''}';
   }
+
   String? toFeatureDate2() {
     var result = [
       if (this?.year != null) '${this?.year}년',
@@ -27,8 +28,8 @@ extension DateTimeFormatOnNuallable on DateTime? {
   }
 
   String? toFeatureDate4() {
-      if (this == null) return null;
-      return DateFormat('yyMMdd').format(this!);
+    if (this == null) return null;
+    return DateFormat('yyMMdd').format(this!);
   }
 
   String toFeatureTime() {
@@ -46,7 +47,7 @@ extension DateTimeFormatOnNuallable on DateTime? {
     return DateFormat('a h:mm', 'ko_KR').format(this!);
   }
 
-  String toIso8601() {
+  String toServerIso8601() {
     if (this == null) {
       return '';
     }
@@ -92,8 +93,12 @@ extension DateTimeFormat on DateTime {
     return DateFormat('a h:mm', 'ko_KR').format(this);
   }
 
-  String toIso8601() {
+  String toServerIso8601() {
     return this.toIso8601String().split('Z').first;
+  }
+
+  String toServerString() {
+    return DateFormat('yyyy-MM-dd').format(this);
   }
 
   bool compare(DateTime date) {

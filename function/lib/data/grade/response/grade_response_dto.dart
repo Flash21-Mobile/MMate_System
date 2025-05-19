@@ -26,10 +26,11 @@ class GradeResponseDto {
   Map<String, dynamic> toJson() => _$GradeResponseDtoToJson(this);
 
   GradeEntity toEntity() => GradeEntity(
-        id: id,
-        name: name??'',
+        id: id!,
+        name: name ?? '',
         order: order,
         groupOrder: groupOrder,
-        active: active,
+        active: active ?? true,
+        positionName: positionName ?? '',
       );
 }

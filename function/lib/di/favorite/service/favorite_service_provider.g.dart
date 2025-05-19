@@ -1,0 +1,27 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'favorite_service_provider.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$favoriteServiceHash() => r'fdd9a5152120f20599274a15050262655db44e37';
+
+/// See also [favoriteService].
+@ProviderFor(favoriteService)
+final favoriteServiceProvider = AutoDisposeProvider<FavoriteService>.internal(
+  favoriteService,
+  name: r'favoriteServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$favoriteServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FavoriteServiceRef = AutoDisposeProviderRef<FavoriteService>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

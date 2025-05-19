@@ -1,4 +1,5 @@
 import 'package:design_system/config.dart';
+import 'package:design_system/image/image.dart';
 import 'package:design_system/utilities/double_tap_to_close.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,52 +9,35 @@ import 'package:flutter_svg/svg.dart';
 import '../text/text_interface.dart';
 import '../textfield/index_text_filed.dart';
 
-class LoginDialog extends ConsumerStatefulWidget {
-  final String? title;
-  final String? svgLogo;
-  final TextEditingController? controller;
-  final String? indexHint;
-  final String? hint;
-  final Widget? extraContents;
-  final TextInputType? keyboardType;
-  final TextInputType? subKeyboardType;
-  final List<TextInputFormatter>? textInputFormatter;
-  final List<TextInputFormatter>? subTextInputFormatter;
-  final Function()? onTap;
-  final String? buttonText;
-  final TextEditingController? subController;
-  final String? indexSubHint;
-  final String? subHint;
-
-  final bool? subObscureText;
-  final Widget? subContent;
+class LoginDialog {
   final BuildContext context;
 
-  const LoginDialog(this.context,
-      {this.title,
-      this.svgLogo,
-      this.controller,
-      this.indexHint,
-      this.hint,
-      this.extraContents,
-      this.keyboardType,
-      this.subKeyboardType,
-      this.textInputFormatter,
-      this.subTextInputFormatter,
-      this.onTap,
-      this.buttonText,
-      this.subController,
-      this.indexSubHint,
-      this.subHint,
-      this.subObscureText,
-      this.subContent});
+  const LoginDialog(this.context);
 
-  Future show() async{
+  Future show({
+    final String? title,
+    final Object? svgLogo,
+    final TextEditingController? controller,
+    final String? indexHint,
+    final String? hint,
+    final Widget? extraContents,
+    final TextInputType? keyboardType,
+    final TextInputType? subKeyboardType,
+    final List<TextInputFormatter>? textInputFormatter,
+    final List<TextInputFormatter>? subTextInputFormatter,
+    final Function()? onTap,
+    final String? buttonText,
+    final TextEditingController? subController,
+    final String? indexSubHint,
+    final String? subHint,
+    final bool? subObscureText,
+    final Widget? subContent,
+  }) async {
     await showGeneralDialog(
         transitionBuilder: (context, animation, secondaryAnimation, child) {
           final curvedAnimation = CurvedAnimation(
             parent: animation,
-            curve: Curves.easeOutCubic, // 부드럽게 감속하는 애니메이션 적용
+            curve: Curves.easeOutCubic,
           );
 
           return SlideTransition(
@@ -67,8 +51,7 @@ class LoginDialog extends ConsumerStatefulWidget {
         context: context,
         transitionDuration: const Duration(milliseconds: 700),
         pageBuilder: (_, __, ___) {
-          return LoginDialog(
-            context,
+          return _LoginDialog(
             title: title,
             svgLogo: svgLogo,
             controller: controller,
@@ -89,16 +72,57 @@ class LoginDialog extends ConsumerStatefulWidget {
           );
         });
   }
+}
+
+class _LoginDialog extends ConsumerStatefulWidget {
+  final String? title;
+  final Object? svgLogo;
+  final TextEditingController? controller;
+  final String? indexHint;
+  final String? hint;
+  final Widget? extraContents;
+  final TextInputType? keyboardType;
+  final TextInputType? subKeyboardType;
+  final List<TextInputFormatter>? textInputFormatter;
+  final List<TextInputFormatter>? subTextInputFormatter;
+  final Function()? onTap;
+  final String? buttonText;
+  final TextEditingController? subController;
+  final String? indexSubHint;
+  final String? subHint;
+
+  final bool? subObscureText;
+  final Widget? subContent;
+
+  const _LoginDialog({
+    super.key,
+    this.title,
+    this.svgLogo,
+    this.controller,
+    this.indexHint,
+    this.hint,
+    this.extraContents,
+    this.keyboardType,
+    this.subKeyboardType,
+    this.textInputFormatter,
+    this.subTextInputFormatter,
+    this.onTap,
+    this.buttonText,
+    this.subController,
+    this.indexSubHint,
+    this.subHint,
+    this.subObscureText,
+    this.subContent,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _Widget();
 }
 
-class _Widget extends ConsumerState<LoginDialog> {
+class _Widget extends ConsumerState<_LoginDialog> {
   @override
   Widget build(BuildContext context) {
-    return DoubleTapToClose(
-        child: Scaffold(
+    return Scaffold(
             backgroundColor: Colors.transparent,
             body: Container(
                 alignment: Alignment.center,
@@ -117,10 +141,10 @@ class _Widget extends ConsumerState<LoginDialog> {
                       children: [
                         ...widget.svgLogo != null
                             ? [
-                                SizedBox(height: AppConfig.paddingIndex/3),
-                                SvgPicture.asset(
+                                SizedBox(height: AppConfig.paddingIndex / 3),
+                                MMateImage(
                                   widget.svgLogo!,
-                                  height: 20,
+                                  height: 80,
                                   fit: BoxFit.contain,
                                 ),
                                 SizedBox(height: AppConfig.paddingIndex),
@@ -213,6 +237,6 @@ class _Widget extends ConsumerState<LoginDialog> {
                       ],
                     ),
                   ),
-                ))));
+                )));
   }
 }

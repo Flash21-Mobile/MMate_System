@@ -1,4 +1,5 @@
-import '../account/account_entity.dart';
+import '../account/base/base_account_entity.dart';
+import '../account/entity/account/account_entity.dart';
 
 class GeocoderAccountEntity {
   final AccountEntity accountEntity;

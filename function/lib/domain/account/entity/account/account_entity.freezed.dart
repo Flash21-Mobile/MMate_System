@@ -19,8 +19,8 @@ mixin _$AccountEntity {
   String get name;
   String get cellphone;
   String get homeAddress;
-  String? get homeAddressSub;
-  String? get homeAddressZipCode;
+  String get homeAddressSub;
+  String get homeAddressZipCode;
   GradeEntity? get grade;
   GradeEntity? get firstGrade;
   GradeEntity? get secondGrade;
@@ -33,14 +33,13 @@ mixin _$AccountEntity {
   bool get permission;
   bool get active;
   bool get isFavorite;
-  CoordinateEntity get coordinate;
-  List<UriEntity> get profileImage;
+  CoordinateEntity? get coordinate;
   String get email;
   String get telephone;
   String get faxNumber;
-  DateTime get birthDate;
+  DateTime? get birthDate;
   String get workAddress;
-  String? get workAddressSub;
+  String get workAddressSub;
   String get workAddressZipCode;
   String get workName;
   String get workPositionName;
@@ -50,7 +49,7 @@ mixin _$AccountEntity {
   String get englishName;
   String get memo;
   String get job;
-  DateTime get time;
+  DateTime? get time;
 
   /// Create a copy of AccountEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -96,8 +95,6 @@ mixin _$AccountEntity {
                 other.isFavorite == isFavorite) &&
             (identical(other.coordinate, coordinate) ||
                 other.coordinate == coordinate) &&
-            const DeepCollectionEquality()
-                .equals(other.profileImage, profileImage) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.telephone, telephone) ||
                 other.telephone == telephone) &&
@@ -149,7 +146,6 @@ mixin _$AccountEntity {
         active,
         isFavorite,
         coordinate,
-        const DeepCollectionEquality().hash(profileImage),
         email,
         telephone,
         faxNumber,
@@ -170,7 +166,7 @@ mixin _$AccountEntity {
 
   @override
   String toString() {
-    return 'AccountEntity(id: $id, name: $name, cellphone: $cellphone, homeAddress: $homeAddress, homeAddressSub: $homeAddressSub, homeAddressZipCode: $homeAddressZipCode, grade: $grade, firstGrade: $firstGrade, secondGrade: $secondGrade, thirdGrade: $thirdGrade, fourthGrade: $fourthGrade, fifthGrade: $fifthGrade, android: $android, ios: $ios, hidden: $hidden, permission: $permission, active: $active, isFavorite: $isFavorite, coordinate: $coordinate, profileImage: $profileImage, email: $email, telephone: $telephone, faxNumber: $faxNumber, birthDate: $birthDate, workAddress: $workAddress, workAddressSub: $workAddressSub, workAddressZipCode: $workAddressZipCode, workName: $workName, workPositionName: $workPositionName, clubRi: $clubRi, memberRi: $memberRi, nickname: $nickname, englishName: $englishName, memo: $memo, job: $job, time: $time)';
+    return 'AccountEntity(id: $id, name: $name, cellphone: $cellphone, homeAddress: $homeAddress, homeAddressSub: $homeAddressSub, homeAddressZipCode: $homeAddressZipCode, grade: $grade, firstGrade: $firstGrade, secondGrade: $secondGrade, thirdGrade: $thirdGrade, fourthGrade: $fourthGrade, fifthGrade: $fifthGrade, android: $android, ios: $ios, hidden: $hidden, permission: $permission, active: $active, isFavorite: $isFavorite, coordinate: $coordinate, email: $email, telephone: $telephone, faxNumber: $faxNumber, birthDate: $birthDate, workAddress: $workAddress, workAddressSub: $workAddressSub, workAddressZipCode: $workAddressZipCode, workName: $workName, workPositionName: $workPositionName, clubRi: $clubRi, memberRi: $memberRi, nickname: $nickname, englishName: $englishName, memo: $memo, job: $job, time: $time)';
   }
 }
 
@@ -185,8 +181,8 @@ abstract mixin class $AccountEntityCopyWith<$Res> {
       String name,
       String cellphone,
       String homeAddress,
-      String? homeAddressSub,
-      String? homeAddressZipCode,
+      String homeAddressSub,
+      String homeAddressZipCode,
       GradeEntity? grade,
       GradeEntity? firstGrade,
       GradeEntity? secondGrade,
@@ -199,14 +195,13 @@ abstract mixin class $AccountEntityCopyWith<$Res> {
       bool permission,
       bool active,
       bool isFavorite,
-      CoordinateEntity coordinate,
-      List<UriEntity> profileImage,
+      CoordinateEntity? coordinate,
       String email,
       String telephone,
       String faxNumber,
-      DateTime birthDate,
+      DateTime? birthDate,
       String workAddress,
-      String? workAddressSub,
+      String workAddressSub,
       String workAddressZipCode,
       String workName,
       String workPositionName,
@@ -216,7 +211,7 @@ abstract mixin class $AccountEntityCopyWith<$Res> {
       String englishName,
       String memo,
       String job,
-      DateTime time});
+      DateTime? time});
 }
 
 /// @nodoc
@@ -236,8 +231,8 @@ class _$AccountEntityCopyWithImpl<$Res>
     Object? name = null,
     Object? cellphone = null,
     Object? homeAddress = null,
-    Object? homeAddressSub = freezed,
-    Object? homeAddressZipCode = freezed,
+    Object? homeAddressSub = null,
+    Object? homeAddressZipCode = null,
     Object? grade = freezed,
     Object? firstGrade = freezed,
     Object? secondGrade = freezed,
@@ -250,14 +245,13 @@ class _$AccountEntityCopyWithImpl<$Res>
     Object? permission = null,
     Object? active = null,
     Object? isFavorite = null,
-    Object? coordinate = null,
-    Object? profileImage = null,
+    Object? coordinate = freezed,
     Object? email = null,
     Object? telephone = null,
     Object? faxNumber = null,
-    Object? birthDate = null,
+    Object? birthDate = freezed,
     Object? workAddress = null,
-    Object? workAddressSub = freezed,
+    Object? workAddressSub = null,
     Object? workAddressZipCode = null,
     Object? workName = null,
     Object? workPositionName = null,
@@ -267,7 +261,7 @@ class _$AccountEntityCopyWithImpl<$Res>
     Object? englishName = null,
     Object? memo = null,
     Object? job = null,
-    Object? time = null,
+    Object? time = freezed,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -286,14 +280,14 @@ class _$AccountEntityCopyWithImpl<$Res>
           ? _self.homeAddress
           : homeAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      homeAddressSub: freezed == homeAddressSub
+      homeAddressSub: null == homeAddressSub
           ? _self.homeAddressSub
           : homeAddressSub // ignore: cast_nullable_to_non_nullable
-              as String?,
-      homeAddressZipCode: freezed == homeAddressZipCode
+              as String,
+      homeAddressZipCode: null == homeAddressZipCode
           ? _self.homeAddressZipCode
           : homeAddressZipCode // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       grade: freezed == grade
           ? _self.grade
           : grade // ignore: cast_nullable_to_non_nullable
@@ -342,14 +336,10 @@ class _$AccountEntityCopyWithImpl<$Res>
           ? _self.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
               as bool,
-      coordinate: null == coordinate
+      coordinate: freezed == coordinate
           ? _self.coordinate
           : coordinate // ignore: cast_nullable_to_non_nullable
-              as CoordinateEntity,
-      profileImage: null == profileImage
-          ? _self.profileImage
-          : profileImage // ignore: cast_nullable_to_non_nullable
-              as List<UriEntity>,
+              as CoordinateEntity?,
       email: null == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -362,18 +352,18 @@ class _$AccountEntityCopyWithImpl<$Res>
           ? _self.faxNumber
           : faxNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      birthDate: null == birthDate
+      birthDate: freezed == birthDate
           ? _self.birthDate
           : birthDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       workAddress: null == workAddress
           ? _self.workAddress
           : workAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      workAddressSub: freezed == workAddressSub
+      workAddressSub: null == workAddressSub
           ? _self.workAddressSub
           : workAddressSub // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       workAddressZipCode: null == workAddressZipCode
           ? _self.workAddressZipCode
           : workAddressZipCode // ignore: cast_nullable_to_non_nullable
@@ -410,10 +400,10 @@ class _$AccountEntityCopyWithImpl<$Res>
           ? _self.job
           : job // ignore: cast_nullable_to_non_nullable
               as String,
-      time: null == time
+      time: freezed == time
           ? _self.time
           : time // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -441,7 +431,6 @@ class _AccountEntity implements AccountEntity {
       required this.active,
       required this.isFavorite,
       required this.coordinate,
-      required final List<UriEntity> profileImage,
       required this.email,
       required this.telephone,
       required this.faxNumber,
@@ -457,8 +446,7 @@ class _AccountEntity implements AccountEntity {
       required this.englishName,
       required this.memo,
       required this.job,
-      required this.time})
-      : _profileImage = profileImage;
+      required this.time});
 
   @override
   final int id;
@@ -469,9 +457,9 @@ class _AccountEntity implements AccountEntity {
   @override
   final String homeAddress;
   @override
-  final String? homeAddressSub;
+  final String homeAddressSub;
   @override
-  final String? homeAddressZipCode;
+  final String homeAddressZipCode;
   @override
   final GradeEntity? grade;
   @override
@@ -497,15 +485,7 @@ class _AccountEntity implements AccountEntity {
   @override
   final bool isFavorite;
   @override
-  final CoordinateEntity coordinate;
-  final List<UriEntity> _profileImage;
-  @override
-  List<UriEntity> get profileImage {
-    if (_profileImage is EqualUnmodifiableListView) return _profileImage;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_profileImage);
-  }
-
+  final CoordinateEntity? coordinate;
   @override
   final String email;
   @override
@@ -513,11 +493,11 @@ class _AccountEntity implements AccountEntity {
   @override
   final String faxNumber;
   @override
-  final DateTime birthDate;
+  final DateTime? birthDate;
   @override
   final String workAddress;
   @override
-  final String? workAddressSub;
+  final String workAddressSub;
   @override
   final String workAddressZipCode;
   @override
@@ -537,7 +517,7 @@ class _AccountEntity implements AccountEntity {
   @override
   final String job;
   @override
-  final DateTime time;
+  final DateTime? time;
 
   /// Create a copy of AccountEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -583,8 +563,6 @@ class _AccountEntity implements AccountEntity {
                 other.isFavorite == isFavorite) &&
             (identical(other.coordinate, coordinate) ||
                 other.coordinate == coordinate) &&
-            const DeepCollectionEquality()
-                .equals(other._profileImage, _profileImage) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.telephone, telephone) ||
                 other.telephone == telephone) &&
@@ -636,7 +614,6 @@ class _AccountEntity implements AccountEntity {
         active,
         isFavorite,
         coordinate,
-        const DeepCollectionEquality().hash(_profileImage),
         email,
         telephone,
         faxNumber,
@@ -657,7 +634,7 @@ class _AccountEntity implements AccountEntity {
 
   @override
   String toString() {
-    return 'AccountEntity(id: $id, name: $name, cellphone: $cellphone, homeAddress: $homeAddress, homeAddressSub: $homeAddressSub, homeAddressZipCode: $homeAddressZipCode, grade: $grade, firstGrade: $firstGrade, secondGrade: $secondGrade, thirdGrade: $thirdGrade, fourthGrade: $fourthGrade, fifthGrade: $fifthGrade, android: $android, ios: $ios, hidden: $hidden, permission: $permission, active: $active, isFavorite: $isFavorite, coordinate: $coordinate, profileImage: $profileImage, email: $email, telephone: $telephone, faxNumber: $faxNumber, birthDate: $birthDate, workAddress: $workAddress, workAddressSub: $workAddressSub, workAddressZipCode: $workAddressZipCode, workName: $workName, workPositionName: $workPositionName, clubRi: $clubRi, memberRi: $memberRi, nickname: $nickname, englishName: $englishName, memo: $memo, job: $job, time: $time)';
+    return 'AccountEntity(id: $id, name: $name, cellphone: $cellphone, homeAddress: $homeAddress, homeAddressSub: $homeAddressSub, homeAddressZipCode: $homeAddressZipCode, grade: $grade, firstGrade: $firstGrade, secondGrade: $secondGrade, thirdGrade: $thirdGrade, fourthGrade: $fourthGrade, fifthGrade: $fifthGrade, android: $android, ios: $ios, hidden: $hidden, permission: $permission, active: $active, isFavorite: $isFavorite, coordinate: $coordinate, email: $email, telephone: $telephone, faxNumber: $faxNumber, birthDate: $birthDate, workAddress: $workAddress, workAddressSub: $workAddressSub, workAddressZipCode: $workAddressZipCode, workName: $workName, workPositionName: $workPositionName, clubRi: $clubRi, memberRi: $memberRi, nickname: $nickname, englishName: $englishName, memo: $memo, job: $job, time: $time)';
   }
 }
 
@@ -674,8 +651,8 @@ abstract mixin class _$AccountEntityCopyWith<$Res>
       String name,
       String cellphone,
       String homeAddress,
-      String? homeAddressSub,
-      String? homeAddressZipCode,
+      String homeAddressSub,
+      String homeAddressZipCode,
       GradeEntity? grade,
       GradeEntity? firstGrade,
       GradeEntity? secondGrade,
@@ -688,14 +665,13 @@ abstract mixin class _$AccountEntityCopyWith<$Res>
       bool permission,
       bool active,
       bool isFavorite,
-      CoordinateEntity coordinate,
-      List<UriEntity> profileImage,
+      CoordinateEntity? coordinate,
       String email,
       String telephone,
       String faxNumber,
-      DateTime birthDate,
+      DateTime? birthDate,
       String workAddress,
-      String? workAddressSub,
+      String workAddressSub,
       String workAddressZipCode,
       String workName,
       String workPositionName,
@@ -705,7 +681,7 @@ abstract mixin class _$AccountEntityCopyWith<$Res>
       String englishName,
       String memo,
       String job,
-      DateTime time});
+      DateTime? time});
 }
 
 /// @nodoc
@@ -725,8 +701,8 @@ class __$AccountEntityCopyWithImpl<$Res>
     Object? name = null,
     Object? cellphone = null,
     Object? homeAddress = null,
-    Object? homeAddressSub = freezed,
-    Object? homeAddressZipCode = freezed,
+    Object? homeAddressSub = null,
+    Object? homeAddressZipCode = null,
     Object? grade = freezed,
     Object? firstGrade = freezed,
     Object? secondGrade = freezed,
@@ -739,14 +715,13 @@ class __$AccountEntityCopyWithImpl<$Res>
     Object? permission = null,
     Object? active = null,
     Object? isFavorite = null,
-    Object? coordinate = null,
-    Object? profileImage = null,
+    Object? coordinate = freezed,
     Object? email = null,
     Object? telephone = null,
     Object? faxNumber = null,
-    Object? birthDate = null,
+    Object? birthDate = freezed,
     Object? workAddress = null,
-    Object? workAddressSub = freezed,
+    Object? workAddressSub = null,
     Object? workAddressZipCode = null,
     Object? workName = null,
     Object? workPositionName = null,
@@ -756,7 +731,7 @@ class __$AccountEntityCopyWithImpl<$Res>
     Object? englishName = null,
     Object? memo = null,
     Object? job = null,
-    Object? time = null,
+    Object? time = freezed,
   }) {
     return _then(_AccountEntity(
       id: null == id
@@ -775,14 +750,14 @@ class __$AccountEntityCopyWithImpl<$Res>
           ? _self.homeAddress
           : homeAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      homeAddressSub: freezed == homeAddressSub
+      homeAddressSub: null == homeAddressSub
           ? _self.homeAddressSub
           : homeAddressSub // ignore: cast_nullable_to_non_nullable
-              as String?,
-      homeAddressZipCode: freezed == homeAddressZipCode
+              as String,
+      homeAddressZipCode: null == homeAddressZipCode
           ? _self.homeAddressZipCode
           : homeAddressZipCode // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       grade: freezed == grade
           ? _self.grade
           : grade // ignore: cast_nullable_to_non_nullable
@@ -831,14 +806,10 @@ class __$AccountEntityCopyWithImpl<$Res>
           ? _self.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
               as bool,
-      coordinate: null == coordinate
+      coordinate: freezed == coordinate
           ? _self.coordinate
           : coordinate // ignore: cast_nullable_to_non_nullable
-              as CoordinateEntity,
-      profileImage: null == profileImage
-          ? _self._profileImage
-          : profileImage // ignore: cast_nullable_to_non_nullable
-              as List<UriEntity>,
+              as CoordinateEntity?,
       email: null == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -851,18 +822,18 @@ class __$AccountEntityCopyWithImpl<$Res>
           ? _self.faxNumber
           : faxNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      birthDate: null == birthDate
+      birthDate: freezed == birthDate
           ? _self.birthDate
           : birthDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       workAddress: null == workAddress
           ? _self.workAddress
           : workAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      workAddressSub: freezed == workAddressSub
+      workAddressSub: null == workAddressSub
           ? _self.workAddressSub
           : workAddressSub // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       workAddressZipCode: null == workAddressZipCode
           ? _self.workAddressZipCode
           : workAddressZipCode // ignore: cast_nullable_to_non_nullable
@@ -899,10 +870,10 @@ class __$AccountEntityCopyWithImpl<$Res>
           ? _self.job
           : job // ignore: cast_nullable_to_non_nullable
               as String,
-      time: null == time
+      time: freezed == time
           ? _self.time
           : time // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }

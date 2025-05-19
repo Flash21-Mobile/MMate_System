@@ -1,5 +1,5 @@
-import '../request/grade_response_dto.dart';
-import '../response/grade_request_dto.dart';
+import '../response/grade_response_dto.dart';
+import '../request/grade_request_dto.dart';
 
 abstract class GradeRepository {
   Future<List<GradeResponseDto>> getGrades({

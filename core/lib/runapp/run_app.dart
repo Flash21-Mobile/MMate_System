@@ -1,24 +1,25 @@
+import 'package:core_system/app/theme/_app_theme_data.dart';
 import 'package:core_system/splash/splash.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import '../theme.dart';
-
 Future runMMate(
   Widget home, {
   required String baseUrl,
   String title = '',
   String appLogoPath = '',
-  MmateTheme? lightTheme,
-  MmateTheme? darkTheme,
+  ThemeData? theme,
+  ThemeData? darkTheme,
   bool isFirebaseEnabled = false,
+  Iterable<Future> Function(WidgetRef ref)? onSplash,
+  Future<bool> Function(WidgetRef ref)? canIntentNext,
 }) async {
   final currentApp = MaterialApp(
     title: title,
-    theme: (lightTheme ?? MmateTheme.light()).themeData(),
-    darkTheme: (darkTheme ?? MmateTheme.dark()).themeData(),
+    theme: theme ?? AppThemeData.light,
+    darkTheme: darkTheme ?? AppThemeData.dark,
     localizationsDelegates: [
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
@@ -33,6 +34,8 @@ Future runMMate(
       title: title,
       home: home,
       baseUrl: baseUrl,
+      onSplash: onSplash,
+      canIntentNext: canIntentNext,
     ),
   );
 

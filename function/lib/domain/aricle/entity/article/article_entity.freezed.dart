@@ -20,7 +20,6 @@ mixin _$ArticleEntity {
   String get title;
   String get content;
   DateTime? get time;
-  List<String> get images;
   int get viewCnt;
   AccountEntity get account;
 
@@ -42,18 +41,17 @@ mixin _$ArticleEntity {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.time, time) || other.time == time) &&
-            const DeepCollectionEquality().equals(other.images, images) &&
             (identical(other.viewCnt, viewCnt) || other.viewCnt == viewCnt) &&
             (identical(other.account, account) || other.account == account));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, board, title, content, time,
-      const DeepCollectionEquality().hash(images), viewCnt, account);
+  int get hashCode => Object.hash(
+      runtimeType, id, board, title, content, time, viewCnt, account);
 
   @override
   String toString() {
-    return 'ArticleEntity(id: $id, board: $board, title: $title, content: $content, time: $time, images: $images, viewCnt: $viewCnt, account: $account)';
+    return 'ArticleEntity(id: $id, board: $board, title: $title, content: $content, time: $time, viewCnt: $viewCnt, account: $account)';
   }
 }
 
@@ -69,7 +67,6 @@ abstract mixin class $ArticleEntityCopyWith<$Res> {
       String title,
       String content,
       DateTime? time,
-      List<String> images,
       int viewCnt,
       AccountEntity account});
 
@@ -94,7 +91,6 @@ class _$ArticleEntityCopyWithImpl<$Res>
     Object? title = null,
     Object? content = null,
     Object? time = freezed,
-    Object? images = null,
     Object? viewCnt = null,
     Object? account = null,
   }) {
@@ -119,10 +115,6 @@ class _$ArticleEntityCopyWithImpl<$Res>
           ? _self.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      images: null == images
-          ? _self.images
-          : images // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       viewCnt: null == viewCnt
           ? _self.viewCnt
           : viewCnt // ignore: cast_nullable_to_non_nullable
@@ -154,10 +146,8 @@ class _ArticleEntity implements ArticleEntity {
       required this.title,
       required this.content,
       this.time,
-      final List<String> images = const [],
       required this.viewCnt,
-      required this.account})
-      : _images = images;
+      required this.account});
 
   @override
   final int id;
@@ -169,15 +159,6 @@ class _ArticleEntity implements ArticleEntity {
   final String content;
   @override
   final DateTime? time;
-  final List<String> _images;
-  @override
-  @JsonKey()
-  List<String> get images {
-    if (_images is EqualUnmodifiableListView) return _images;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_images);
-  }
-
   @override
   final int viewCnt;
   @override
@@ -201,18 +182,17 @@ class _ArticleEntity implements ArticleEntity {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.time, time) || other.time == time) &&
-            const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.viewCnt, viewCnt) || other.viewCnt == viewCnt) &&
             (identical(other.account, account) || other.account == account));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, board, title, content, time,
-      const DeepCollectionEquality().hash(_images), viewCnt, account);
+  int get hashCode => Object.hash(
+      runtimeType, id, board, title, content, time, viewCnt, account);
 
   @override
   String toString() {
-    return 'ArticleEntity(id: $id, board: $board, title: $title, content: $content, time: $time, images: $images, viewCnt: $viewCnt, account: $account)';
+    return 'ArticleEntity(id: $id, board: $board, title: $title, content: $content, time: $time, viewCnt: $viewCnt, account: $account)';
   }
 }
 
@@ -230,7 +210,6 @@ abstract mixin class _$ArticleEntityCopyWith<$Res>
       String title,
       String content,
       DateTime? time,
-      List<String> images,
       int viewCnt,
       AccountEntity account});
 
@@ -256,7 +235,6 @@ class __$ArticleEntityCopyWithImpl<$Res>
     Object? title = null,
     Object? content = null,
     Object? time = freezed,
-    Object? images = null,
     Object? viewCnt = null,
     Object? account = null,
   }) {
@@ -281,10 +259,6 @@ class __$ArticleEntityCopyWithImpl<$Res>
           ? _self.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      images: null == images
-          ? _self._images
-          : images // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       viewCnt: null == viewCnt
           ? _self.viewCnt
           : viewCnt // ignore: cast_nullable_to_non_nullable

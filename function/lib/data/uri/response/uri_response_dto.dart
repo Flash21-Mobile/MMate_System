@@ -29,7 +29,7 @@ class UriResponseDTO {
       this.pk,
       this.image});
 
-  UriEntity get toEntity {
+  UriEntity toEntity() {
     if (image == null) throw MMateException.cannotFormat;
 
     return UriEntity(

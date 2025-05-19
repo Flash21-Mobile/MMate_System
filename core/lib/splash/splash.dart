@@ -1,12 +1,13 @@
-import 'package:core_system/community/provider/board/board_provider.dart';
 import 'package:core_system/splash/provider/login_viewmodel.dart';
 import 'package:design_system/config.dart';
+import 'package:design_system/dialog/login_dialog.dart';
 import 'package:design_system/image/image.dart';
 import 'package:design_system/text/text_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:function_system/di/utilities/base_url_provider.dart';
+import 'package:function_system/utilities/log.dart';
 import 'package:function_system/utilities/navigation/navigation.dart';
 
 class MMateSplash extends ConsumerStatefulWidget {
@@ -14,6 +15,8 @@ class MMateSplash extends ConsumerStatefulWidget {
   final String title;
   final Widget home;
   final String baseUrl;
+  final Iterable<Future> Function(WidgetRef ref)? onSplash;
+  final Future<bool> Function(WidgetRef ref)? canIntentNext;
 
   const MMateSplash({
     super.key,
@@ -21,6 +24,8 @@ class MMateSplash extends ConsumerStatefulWidget {
     required this.title,
     required this.home,
     required this.baseUrl,
+    required this.onSplash,
+    required this.canIntentNext,
   });
 
   @override
@@ -71,12 +76,17 @@ class _Widget extends ConsumerState<MMateSplash>
   }) async {
     final splashAnimation = Future.delayed(
       Duration(milliseconds: 500),
-      () => _controller.forward(),
+      () => widget.title.isEmpty ? null : _controller.forward(),
     );
 
-    await Future.wait([splashAnimation, ...futures]).then((_) {
+    await Future.wait([splashAnimation, ...futures]).then((_) async {
+      final canIntentNext = await widget.canIntentNext?.call(ref);
       if (mounted) {
-        context.replace(next ?? widget.home);
+        if (canIntentNext ?? true) {
+          context.replace(next ?? widget.home);
+        }else {
+          loginPopUp();
+        }
       }
     });
   }
@@ -87,16 +97,33 @@ class _Widget extends ConsumerState<MMateSplash>
     super.dispose();
   }
 
+  Future loginPopUp() async {
+    final cellphoneController = TextEditingController();
+    final nameController = TextEditingController();
+
+    await LoginDialog(context).show(
+        svgLogo: widget.appLogoPath,
+        indexHint: '전화번호',
+        controller: cellphoneController,
+        indexSubHint: '이름',
+        subController: nameController,
+        buttonText: '로그인',
+        onTap: () {
+          ref
+              .read(loginViewmodelProvider.notifier)
+              .login(cellphoneController.text);
+
+          context.pop();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(loginViewmodelProvider, (previous, next) {
-      if ((previous?.isLoading??true) == true && next.isLoading == false) {
-        launchSplash([
-          ref.read(boardProvider.notifier).fetchData(),
-          if (next.data != null) ...[
-
-          ]
-        ]);
+      if (next.isLoading == false && next.error == null && next.isLogin) {
+        launchSplash([if (next.data != null) ...?widget.onSplash?.call(ref)]);
+      } else if(next.isLoading == false){
+        loginPopUp();
       }
     });
 
@@ -120,8 +147,8 @@ class _Widget extends ConsumerState<MMateSplash>
               },
               child: MMateImage(
                 widget.appLogoPath,
-                width: 100,
-                height: 100,
+                width: 150,
+                height: 150,
               ),
             ),
             ClipRect(

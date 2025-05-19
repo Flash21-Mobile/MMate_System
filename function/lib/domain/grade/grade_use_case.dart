@@ -17,7 +17,7 @@ class GetGradesUseCase {
         return a.order!.compareTo(b.order!); // 숫자 비교
       });
 
-      return result.map((e) => e.toEntity).toList();
+      return result.map((e) => e.toEntity()).toList();
     } catch (e) {
       rethrow;
     }
@@ -33,7 +33,7 @@ class GetGradeUseCase {
     try {
       final result = await _gradeRepository.getGrades(id: id);
 
-      return result.map((e) => e.toEntity).toList().first;
+      return result.map((e) => e.toEntity()).toList().first;
     } catch (e) {
       rethrow;
     }
@@ -61,7 +61,7 @@ class PostGradeUseCase {
         active: active,
       );
 
-      return result.toEntity;
+      return result.toEntity();
     } catch (e) {
       rethrow;
     }

@@ -6,49 +6,47 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/services.dart';
 
+import 'package:flutter/foundation.dart';
+
 class Log {
-  static const _androidChannel = MethodChannel('com.resoft.chunggu/android');
-  static const _appName = "mmate";
+  static void d(dynamic message) {
+    _log('DEBUG', message);
+  }
 
-  static void _log(
-      String? tag, String level, String message, bool isSuper, String type) {
-    if (kDebugMode) {
-      final stack = StackTrace.current.toString().split('\n')[isSuper ? 3 : 2];
+  static void i(dynamic message) {
+    _log('INFO', message);
+  }
 
-      final match = RegExp(r'(\S+\.dart):(\d+):\d+').firstMatch(stack);
-      final location = match != null
-          ? '${match.group(1)}:${match.group(2)}'
-          : 'unknown location';
+  static void w(dynamic message) {
+    _log('WARNING', message);
+  }
 
-      if (Platform.isAndroid) {
-        try {
-          _androidChannel.invokeMethod(level, {
-            'tag': '$_appName${tag != null ? '_$tag' : ''}',
-            'message': '$message $location)'
-          });
-        } catch (e) {
-          print('Error invoking method: $e');
-        }
-      }
-      else {
-        debugPrint('$_appName${tag != null ? '_$tag' : ''} [$type] $message $location)');
-      }
+  static void e(dynamic message) {
+    _log('ERROR', message);
+  }
+
+  static void _log(String level, dynamic message) {
+    if (!kDebugMode) return;
+
+    final timestamp = DateTime.now().toIso8601String();
+    final location = _getCallerLocation();
+
+    // ignore: avoid_print
+    print('[$timestamp][$level] $message\n➡️ $location');
+  }
+
+  static String _getCallerLocation() {
+    final trace = StackTrace.current.toString().split('\n');
+
+    // 0: this function (_getCallerLocation)
+    // 1: _log()
+    // 2: Logger.debug()/info()/warning()/error()
+    // 3: actual caller
+    // 따라서 trace[3]이 우리가 원하는 실제 호출 위치
+    if (trace.length > 3) {
+      return trace[3].trim();
     }
-  }
 
-  static void d(String message, {String? tag, bool isSuper = false}) {
-    _log(tag, 'logd', message, isSuper, 'D');
-  }
-
-  static void e(String message, {String? tag, bool isSuper = false}) {
-    _log(tag, 'loge', message, isSuper, 'E');
-  }
-
-  static void w(String message, {String? tag, bool isSuper = false}) {
-    _log(tag, 'logw', message, isSuper, 'W');
-  }
-
-  static void wtf(String message, {String? tag, bool isSuper = false}) {
-    _log(tag, 'logwtf', message, isSuper, 'WTF');
+    return 'Unknown Location';
   }
 }

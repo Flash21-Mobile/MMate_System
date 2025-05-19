@@ -2,7 +2,7 @@
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginViewmodelHash() => r'b0a3a81961e18bf1ddf3c20cded7433c1bf80d31';
+String _$loginViewmodelHash() => r'4cfe14842cedce3759487dadc4d01aada2069c4f';
 
 /// See also [LoginViewmodel].
 @ProviderFor(LoginViewmodel)

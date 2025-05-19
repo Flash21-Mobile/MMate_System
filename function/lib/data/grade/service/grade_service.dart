@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
-import '../request/grade_response_dto.dart';
-import '../response/grade_request_dto.dart';
+import '../response/grade_response_dto.dart';
+import '../request/grade_request_dto.dart';
 
 part 'grade_service.g.dart';
 

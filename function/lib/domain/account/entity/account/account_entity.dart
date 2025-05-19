@@ -3,7 +3,7 @@ import 'package:function_system/domain/account/base/base_account_entity.dart';
 import 'package:function_system/domain/coordinate/coordinate_entity.dart';
 import 'package:function_system/domain/uri/uri_entity.dart';
 
-import '../../grade/grade_entity.dart';
+import '../../../grade/grade_entity.dart';
 
 part 'account_entity.freezed.dart';
 
@@ -14,8 +14,8 @@ abstract class AccountEntity with _$AccountEntity implements BaseAccountEntity{
     required String name,
     required String cellphone,
     required String homeAddress,
-    required String? homeAddressSub,
-    required String? homeAddressZipCode,
+    required String homeAddressSub,
+    required String homeAddressZipCode,
     required GradeEntity? grade,
     required GradeEntity? firstGrade,
     required GradeEntity? secondGrade,
@@ -29,14 +29,13 @@ abstract class AccountEntity with _$AccountEntity implements BaseAccountEntity{
     required bool active,
     required bool isFavorite,
     required CoordinateEntity? coordinate,
-    required List<UriEntity> profileImage,
 
     required String email,
     required String telephone,
     required String faxNumber,
     required DateTime? birthDate,
     required String workAddress,
-    required String? workAddressSub,
+    required String workAddressSub,
     required String workAddressZipCode,
     required String workName,
     required String workPositionName,

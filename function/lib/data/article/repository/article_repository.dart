@@ -1,6 +1,6 @@
 import 'package:function_system/data/article/response/article_response_dto.dart';
 
-import '../../../domain/aricle/entity/article_entity.dart';
+import '../../../domain/aricle/entity/article/article_entity.dart';
 
 abstract class ArticleRepository {
   Future<List<ArticleResponseDto>> getArticleList({

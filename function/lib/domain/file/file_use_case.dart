@@ -31,7 +31,7 @@ class GetUintUseCase {
       {required String api, required int id, bool? isFirst}) async {
     try {
       final result = await repository.getImage(api, id, isFirst);
-      return result.toEntity;
+      return result.toEntity();
     } catch (e) {
       rethrow;
     }
@@ -49,7 +49,7 @@ class GetUintListUseCase {
       final result = await repository.getImages(api, id);
       return result
           .where((e) => e.image != null)
-          .map((e) => e.toEntity)
+          .map((e) => e.toEntity())
           .toList();
     } catch (e) {
       rethrow;

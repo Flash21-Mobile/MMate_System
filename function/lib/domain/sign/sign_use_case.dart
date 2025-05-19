@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:function_system/data/fcm/repository/fcm_repository.dart';
 import 'package:function_system/data/login/repository/login_repository.dart';
 import 'package:function_system/data/sign/repository/sign_repository.dart';
-import 'package:function_system/domain/account/account_entity.dart';
+import 'package:function_system/domain/account/base/base_account_entity.dart';
 import 'package:function_system/utilities/exception/exceoption.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../account/entity/account/account_entity.dart';
 
 class SignInUseCase {
   final SignRepository repository;
@@ -18,7 +20,7 @@ class SignInUseCase {
     this._fcmRepository,
   );
 
-  Future<AccountEntity> execute(
+  Future<String> execute(
     String? fcmToken, {
     String? name,
     required String cellphone,
@@ -27,16 +29,11 @@ class SignInUseCase {
       final result = await repository.signIn(name, cellphone);
       await repository.setToken(result);
 
-      final loginResult = await loginRepository.login();
-
       if (fcmToken != null) {
         await _fcmRepository.putFcm(fcmToken);
       }
 
-      if (loginResult.active == true && loginResult.id != null) {
-        return loginResult.toEntity();
-      }
-      throw MMateException.noActiveAccountFound;
+      return result;
     } catch (e) {
       rethrow;
     }

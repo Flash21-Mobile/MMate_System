@@ -1,23 +1,22 @@
 import 'dart:ui';
 
-import 'package:design_system/appbar/app_bar_bottom.dart';
+import 'package:design_system/config.dart';
+import 'package:design_system/utilities/config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../config.dart';
-import '../utilities/config.dart';
+import 'app_bar_bottom.dart';
 
-class MMateAppBar extends StatelessWidget implements PreferredSizeWidget {
+class BlurAppBar extends StatelessWidget implements PreferredSizeWidget {
   final BuildContext context;
 
-  final MMateAppBarBottom? bottom;
+  final AppBarBottom? bottom;
   final double appBarHeight;
 
   final double scrolledUnderElevation;
   final Color? backgroundColor;
   final Widget? child;
 
-  const MMateAppBar(
+  const BlurAppBar(
     this.context, {
     super.key,
     this.appBarHeight = 56,
@@ -41,8 +40,9 @@ class MMateAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
             child: Container(
-              color: backgroundColor ??
-                  Theme.of(context).colorScheme.primaryContainer.withAlpha(10),
+              color: (backgroundColor ??
+                      Theme.of(context).colorScheme.primaryContainer)
+                  .withAlpha(180),
             ),
           ),
         )),
@@ -52,7 +52,9 @@ class MMateAppBar extends StatelessWidget implements PreferredSizeWidget {
             scrolledUnderElevation: scrolledUnderElevation,
             toolbarHeight: appBarHeight,
             flexibleSpace: Padding(
-                padding: IndexPadding(top: MediaQuery.of(context).padding.top),
+                padding: IndexPadding(
+                    top: MediaQuery.of(context).padding.top,
+                    bottom: bottom?.height),
                 child: Center(
                   child: child,
                 )),

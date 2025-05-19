@@ -17,5 +17,5 @@ class IndexText extends _TextInterface {
 
   @override
   double Function(BuildContext context) get fontSize =>
-      (BuildContext context) => _getFontSize(context, 0.047, 16);
+      (BuildContext context) => _getFontSize(context, 0.047, 14);
 }

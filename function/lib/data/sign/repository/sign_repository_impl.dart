@@ -41,17 +41,17 @@ class SignRepositoryImpl extends SignRepository {
 
   @override
   Future setToken(String token) async {
-    secureStorage.write(key: SecureStorageKey.token, value: token);
+    await secureStorage.write(key: SecureStorageKey.token, value: token);
   }
 
   @override
   Future<String?> getToken() async {
-    return secureStorage.read(key: SecureStorageKey.token);
+    return await secureStorage.read(key: SecureStorageKey.token);
   }
 
   @override
   Future setCellphone(String cellphone) async {
-    secureStorage.write(key: SecureStorageKey.cellphone, value: cellphone);
+    await secureStorage.write(key: SecureStorageKey.cellphone, value: cellphone);
   }
 
   @override
