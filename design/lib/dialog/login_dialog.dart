@@ -123,52 +123,56 @@ class _Widget extends ConsumerState<_LoginDialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Container(
-                alignment: Alignment.center,
-                margin: AppConfig.paddingHorizontal,
-                child:
-                    // backgroundColor: Colors.white,
-                    SingleChildScrollView(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: AppConfig.borderRadius,
-                      color: Colors.white,
-                    ),
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+        backgroundColor: Colors.transparent,
+        body: Container(
+            alignment: Alignment.center,
+            margin: AppConfig.paddingHorizontal,
+            child:
+                // backgroundColor: Colors.white,
+                SingleChildScrollView(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: AppConfig.borderRadius,
+                  color: Colors.white,
+                ),
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ...widget.svgLogo != null
+                        ? [
+                            SizedBox(height: AppConfig.paddingIndex / 3),
+                            MMateImage(
+                              widget.svgLogo!,
+                              height: 80,
+                              fit: BoxFit.contain,
+                            ),
+                            SizedBox(height: AppConfig.paddingIndex),
+                          ]
+                        : [],
+                    ...widget.extraContents != null
+                        ? [widget.extraContents!, const SizedBox(height: 20)]
+                        : [],
+                    ...widget.title != null
+                        ? [
+                            IndexText(
+                              widget.title,
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            )
+                          ]
+                        : [],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ...widget.svgLogo != null
-                            ? [
-                                SizedBox(height: AppConfig.paddingIndex / 3),
-                                MMateImage(
-                                  widget.svgLogo!,
-                                  height: 80,
-                                  fit: BoxFit.contain,
-                                ),
-                                SizedBox(height: AppConfig.paddingIndex),
-                              ]
-                            : [],
-                        ...widget.extraContents != null
-                            ? [
-                                widget.extraContents!,
-                                const SizedBox(height: 20)
-                              ]
-                            : [],
-                        ...widget.title != null
-                            ? [
-                                IndexText(
-                                  widget.title,
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                )
-                              ]
-                            : [],
-                        ...(widget.indexHint != null ||
-                                widget.controller != null)
+                        if (widget.indexHint != null)
+                          IndexTextMin(
+                            widget.indexHint,
+                            color: Theme.of(context).colorScheme.onTertiary,
+                          ),
+                        ...(widget.controller != null)
                             ? [
                                 IndexTextField(
                                     padding: AppConfig.padding,
@@ -179,7 +183,6 @@ class _Widget extends ConsumerState<_LoginDialog> {
                                             width: 1,
                                             color: Theme.of(context)
                                                 .primaryColor)),
-                                    indexText: widget.indexHint,
                                     hintText: widget.hint,
                                     controller: widget.controller,
                                     keyboardType: widget.keyboardType,
@@ -187,6 +190,11 @@ class _Widget extends ConsumerState<_LoginDialog> {
                                 SizedBox(height: 20)
                               ]
                             : [],
+                        if (widget.indexSubHint != null)
+                          IndexTextMin(
+                            widget.indexSubHint,
+                            color: Theme.of(context).colorScheme.onTertiary,
+                          ),
                         ...(widget.indexSubHint != null ||
                                 widget.subController != null)
                             ? [
@@ -199,7 +207,6 @@ class _Widget extends ConsumerState<_LoginDialog> {
                                             width: 1,
                                             color: Theme.of(context)
                                                 .primaryColor)),
-                                    indexText: widget.indexSubHint,
                                     hintText: widget.subHint,
                                     controller: widget.subController,
                                     keyboardType: widget.subKeyboardType,
@@ -209,34 +216,35 @@ class _Widget extends ConsumerState<_LoginDialog> {
                                 SizedBox(height: 20),
                               ]
                             : [],
-                        Row(mainAxisSize: MainAxisSize.max, children: [
-                          Expanded(
-                              child: Material(
-                                  color: Theme.of(context).primaryColor,
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: InkWell(
-                                      borderRadius: BorderRadius.circular(100),
-                                      onTap: widget.onTap,
-                                      child: Container(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 15),
-                                        alignment: Alignment.center,
-                                        child: IndexText(
-                                          widget.buttonText,
-                                          color: Colors.white,
-                                        ),
-                                      ))))
-                        ]),
-                        ...widget.subContent != null
-                            ? [
-                                const SizedBox(height: 15),
-                                widget.subContent!,
-                                const SizedBox(height: 5)
-                              ]
-                            : []
                       ],
                     ),
-                  ),
-                )));
+                    Row(mainAxisSize: MainAxisSize.max, children: [
+                      Expanded(
+                          child: Material(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(100),
+                              child: InkWell(
+                                  borderRadius: BorderRadius.circular(100),
+                                  onTap: widget.onTap,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 15),
+                                    alignment: Alignment.center,
+                                    child: IndexText(
+                                      widget.buttonText,
+                                      color: Colors.white,
+                                    ),
+                                  ))))
+                    ]),
+                    ...widget.subContent != null
+                        ? [
+                            const SizedBox(height: 15),
+                            widget.subContent!,
+                            const SizedBox(height: 5)
+                          ]
+                        : []
+                  ],
+                ),
+              ),
+            )));
   }
 }

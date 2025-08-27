@@ -1,6 +1,6 @@
 import 'package:function_system/data/article/response/article_response_dto.dart';
 
-import '../../../domain/aricle/entity/article/article_entity.dart';
+import '../../../domain/article/entity/article/article.dart';
 
 abstract class ArticleRepository {
   Future<List<ArticleResponseDto>> getArticleList({
@@ -15,7 +15,7 @@ abstract class ArticleRepository {
     required int boardPk,
     required String title,
     required String content,
-    required String time,
+    required DateTime time,
     required bool sendPushAlarm,
   });
 
@@ -25,7 +25,7 @@ abstract class ArticleRepository {
     required int boardPk,
     required String title,
     required String content,
-    required String time,
+    required DateTime? time,
   });
 
   Future deleteArticle({

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:design_system/bottom/bottom.dart';
 import 'package:design_system/button/button_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,16 +18,17 @@ class MMateScaffold extends StatelessWidget {
   final Color? backgroundColor;
   final Widget? floatingActionButton;
 
-  const MMateScaffold(
-    BuildContext context, {
-    super.key,
-    this.appBar,
-    this.body,
-    this.backgroundColor,
-    this.bottomMMateButton,
-    this.isBottomMMateButtonVisible = true,
-    this.floatingActionButton,
-  });
+  final Color? bottomBackgroundColor;
+
+  const MMateScaffold(BuildContext context,
+      {super.key,
+      this.appBar,
+      this.body,
+      this.backgroundColor,
+      this.bottomMMateButton,
+      this.isBottomMMateButtonVisible = true,
+      this.floatingActionButton,
+      this.bottomBackgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,11 @@ class MMateScaffold extends StatelessWidget {
                         }(),
                       ),
                     )
-                  : null,
+                  : MMateBottom(
+                      backgroundColor: bottomBackgroundColor ??
+                          backgroundColor ??
+                          Theme.of(context).colorScheme.primaryContainer,
+                    ),
             ),
             floatingActionButton: floatingActionButton);
       },

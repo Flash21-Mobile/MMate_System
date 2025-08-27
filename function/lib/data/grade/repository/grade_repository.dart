@@ -5,6 +5,7 @@ abstract class GradeRepository {
   Future<List<GradeResponseDto>> getGrades({
     int? id,
     String? positionName,
+    int? groupOrder,
     String? name,
   });
 

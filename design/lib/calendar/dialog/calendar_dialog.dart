@@ -81,18 +81,17 @@ class _Widget extends ConsumerState<CalendarDialog> {
                 IndexTextMax(widget.title, fontWeight: FontWeight.bold),
                 TableCalendar(
                   locale: 'ko_KR',
-                  focusedDay: selectedDate,
-                  onDaySelected: (selectedDay, _) {
+                  selectedDay: selectedDate,
+                  onDaySelected: (selectedDay) {
                     setState(() {
                       setSelectedData = selectedDay;
                     });
                   },
-                  selectedDayPredicate: (date) => isSameDay(selectedDate, date),
-                  onPageChanged: (focusedDay) {
-                    setState(() {
-                      setSelectedData = focusedDay;
-                    });
-                  },
+                  // onPageChanged: (focusedDay) {
+                  //   setState(() {
+                  //     setSelectedData = focusedDay;
+                  //   });
+                  // },
                 ),
                 SizedBox(height: 30),
                 InkWell(

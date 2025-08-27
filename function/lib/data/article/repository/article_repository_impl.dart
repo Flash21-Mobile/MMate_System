@@ -35,7 +35,7 @@ class ArticleRepositoryImpl extends ArticleRepository {
     required int boardPk,
     required String title,
     required String content,
-    required String time,
+    required DateTime time,
     required bool sendPushAlarm,
   }) async {
     try {
@@ -63,7 +63,7 @@ class ArticleRepositoryImpl extends ArticleRepository {
     required int boardPk,
     required String title,
     required String content,
-    required String time,
+    required DateTime? time,
   }) async {
     try {
       final result = await service.putArticle(

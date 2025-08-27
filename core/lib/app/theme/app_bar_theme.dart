@@ -1,7 +1,7 @@
 part of '_app_theme_data.dart';
 
 class _AppBarTheme {
-  static final light = const AppBarTheme(
+  static final light = AppBarTheme(
     backgroundColor: Color(0xFFF5F6F8),
     iconTheme: IconThemeData(color: Colors.black),
     centerTitle: true,

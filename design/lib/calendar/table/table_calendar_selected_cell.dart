@@ -33,6 +33,9 @@ class _Widget extends State<TableCalendarSelectedCell> {
 
   @override
   Widget build(BuildContext context) {
+    final isLightMode =
+        MediaQuery.of(context).platformBrightness == Brightness.light;
+
     return AnimatedContainer(
       curve: Curves.bounceInOut,
       duration: Duration(milliseconds: 200),
@@ -44,7 +47,7 @@ class _Widget extends State<TableCalendarSelectedCell> {
       decoration: BoxDecoration(
         color: isAnimate
             ? widget.isToday
-                ? Theme.of(context).colorScheme.secondary
+                ? Theme.of(context).colorScheme.primary.withAlpha(100)
                 : Theme.of(context).colorScheme.primaryContainer
             : Theme.of(context).colorScheme.tertiary,
         borderRadius: BorderRadius.circular(12),
@@ -52,7 +55,10 @@ class _Widget extends State<TableCalendarSelectedCell> {
           BoxShadow(
             blurRadius: isAnimate ? 12 : 6, // 그림자 점점 줄이기
             spreadRadius: isAnimate ? 12 : 6,
-            color: Theme.of(context).unselectedWidgetColor.withOpacity(0.5),
+            color: (isLightMode
+                    ? Color(0xFFBBBBBB)
+                    : Colors.black12)
+                .withOpacity(0.5),
             offset: Offset(0, 8),
           )
         ],
@@ -62,7 +68,9 @@ class _Widget extends State<TableCalendarSelectedCell> {
         widget.text,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.black,
+          color: widget.isToday
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.onPrimaryContainer,
           fontSize: 17.0,
         ),
       ),

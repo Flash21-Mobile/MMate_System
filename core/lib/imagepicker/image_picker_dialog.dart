@@ -10,7 +10,7 @@ import 'package:design_system/image/image_detail.dart';
 import 'package:design_system/text/text_interface.dart';
 import 'package:design_system/toast/toast.dart';
 import 'package:flutter/material.dart';
-import 'package:function_system/domain/uri/uri_entity.dart';
+import 'package:function_system/domain/uint_file/entity/uint_file.dart';
 import 'package:function_system/utilities/navigation/navigation.dart';
 import 'package:function_system/utilities/permission/permission.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,7 +29,7 @@ class ImagePickerDialog {
     this.maxLength = 8,
   });
 
-  Future<List<UriEntity>> show() async {
+  Future<List<UintFile>> show() async {
     final isGranted = await MMatePermission.photos();
     if (isGranted == false) {
       return [];
@@ -61,7 +61,7 @@ class ImagePickerDialog {
             })) ??
         [];
 
-    final List<UriEntity> imageList = [];
+    final List<UintFile> imageList = [];
     for (AssetEntity photo in tempImage) {
       Uint8List? imageData = await photo.thumbnailDataWithSize(
         const ThumbnailSize(720, 720),
@@ -70,7 +70,7 @@ class ImagePickerDialog {
 
       final currentFile = await photo.file;
       if (imageData != null) {
-        imageList.add(UriEntity(
+        imageList.add(UintFile(
             data: imageData,
             extension:
                 p.extension(currentFile?.path ?? '').replaceFirst('.', '')));
@@ -162,7 +162,7 @@ class _Widget extends State<_ImagePickerScreen> {
       return;
     }
     if ((selectedPhotos.length + widget.initialLength) >= widget.maxLength) {
-      context.warningToast('사진은 최대 ${widget.maxLength}개 까지만 선택할 수 있어요');
+      context.toast('사진은 최대 ${widget.maxLength}개 까지만 선택할 수 있어요', toastType: ToastType.error);
       return;
     }
     setState(() {

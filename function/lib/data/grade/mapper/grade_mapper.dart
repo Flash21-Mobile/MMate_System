@@ -1,4 +1,4 @@
-import 'package:function_system/domain/grade/grade_entity.dart';
+import 'package:function_system/domain/grade/entity/grade.dart';
 
 import '../../account/realm/account_realm_model.dart';
 

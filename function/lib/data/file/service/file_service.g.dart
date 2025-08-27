@@ -61,6 +61,9 @@ class _FileService implements FileService {
     final _headers = <String, dynamic>{};
     final _data = FormData();
     _data.files.addAll(files.map((i) => MapEntry('file', i)));
+    print('데따_data: $_data');
+    print('데따_엔드리: ${files.map((e)=> 'file:$e')}');
+    print('데따_빠일즈: ${_data.files}');
     final _options = _setStreamType<List<FileResponseDTO>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -80,6 +83,8 @@ class _FileService implements FileService {
           )
           .toList();
     } on Object catch (e, s) {
+      Log.e('$e');
+      Log.e('$s');
       errorLogger?.logError(e, s, _options);
       rethrow;
     }

@@ -8,8 +8,6 @@ import '../text/text_interface.dart';
 
 class IndexTextField extends HookWidget {
 
-  final String? indexText;
-  final Color? indexColor;
 
   final TextEditingController? controller;
   final bool multilineEnable;
@@ -36,8 +34,6 @@ class IndexTextField extends HookWidget {
 
   const IndexTextField({
     super.key,
-    this.indexText,
-    this.indexColor,
     this.controller,
     this.padding = const EdgeInsets.all(0),
     this.multilineEnable = false,
@@ -52,7 +48,7 @@ class IndexTextField extends HookWidget {
     this.focusNode,
     this.textInputAction,
     this.fontWeight,
-    this.fontSize = 16,
+    this.fontSize = 14,
     this.color,
     this.onChanged,
     this.maxLength,
@@ -72,30 +68,11 @@ class IndexTextField extends HookWidget {
     return Material(
         color: Colors.transparent,
         child:
-        // Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          // if (indexText != null) ...[
-          //   IndexText(indexText,
-          //       color: indexColor ?? Theme.of(context).hintColor),
-          //   SizedBox(height: 5),
-          // ],
-          // if (animate != null) ...[
-          //   AnimatedOpacity(
-          //     opacity: opacity.value,
-          //     duration: Duration(milliseconds: 150),
-          //     child: IndexTextMin(
-          //       fontWeight: FontWeight.w500,
-          //       hintText,
-          //       color: indexFocus.value
-          //           ? indexColor ?? Theme.of(context).colorScheme.primary
-          //           : Theme.of(context).colorScheme.onTertiary,
-          //     ),
-          //   ),
-          //   SizedBox(height: AppConfig.paddingIndex / 3)
-          // ],
           Container(
               width: width,
               height: height,
               decoration: decoration,
+              alignment: Alignment.center,
               child: TextFormField(
                 focusNode: focusNode,
                 maxLength: maxLength,
@@ -141,29 +118,6 @@ class IndexTextField extends HookWidget {
                   focusedBorder: InputBorder.none, // 동그란 테두리
                 ),
               )),
-          // if (animate != null) ...[
-          //   Container(
-          //     height: 1.23,
-          //     width: double.infinity,
-          //     margin: EdgeInsets.only(top: 5),
-          //     color: indexFocus.value
-          //         ? indexColor ?? Theme.of(context).colorScheme.primary
-          //         : Theme.of(context).colorScheme.tertiary,
-          //   ),
-          //   if (animate!.subText.isNotEmpty)
-          //     ClipRect(
-          //         child: AnimatedSlide(
-          //       offset: viewSub.value ? Offset(0, 0) : Offset(0, -1),
-          //       duration: Duration(milliseconds: 150),
-          //       child: IndexTextMin(
-          //         animate!.subText,
-          //         color: indexColor ??
-          //             Theme.of(context).colorScheme.onTertiary,
-          //       ),
-          //     )),
-          // ]
-        // ]
-    // )
     );
   }
 }

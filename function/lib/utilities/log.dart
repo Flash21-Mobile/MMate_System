@@ -32,7 +32,14 @@ class Log {
     final location = _getCallerLocation();
 
     // ignore: avoid_print
-    print('[$timestamp][$level] $message\n➡️ $location');
+    _print('[$timestamp][$level] $message\n➡️ $location');
+
+
+  }
+
+  static void _print(String text) {
+    final pattern = RegExp('.{1,800}'); // 800자 단위로 끊음
+    pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
 
   static String _getCallerLocation() {

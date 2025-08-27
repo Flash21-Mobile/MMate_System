@@ -7,7 +7,7 @@ import 'package:function_system/key/constants_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../key/shared_preference_key.dart';
-import '../../../utilities/exception/exceoption.dart';
+import '../../../utilities/exception/exception.dart';
 
 class SharedRepositoryImpl extends SharedRepository {
   @override

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:function_system/domain/board/board_entity.dart';
+import 'package:function_system/domain/board/entity/board.dart';
 import 'package:function_system/domain/board/board_type.dart';
 
 part 'board_response_dto.g.dart';
@@ -23,8 +23,8 @@ class BoardResponseDto {
 
   Map<String, dynamic> toJson() => _$BoardResponseDtoToJson(this);
 
-  BoardEntity toEntity() {
-    return BoardEntity(
+  Board toEntity() {
+    return Board(
       id: id ?? 0,
       name: name ?? '',
       type: BoardType.getType(type ?? ''),

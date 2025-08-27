@@ -31,7 +31,6 @@ class IndexDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('isLoading $isLoading');
 
     final dummyNode = FocusNode();
 

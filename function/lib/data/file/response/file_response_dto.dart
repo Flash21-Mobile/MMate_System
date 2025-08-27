@@ -1,4 +1,4 @@
-import 'package:function_system/domain/file/file_entity.dart';
+import 'package:function_system/domain/file/entity/file.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'file_response_dto.g.dart';
@@ -33,7 +33,7 @@ class FileResponseDTO {
 
   Map<String, dynamic> toJson() => _$FileResponseDTOToJson(this);
 
-  FileEntity get toEntity => FileEntity(
+  File get toEntity => File(
         id: id ?? 0,
         name: name ?? '',
         path: path ?? '',

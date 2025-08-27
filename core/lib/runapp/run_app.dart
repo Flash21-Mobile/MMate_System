@@ -1,9 +1,9 @@
 import 'package:core_system/app/theme/_app_theme_data.dart';
-import 'package:core_system/splash/splash.dart';
+import 'package:core_system/splash/mmate_splash.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future runMMate(
   Widget home, {
@@ -13,7 +13,8 @@ Future runMMate(
   ThemeData? theme,
   ThemeData? darkTheme,
   bool isFirebaseEnabled = false,
-  Iterable<Future> Function(WidgetRef ref)? onSplash,
+  Iterable<Future<void>> Function(WidgetRef ref)? onSplashCreated,
+  Iterable<Future<void>> Function(WidgetRef ref)? onSplash,
   Future<bool> Function(WidgetRef ref)? canIntentNext,
 }) async {
   final currentApp = MaterialApp(
@@ -34,6 +35,7 @@ Future runMMate(
       title: title,
       home: home,
       baseUrl: baseUrl,
+      onSplashCreated: onSplashCreated,
       onSplash: onSplash,
       canIntentNext: canIntentNext,
     ),

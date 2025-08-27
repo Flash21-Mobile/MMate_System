@@ -22,12 +22,14 @@ class _GradeService implements GradeService {
     int? id,
     String? positionName,
     String? name,
+    int? groupOrder,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'id': id,
       r'positionName': positionName,
       r'name': name,
+      r'groupOrder': groupOrder,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

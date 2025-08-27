@@ -1,4 +1,4 @@
-import 'package:function_system/domain/grade/grade_entity.dart';
+import 'package:function_system/domain/grade/entity/grade.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'grade_response_dto.g.dart';
@@ -25,7 +25,7 @@ class GradeResponseDto {
 
   Map<String, dynamic> toJson() => _$GradeResponseDtoToJson(this);
 
-  GradeEntity toEntity() => GradeEntity(
+  Grade toEntity() => Grade(
         id: id!,
         name: name ?? '',
         order: order,

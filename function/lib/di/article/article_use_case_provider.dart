@@ -4,7 +4,12 @@ import 'package:function_system/di/account/enricher/account_enricher_provider.da
 import 'package:function_system/di/article/article_repository_provider.dart';
 import 'package:function_system/di/article/enricher/article_enricher_provider.dart';
 import 'package:function_system/di/file/file_repository_provider.dart';
-import 'package:function_system/domain/aricle/article_use_case.dart';
+import 'package:function_system/domain/article/usecase/delete_article_use_case.dart';
+
+import '../../domain/article/usecase/get_article_detail_use_case.dart';
+import '../../domain/article/usecase/get_articles_use_case.dart';
+import '../../domain/article/usecase/post_article_use_case.dart';
+import '../../domain/article/usecase/put_article_use_case.dart';
 
 final getArticleDetailUseCaseProvider =
     Provider<GetArticleDetailUseCase>((ref) {

@@ -5,114 +5,71 @@ import 'dart:math' as math;
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 
-/// 마켓 스토어 타입
-enum StoreMarket { GooglePlayStore }
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math' as math;
 
-/// 앱 버전 체크
-///
-/// [currentVersion] : 현재 앱 버전
-///
-/// [appId] : 앱 아이디
-///
-/// [storeMarket] : 마켓 스토어 타입
+import 'package:http/http.dart' as http;
+import 'package:package_info_plus/package_info_plus.dart';
+
 class VersionCheck {
-  final String? currentVersion;
-  final String? appId;
-  final StoreMarket storeMarket;
-
-  VersionCheck({
-    this.currentVersion,
-    this.appId,
-    this.storeMarket = StoreMarket.GooglePlayStore,
-  });
-
-  Future<AppCheckerResult> checkUpdate() async {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    final currentVersionTemp = currentVersion ?? packageInfo.version;
-    final packageNameTemp = appId ?? packageInfo.packageName;
-
-    if (Platform.isAndroid) {
-      switch (storeMarket) {
-        case StoreMarket.GooglePlayStore:
-          return await _checkPlayStore(currentVersionTemp, packageNameTemp);
-      }
-    } else if (Platform.isIOS) {
-      return await _checkAppleStore(currentVersionTemp, packageNameTemp);
-    } else {
-      return AppCheckerResult(currentVersionTemp, null, '',
-          '대상 플랫폼 "${Platform.operatingSystem}"은 이 패키지에서 아직 지원하지 않습니다');
-    }
-  }
-
-  Future<AppCheckerResult> _checkAppleStore(
-      String currentVersion,
-      String packageName,
-      ) async {
-    String? errorMsg;
-    String? newVersion;
-    String? url;
-    final uri =
-    Uri.https('itunes.apple.com', '/lookup', {'bundleId': packageName});
-
+  static Future<AppCheckerResult> checkVersion() async {
     try {
-      final response = await http.get(uri);
+      final packageInfo = await PackageInfo.fromPlatform();
+      final currentVersion = packageInfo.version;
+      final packageName = packageInfo.packageName;
 
-      if (response.statusCode != 200) {
-        errorMsg = 'ID가 $packageName인 앱을 Apple Store에서 찾을 수 없습니다';
-      } else {
-        final jsonObj = jsonDecode(response.body);
-        final List<dynamic> results = jsonObj['results'] as List<dynamic>;
+      String? storeVersion;
+      String? appURL;
 
-        if (results.isEmpty) {
-          errorMsg = 'ID가 $packageName인 앱을 Apple Store에서 찾을 수 없습니다';
+      if (Platform.isIOS) {
+        final url =
+            Uri.parse('https://itunes.apple.com/lookup?bundleId=$packageName');
+        final response = await http.get(url);
+
+        if (response.statusCode == 200) {
+          final jsonData = json.decode(response.body);
+          if ((jsonData['resultCount'] ?? 0) > 0) {
+            final result = jsonData['results'][0];
+            storeVersion = result['version'];
+            appURL = result['trackViewUrl'];
+          } else {
+            return AppCheckerResult(
+                currentVersion, null, null, '앱스토어에서 앱을 찾을 수 없습니다.');
+          }
         } else {
-          newVersion = jsonObj['results'][0]['version'].toString();
-          url = jsonObj['results'][0]['trackViewUrl'].toString();
+          return AppCheckerResult(currentVersion, null, null, 'iOS 버전 요청 실패');
         }
-      }
-    } catch (e) {
-      errorMsg = '$e';
-    }
+      } else if (Platform.isAndroid) {
+        final url = Uri.parse(
+            'https://play.google.com/store/apps/details?id=$packageName&hl=ko');
+        final response = await http.get(url);
 
-    return AppCheckerResult(
-      currentVersion,
-      newVersion,
-      url,
-      errorMsg,
-    );
-  }
+        if (response.statusCode == 200) {
+          final html = response.body;
 
-  Future<AppCheckerResult> _checkPlayStore(
-      String currentVersion,
-      String packageName,
-      ) async {
-    String? errorMsg;
-    String? newVersion;
-    String? url;
-    final uri = Uri.https(
-        'play.google.com', '/store/apps/details', {'id': packageName});
+          final versionRegExp = RegExp(r',\[\[\["([0-9,.]*)"]],');
+          final match = versionRegExp.firstMatch(html);
 
-    try {
-      final response = await http.get(uri);
-
-      if (response.statusCode != 200) {
-        errorMsg = 'Google Play Store에서 $packageName 앱을 찾을 수 없습니다';
+          if (match != null) {
+            storeVersion = match.group(1)?.trim();
+            appURL =
+                'https://play.google.com/store/apps/details?id=$packageName';
+          } else {
+            return AppCheckerResult(currentVersion, null, null,
+                '버전을 찾을 수 없습니다 (HTML 구조 변경?): ${html}');
+          }
+        } else {
+          return AppCheckerResult(currentVersion, null, null, '플레이스토어 요청 실패');
+        }
       } else {
-        newVersion = RegExp(r',\[\[\["([0-9,\.]*)"]],')
-            .firstMatch(response.body)!
-            .group(1);
-        url = uri.toString();
+        return AppCheckerResult(currentVersion, null, null, '지원하지 않는 플랫폼');
       }
-    } catch (e) {
-      errorMsg = '$e';
-    }
 
-    return AppCheckerResult(
-      currentVersion,
-      newVersion,
-      url,
-      errorMsg,
-    );
+      return AppCheckerResult(currentVersion, storeVersion, appURL, null);
+    } catch (e) {
+      return AppCheckerResult('unknown', null, null, e.toString());
+    }
   }
 }
 
@@ -123,20 +80,20 @@ class AppCheckerResult {
   final String? errorMessage;
 
   AppCheckerResult(
-      this.currentVersion,
-      this.newVersion,
-      this.appURL,
-      this.errorMessage,
-      );
+    this.currentVersion,
+    this.newVersion,
+    this.appURL,
+    this.errorMessage,
+  );
 
   bool get canUpdate =>
       _shouldUpdate(currentVersion, newVersion ?? currentVersion);
 
   bool _shouldUpdate(String versionA, String versionB) {
     final versionNumbersA =
-    versionA.split('.').map((e) => int.tryParse(e) ?? 0).toList();
+        versionA.split('.').map((e) => int.tryParse(e) ?? 0).toList();
     final versionNumbersB =
-    versionB.split('.').map((e) => int.tryParse(e) ?? 0).toList();
+        versionB.split('.').map((e) => int.tryParse(e) ?? 0).toList();
 
     final int versionASize = versionNumbersA.length;
     final int versionBSize = versionNumbersB.length;

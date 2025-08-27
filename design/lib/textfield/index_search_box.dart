@@ -32,9 +32,7 @@ class IndexSearchBox<T> extends HookWidget {
           onChanged(items);
           return;
         }
-        print('object');
         final searchedList = items.where((e) {
-          print('${searchController.text} ${searchItem(e).join(' ')}');
           final target = unorm.nfc(searchItem(e).join(' '));
           final query = unorm.nfc(searchController.text);
 

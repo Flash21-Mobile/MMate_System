@@ -17,10 +17,10 @@ abstract class _ThemePalette {
 
 class _LightThemePalette extends _ThemePalette {
   @override
-  Color primaryColor = Color(0xFF00438A);
+  Color primaryColor = Color(0xFF006EB5);
 
   @override
-  Color secondaryColor = Color(0xFFB5B7BA);
+  Color secondaryColor = Color(0xFFB8C9EA);
 
   @override
   Color onSurfaceColor = Color(0xFF00438A);
@@ -28,7 +28,7 @@ class _LightThemePalette extends _ThemePalette {
 
 class _DarkThemePalette extends _ThemePalette {
   @override
-  Color primaryColor = Color(0xFFB8C9EA);
+  Color primaryColor = Color(0xFF006EB5);
 
   @override
   Color secondaryColor = Color(0xFFB5B7BA);

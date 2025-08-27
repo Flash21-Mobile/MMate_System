@@ -18,7 +18,6 @@ class CellContent extends StatelessWidget {
   final bool isSelected;
   final bool isOutside;
   final bool isDisabled;
-  final bool isHoliday;
   final bool isWeekend;
   final CalendarStyle calendarStyle;
   final CalendarBuilders calendarBuilders;
@@ -35,7 +34,6 @@ class CellContent extends StatelessWidget {
     required this.isSelected,
     required this.isOutside,
     required this.isDisabled,
-    required this.isHoliday,
     required this.isWeekend,
     required this.cellAlignment,
     this.locale,
@@ -79,7 +77,7 @@ class CellContent extends StatelessWidget {
               margin: margin,
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary.withAlpha(100),
                   blurRadius: 10,
                 )
               ]),

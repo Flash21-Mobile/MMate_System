@@ -14,4 +14,11 @@ class Launch {
       await launchUrl(uri,mode: LaunchMode.externalApplication);
     }
   }
+
+  static Future url(String url) async {
+    var uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
 }

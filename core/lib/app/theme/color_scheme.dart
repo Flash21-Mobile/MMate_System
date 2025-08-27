@@ -27,7 +27,7 @@ class _ColorScheme {
     final palette = _DarkThemePalette();
     return ColorScheme(
       brightness: Brightness.dark,
-      primary: palette._desaturate(palette.primaryColor),
+      primary: palette.primaryColor,
       onPrimary: Colors.white,
       primaryFixed: palette.secondaryColor,
       secondary: const Color(0xFF61616D),
@@ -37,7 +37,7 @@ class _ColorScheme {
       error: palette._desaturate(const Color(0xFFF44336)),
       onError: const Color(0xFFFFFFFF),
       surface: Color(0xFF2C2C36),
-      onSurface: Color(0xFF61616D),
+      onSurface: Color(0xFFA1A1A1),
       primaryContainer: const Color(0xFF202126),
       onPrimaryContainer: Colors.white,
       secondaryContainer: const Color(0xFFF5F6F8),

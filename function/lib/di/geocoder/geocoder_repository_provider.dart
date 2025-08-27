@@ -11,7 +11,7 @@ import 'package:function_system/di/article/article_service_provider.dart';
 import 'package:function_system/data/article/repository/article_repository.dart';
 import 'package:function_system/di/utilities/dio_provider.dart';
 import 'package:function_system/di/file/file_service_provider.dart';
-import 'package:function_system/domain/account/usecase/account_use_case.dart';
+import 'package:function_system/domain/account/usecase/get_accounts_use_case.dart';
 
 final geocoderRepositoryProvider = Provider<GeocoderRepository>((ref) {
   return GeocoderRepositoryImpl();

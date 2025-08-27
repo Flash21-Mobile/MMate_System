@@ -1,25 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:function_system/di/uint_file/use_case/uint_file_use_case_provider.dart';
 import 'package:function_system/utilities/imagebuilder/image_builder_key.dart';
+import 'package:function_system/utilities/imagebuilder/image_builder_keys_provider.dart';
 import 'package:function_system/utilities/imagebuilder/image_builder_state.dart';
 
-import '../../di/file/file_use_case_provider.dart';
-import '../../domain/file/file_use_case.dart';
-import '../exception/exceoption.dart';
+import '../../domain/uint_file/use_case/get_uint_file_by_last_use_case.dart';
+import '../exception/exception.dart';
 
-final imageBuilderProvider = StateNotifierProvider.family<_Viewmodel,
-    ImageBuilderState, ImageBuilderKey>(
+final imageBuilderProvider = StateNotifierProvider.family<_Viewmodel, ImageBuilderState, ImageBuilderKey>(
   (ref, imageKey) {
-    final viewModel = _Viewmodel(ref.watch(getUintUseCaseProvider), imageKey);
-    return viewModel;
+    final getUintUseCase = ref.read(getUintFileByLastUseCaseProvider);
+
+    return _Viewmodel(ref, imageKey, getUintUseCase);
   },
 );
 
 class _Viewmodel extends StateNotifier<ImageBuilderState> {
-  final GetUintUseCase _getUintUseCase;
+  final Ref _ref;
+  final GetUintFileByLastUseCase _getUintFileByLastUseCase;
   final ImageBuilderKey imageKey;
 
-  _Viewmodel(this._getUintUseCase, this.imageKey)
+  _Viewmodel(this._ref, this.imageKey, this._getUintFileByLastUseCase)
       : super(ImageBuilderState.initial()) {
+    Future.microtask(() {
+      _ref
+          .read(imageBuilderKeysProvider.notifier)
+          .update((state) => {...state, imageKey});
+    });
     _loadImage();
   }
 
@@ -32,15 +39,13 @@ class _Viewmodel extends StateNotifier<ImageBuilderState> {
     state = state.copyWith(isLoading: true, error: null, isInit: true);
 
     try {
-      final imageData = await _getUintUseCase.execute(
+      final imageData = await _getUintFileByLastUseCase.execute(
         api: imageKey.api,
         id: imageKey.id,
         isFirst: imageKey.isLast,
       );
 
-      state = state.copyWith(
-          data: imageData.data,
-          isLoading: false);
+      state = state.copyWith(data: imageData.data, isLoading: false);
     } catch (e) {
       if (e == MMateException.noFilesFound) {
         state = state.copyWith(data: null, isEmpty: true, isLoading: false);

@@ -8,7 +8,7 @@ part of 'article_response_dto.dart';
 
 ArticleResponseDto _$ArticleResponseDtoFromJson(Map<String, dynamic> json) =>
     ArticleResponseDto(
-      id: (json['id'] as num?)?.toInt(),
+      id: (json['id'] as num).toInt(),
       account: json['account'] == null
           ? null
           : AccountResponseDto.fromJson(
@@ -18,7 +18,8 @@ ArticleResponseDto _$ArticleResponseDtoFromJson(Map<String, dynamic> json) =>
           : BoardResponseDto.fromJson(json['board'] as Map<String, dynamic>),
       title: json['title'] as String?,
       content: json['content'] as String?,
-      time: json['time'] as String?,
+      time:
+          json['time'] == null ? null : DateTime.parse(json['time'] as String),
       viewCnt: (json['viewCnt'] as num?)?.toInt(),
     );
 
@@ -29,6 +30,6 @@ Map<String, dynamic> _$ArticleResponseDtoToJson(ArticleResponseDto instance) =>
       'board': instance.board,
       'title': instance.title,
       'content': instance.content,
-      'time': instance.time,
+      'time': instance.time?.toIso8601String(),
       'viewCnt': instance.viewCnt,
     };

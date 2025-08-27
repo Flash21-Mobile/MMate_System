@@ -13,7 +13,6 @@ class CalendarCore extends StatelessWidget {
   final FocusedDayBuilder dayBuilder;
   final bool sixWeekMonthsEnforced;
   final bool dowVisible;
-  final bool weekNumbersVisible;
   final Decoration? dowDecoration;
   final Decoration? rowDecoration;
   final TableBorder? tableBorder;
@@ -45,7 +44,6 @@ class CalendarCore extends StatelessWidget {
     this.sixWeekMonthsEnforced = false,
     this.dowVisible = true,
     this.weekNumberBuilder,
-    required this.weekNumbersVisible,
     this.dowDecoration,
     this.rowDecoration,
     this.tableBorder,
@@ -67,14 +65,11 @@ class CalendarCore extends StatelessWidget {
         final actualDowHeight = dowVisible ? dowHeight! : 0.0;
         final constrainedRowHeight = constraints.hasBoundedHeight
             ? (constraints.maxHeight - actualDowHeight) /
-                _getRowCount(calendarFormat, baseDay)
+            _getRowCount(calendarFormat, baseDay)
             : null;
 
         return Container(
-            padding: EdgeInsets.only(
-              left: AppConfig.paddingIndex,
-              right: AppConfig.paddingIndex,
-            ),
+            padding: EdgeInsets.zero,
             child: CalendarPage(
               visibleDays: visibleDays,
               dowVisible: dowVisible,
@@ -83,9 +78,10 @@ class CalendarCore extends StatelessWidget {
               tableBorder: tableBorder,
               tablePadding: tablePadding,
               dowBuilder: (context, day) {
-                return SizedBox(
+                return Container(
                   height: dowHeight,
                   child: dowBuilder?.call(context, day),
+                  margin: EdgeInsets.zero,
                 );
               },
               dayBuilder: (context, day) {
@@ -104,7 +100,6 @@ class CalendarCore extends StatelessWidget {
                 );
               },
               dowHeight: dowHeight,
-              weekNumberVisible: weekNumbersVisible,
               weekNumberBuilder: (context, day) {
                 return SizedBox(
                   height: constrainedRowHeight ?? rowHeight,
@@ -154,10 +149,10 @@ class CalendarCore extends StatelessWidget {
   }
 
   DateTime _getFocusedDay(
-    CalendarFormat format,
-    DateTime prevFocusedDay,
-    int pageIndex,
-  ) {
+      CalendarFormat format,
+      DateTime prevFocusedDay,
+      int pageIndex,
+      ) {
     if (pageIndex == previousIndex) {
       return prevFocusedDay;
     }
@@ -266,7 +261,7 @@ class CalendarCore extends StatelessWidget {
     final dayCount = last.difference(first).inDays + 1;
     return List.generate(
       dayCount,
-      (index) => DateTime.utc(first.year, first.month, first.day + index),
+          (index) => DateTime.utc(first.year, first.month, first.day + index),
     );
   }
 

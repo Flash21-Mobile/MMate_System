@@ -4,9 +4,13 @@ import 'package:function_system/di/article/article_repository_provider.dart';
 import 'package:function_system/di/favorite/repository/favorite_repository_provider.dart';
 import 'package:function_system/di/file/file_repository_provider.dart';
 import 'package:function_system/di/login/login_repository_provider.dart';
-import 'package:function_system/domain/account/usecase/account_use_case.dart';
-import 'package:function_system/domain/aricle/article_use_case.dart';
+import 'package:function_system/domain/account/usecase/get_accounts_use_case.dart';
+import 'package:function_system/domain/article/usecase/delete_article_use_case.dart';
 
+import '../../domain/account/usecase/delete_account_favorite_use_case.dart';
+import '../../domain/account/usecase/get_account_detail_use_case.dart';
+import '../../domain/account/usecase/post_account_favorite_use_case.dart';
+import '../../domain/account/usecase/put_account_use_case.dart';
 import 'enricher/account_enricher_provider.dart';
 
 final getAccountsUseCaseProvider = Provider<GetAccountsUseCase>((ref) {

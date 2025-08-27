@@ -27,7 +27,7 @@ class _ArticleService implements ArticleService {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'board': boardId,
-      r'accountlist': accountId,
+      r'account': accountId,
       r'id': id,
       r'title': title,
     };

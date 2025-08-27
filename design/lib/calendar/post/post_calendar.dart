@@ -128,8 +128,8 @@ class _Widget extends State<PostCalendar> {
                           ]);
                         },
                         cellAlignment: Alignment.center,
-                        focusedDay: value,
-                        onDaySelected: (date, _) {
+                        selectedDay: value,
+                        onDaySelected: (date) {
                           selectedDate.value = DateTime(
                             date.year,
                             date.month,
@@ -138,9 +138,7 @@ class _Widget extends State<PostCalendar> {
                             selectedDate.value.minute,
                             selectedDate.value.second,
                           );
-                        },
-                        selectedDayPredicate: (date) => isSameDay(value, date));
-                  }),
+                  });}),
               PostCalendarFocused.shrink => SizedBox(
                   width: double.infinity,
                 ),

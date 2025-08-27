@@ -38,9 +38,6 @@ class CalendarStyle {
   /// Will have no effect on markers if `markersAutoAligned` or `markersOffset` is used.
   final AlignmentGeometry markersAlignment;
 
-  /// Decoration of single event markers. Affects each marker dot.
-  final Decoration markerDecoration;
-
   /// Margin of single event markers. Affects each marker dot.
   final EdgeInsets markerMargin;
 
@@ -176,10 +173,6 @@ class CalendarStyle {
     this.cellAlignment = Alignment.center,
     this.markersOffset = const PositionedOffset(),
     this.rangeHighlightColor = const Color(0xFFBBDDFF),
-    this.markerDecoration = const BoxDecoration(
-      color: Colors.red,
-      shape: BoxShape.circle,
-    ),
     this.todayTextStyle = const TextStyle(
       color: Color(0xFFFAFAFA),
       fontSize: 16.0,

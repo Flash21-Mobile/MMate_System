@@ -1,17 +1,13 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:design_system/animate/ink_well.dart';
 import 'package:design_system/config.dart';
-import 'package:design_system/dialog/bottom_sheet_dialog.dart';
-import 'package:design_system/dialog/bottom_sheet_header_delegate.dart';
 import 'package:design_system/image/image.dart';
 import 'package:design_system/loading/loading_widget.dart';
 import 'package:design_system/text/text_interface.dart';
-import 'package:design_system/toast/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:function_system/domain/uri/uri_entity.dart';
+import 'package:function_system/domain/uint_file/entity/uint_file.dart';
 import 'package:function_system/utilities/navigation/navigation.dart';
 import 'package:function_system/utilities/permission/permission.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,14 +15,10 @@ import 'package:path/path.dart' as p;
 
 class ImageSinglePickerDialog {
   final BuildContext context;
-  final UriEntity? initialImage;
 
-  const ImageSinglePickerDialog(
-    this.context, {
-    required this.initialImage,
-  });
+  const ImageSinglePickerDialog(this.context);
 
-  Future<UriEntity?> show() async {
+  Future<UintFile?> show({UintFile? initialImage}) async {
     final isGranted = await MMatePermission.photos();
     if (isGranted == false) {
       return null;
@@ -59,7 +51,7 @@ class ImageSinglePickerDialog {
     if (result == null) return initialImage;
     if (result is int) return null;
 
-    if (result is UriEntity) {
+    if (result is UintFile) {
       return result;
     }
     throw '에러';
@@ -67,7 +59,7 @@ class ImageSinglePickerDialog {
 }
 
 class _ImageSinglePickerScreen extends ConsumerStatefulWidget {
-  final UriEntity? initialImage;
+  final UintFile? initialImage;
 
   const _ImageSinglePickerScreen(this.initialImage);
 
@@ -76,7 +68,7 @@ class _ImageSinglePickerScreen extends ConsumerStatefulWidget {
 }
 
 class _Widget extends ConsumerState<_ImageSinglePickerScreen> {
-  UriEntity? imageData;
+  UintFile? imageData;
 
   @override
   void initState() {
@@ -90,12 +82,10 @@ class _Widget extends ConsumerState<_ImageSinglePickerScreen> {
     final XFile? pickedFile =
         await picker.pickImage(source: source, maxWidth: 1080);
     if (pickedFile != null) {
-        imageData = UriEntity(
-            data: File(pickedFile.path).readAsBytesSync(),
-            extension:
-                p.extension(pickedFile.path ?? '').replaceFirst('.', ''));
-      setState(() {
-      });
+      imageData = UintFile(
+          data: File(pickedFile.path).readAsBytesSync(),
+          extension: p.extension(pickedFile.path ?? '').replaceFirst('.', ''));
+      setState(() {});
     }
   }
 
@@ -105,12 +95,13 @@ class _Widget extends ConsumerState<_ImageSinglePickerScreen> {
     final imageWidth = screenWidth - (AppConfig.paddingIndex * 4);
 
     return Container(
+        color: Theme.of(context).colorScheme.primaryContainer,
         padding: AppConfig.padding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             IndexTextMax(
-              '본인 신분증을 등록해 주세요',
+              '프로필 사진을 선택해주세요',
               fontWeight: FontWeight.w700,
             ),
             SizedBox(height: AppConfig.paddingIndex),
@@ -120,10 +111,14 @@ class _Widget extends ConsumerState<_ImageSinglePickerScreen> {
                 width: imageWidth,
                 height: imageWidth / 16 * 9,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).unselectedWidgetColor,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                 ),
                 child: imageData == null
-                    ? null
+                    ? Icon(
+                        Icons.person,
+                        color: Theme.of(context).colorScheme.onTertiary,
+                        size: 42,
+                      )
                     : Stack(children: [
                         LoadingWidget.sizedBox(
                           width: imageWidth,
@@ -150,7 +145,7 @@ class _Widget extends ConsumerState<_ImageSinglePickerScreen> {
                         height: 40,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            color: Theme.of(context).unselectedWidgetColor),
+                            color: Theme.of(context).scaffoldBackgroundColor),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,7 +175,7 @@ class _Widget extends ConsumerState<_ImageSinglePickerScreen> {
                   height: 40,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
-                      color: Theme.of(context).unselectedWidgetColor),
+                      color: Theme.of(context).scaffoldBackgroundColor),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,

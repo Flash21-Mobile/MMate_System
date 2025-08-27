@@ -7,7 +7,7 @@ class ArticleRequestDto {
   int? account;
   int? board;
   String? content;
-  String? time;
+  DateTime? time;
   String? title;
 
   ArticleRequestDto({

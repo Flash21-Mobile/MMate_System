@@ -1,4 +1,4 @@
-import 'package:function_system/domain/grade/grade_entity.dart';
+import 'package:function_system/domain/grade/entity/grade.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'grade_request_dto.g.dart';

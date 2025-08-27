@@ -9,16 +9,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:function_system/di/utilities/base_url_provider.dart';
 import 'package:function_system/utilities/log.dart';
 import 'package:function_system/utilities/navigation/navigation.dart';
+import 'package:design_system/utilities/inputformatter/phone_input_formatter.dart';
 
-class MMateSplash extends ConsumerStatefulWidget {
+class Splash extends ConsumerStatefulWidget {
   final String appLogoPath;
   final String title;
   final Widget home;
   final String baseUrl;
-  final Iterable<Future> Function(WidgetRef ref)? onSplash;
+
+  final Iterable<Future<void>> Function(WidgetRef ref)? onSplash;
   final Future<bool> Function(WidgetRef ref)? canIntentNext;
 
-  const MMateSplash({
+  const Splash({
     super.key,
     required this.appLogoPath,
     required this.title,
@@ -32,7 +34,7 @@ class MMateSplash extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _Widget();
 }
 
-class _Widget extends ConsumerState<MMateSplash>
+class _Widget extends ConsumerState<Splash>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _logoAnimation;
@@ -41,10 +43,8 @@ class _Widget extends ConsumerState<MMateSplash>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async {
-      ref.read(baseUrlProvider.notifier).state = widget.baseUrl;
-      ref.read(loginViewmodelProvider.notifier).fetchData();
-    });
+
+    _onSplashCreated();
 
     _controller = AnimationController(
       duration: Duration(milliseconds: 300),
@@ -60,6 +60,13 @@ class _Widget extends ConsumerState<MMateSplash>
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  Future<void> _onSplashCreated() async {
+    await Future.microtask(() async {
+      ref.read(baseUrlProvider.notifier).state = widget.baseUrl;
+      await ref.read(loginViewmodelProvider.future);
+    });
   }
 
   @override
@@ -84,7 +91,7 @@ class _Widget extends ConsumerState<MMateSplash>
       if (mounted) {
         if (canIntentNext ?? true) {
           context.replace(next ?? widget.home);
-        }else {
+        } else {
           loginPopUp();
         }
       }
@@ -101,11 +108,19 @@ class _Widget extends ConsumerState<MMateSplash>
     final cellphoneController = TextEditingController();
     final nameController = TextEditingController();
 
+    // final cellphone
+
     await LoginDialog(context).show(
         svgLogo: widget.appLogoPath,
-        indexHint: '전화번호',
         controller: cellphoneController,
+        textInputFormatter: [
+          FilteringTextInputFormatter.digitsOnly,
+          PhoneInputFormatter(),
+        ],
+        indexHint: '전화번호',
+        hint: '전화번호를 입력해주세요',
         indexSubHint: '이름',
+        subHint: '이름을 입력해주세요',
         subController: nameController,
         buttonText: '로그인',
         onTap: () {
@@ -120,9 +135,9 @@ class _Widget extends ConsumerState<MMateSplash>
   @override
   Widget build(BuildContext context) {
     ref.listen(loginViewmodelProvider, (previous, next) {
-      if (next.isLoading == false && next.error == null && next.isLogin) {
-        launchSplash([if (next.data != null) ...?widget.onSplash?.call(ref)]);
-      } else if(next.isLoading == false){
+      if (next.hasValue) {
+        launchSplash([...?widget.onSplash?.call(ref)]);
+      } else if (next.isLoading == false && next.hasError) {
         loginPopUp();
       }
     });

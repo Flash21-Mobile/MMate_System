@@ -7,7 +7,8 @@ ArticleRequestDto _$ArticleRequestDtoFromJson(Map<String, dynamic> json) =>
       account: (json['account'] as num?)?.toInt(),
       board: (json['board'] as num?)?.toInt(),
       content: json['content'] as String?,
-      time: json['time'] as String?,
+      time:
+          json['time'] == null ? null : DateTime.parse(json['time'] as String),
       title: json['title'] as String?,
     );
 
@@ -16,6 +17,6 @@ Map<String, dynamic> _$ArticleRequestDtoToJson(ArticleRequestDto instance) =>
       'account': instance.account,
       'board': instance.board,
       'content': instance.content,
-      'time': instance.time,
+      'time': instance.time?.toIso8601String(),
       'title': instance.title,
     };

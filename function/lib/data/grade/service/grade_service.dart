@@ -16,6 +16,7 @@ abstract class GradeService {
     @Query('id') int? id,
     @Query('positionName') String? positionName,
     @Query('name') String? name,
+      @Query('groupOrder') int? groupOrder,
   );
 
   @POST('/api/grade')

@@ -48,13 +48,13 @@ abstract class _TextInterface extends StatelessWidget {
       textScaler: (defaultScale == true) ? TextScaler.noScaling : null,
       style: TextStyle(
           decoration: decoration,
+          decorationColor:
+              color ?? Theme.of(context).colorScheme.onPrimaryContainer,
           fontSize: fontSize(context),
           height: height,
           fontWeight: fontWeight,
           color: color ?? Theme.of(context).colorScheme.onPrimaryContainer),
-      overflow: overFlowFade ?? false
-              ? TextOverflow.ellipsis
-              : null,
+      overflow: overFlowFade ?? false ? TextOverflow.fade : null,
       maxLines: maxLines ?? (overFlowFade ?? false ? 1 : null),
       softWrap: softWrap ?? overFlowFade ?? false ? false : null,
     );

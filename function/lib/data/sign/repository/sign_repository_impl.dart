@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:function_system/data/sign/request/sign_request_dto.dart';
 import 'package:function_system/data/sign/service/sign_service.dart';
-import 'package:function_system/utilities/exception/exceoption.dart';
+import 'package:function_system/utilities/exception/exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'sign_repository.dart';
@@ -77,9 +77,9 @@ class SignRepositoryImpl extends SignRepository {
   Future<String> getCellphoneOnDevice() async {
     try {
       if (Platform.isAndroid) {
-        const androidChannel = MethodChannel('com.flash21.mmate/android');
+        const androidChannel = MethodChannel('com.flash21.rotary_3700/android');
 
-        var cellphoneNum = await androidChannel.invokeMethod('getCellphone');
+        var cellphoneNum = await androidChannel.invokeMethod('getPhoneNumber');
         if (cellphoneNum != null && cellphoneNum is String) {
           var cellphone = cellphoneNum.replaceAll('+82', '0');
 

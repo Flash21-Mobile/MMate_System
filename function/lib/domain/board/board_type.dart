@@ -19,3 +19,5 @@ class BoardTypeCommunity extends BoardType {
 class BoardTypeNon extends BoardType {
   BoardTypeNon();
 }
+
+// todo: 이거 enum으로 바꾸고 유스케이스 매개변수를 enum으로 바꾸기

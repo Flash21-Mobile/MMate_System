@@ -1,8 +1,5 @@
 library;
 
-import 'dart:ui';
-
-import 'package:core_system/splash/state/login_state.dart';
 import 'package:flutter/material.dart';
 
 part 'theme_palette.dart';
@@ -16,6 +13,7 @@ class AppThemeData {
     scaffoldBackgroundColor: const Color(0xFFF5F6F8),
     unselectedWidgetColor: const Color(0xFFE8EAEB),
     appBarTheme: _AppBarTheme.light,
+
     colorScheme: _ColorScheme.light(),
   );
 

@@ -19,10 +19,10 @@ class BottomSheetHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final primaryColor = Theme.of(context).primaryColor;
+    final primaryColor = Theme.of(context).colorScheme.primary;
 
     return Container(
-      color: Colors.white, // 배경색 추가 (필요하면 변경 가능)
+      color: Theme.of(context).colorScheme.primaryContainer,
       child: SizedBox(
         height: minExtent,
         child: Stack(

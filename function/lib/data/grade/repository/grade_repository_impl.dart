@@ -16,13 +16,11 @@ class GradeRepositoryImpl extends GradeRepository {
     int? id,
     String? positionName,
     String? name,
+    int? groupOrder,
   }) async {
     try {
-      final result = await service.getGrades(
-        id,
-        positionName,
-        name,
-      );
+      final result =
+          await service.getGrades(id, positionName, name, groupOrder);
       return result ?? [];
     } catch (e) {
       rethrow;

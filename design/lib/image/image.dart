@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:design_system/image/image_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-class MMateImage extends ConsumerWidget {
+import 'image_detail.dart';
+
+class MMateImage extends StatelessWidget {
   final Object data;
   final double? width;
   final double? height;
@@ -29,7 +29,7 @@ class MMateImage extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final imageAssets = ['.png', '.jpg', 'jpeg'];
     final svgAssets = ['.svg'];
     final imageNetwork = ['https://', 'http://'];
@@ -92,32 +92,47 @@ class MMateImage extends ConsumerWidget {
       );
     } else if (data is Future<File?>) {
       currentWidget = FutureBuilder(
-          future: data as Future<File?>,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return SizedBox(width: width, height: height);
-            } else if (snapshot.hasError) {
-              return SizedBox(
-                width: width,
-                height: height,
-              );
-            } else if (snapshot.hasData) {
-              return Image.file(
-                snapshot.data!,
-                width: width,
-                height: height,
-                fit: fit,
-                alignment: alignment,
-              );
-            } else {
-              return SizedBox(
-                width: width,
-                height: height,
-              );
-            }
-          });
+        future: data as Future<File?>,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SizedBox(width: width, height: height);
+          } else if (snapshot.hasError) {
+            return SizedBox(width: width, height: height);
+          } else if (snapshot.hasData) {
+            return Image.file(
+              snapshot.data!,
+              width: width,
+              height: height,
+              fit: fit,
+              alignment: alignment,
+            );
+          } else {
+            return SizedBox(width: width, height: height);
+          }
+        },
+      );
+    } else if (data is SvgLoader) {
+      final imageData = data as SvgLoader;
+      currentWidget = SvgPicture(
+        imageData,
+        width: width,
+        height: height,
+        fit: fit,
+        alignment: alignment,
+        colorFilter:
+            color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+      );
+    } else if (data is ImageProvider) {
+      final imageData = data as ImageProvider;
+      currentWidget = Image(
+        image: imageData,
+        width: width,
+        height: height,
+        fit: fit,
+        alignment: alignment,
+      );
     } else {
-      throw '지원하지 않는 형식의 데이터 입니다';
+      throw '지원하지 않는 형식의 데이터 입니다 $data';
     }
 
     return InkWell(

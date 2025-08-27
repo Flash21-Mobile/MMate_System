@@ -2,17 +2,17 @@ import 'dart:typed_data';
 
 import 'package:design_system/animate/ink_well.dart';
 import 'package:design_system/config.dart';
-import 'package:design_system/image/image_memory.dart';
+import 'package:design_system/image/image.dart';
 import 'package:design_system/loading/loading_widget.dart';
 import 'package:design_system/text/text_interface.dart';
 import 'package:flutter/material.dart';
-import 'package:function_system/domain/uri/uri_entity.dart';
+import 'package:function_system/domain/uint_file/entity/uint_file.dart';
 
 class ImagePostList extends StatelessWidget {
   final double itemWidth;
   final bool isLoading;
 
-  final List<UriEntity> imageData;
+  final List<UintFile> imageData;
   final Function(int)? onTapDelete;
   final VoidCallback? onTapAdd;
 
@@ -82,7 +82,7 @@ class ImagePostList extends StatelessWidget {
                           height: imageWidth,
                           borderRadius: AppConfig.borderRadius,
                         )
-                            : IndexImage.memory(
+                            : MMateImage(
                           width: imageWidth,
                           height: imageWidth,
                           imageData[index - 1].data,
